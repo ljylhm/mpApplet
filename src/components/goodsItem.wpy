@@ -9,15 +9,49 @@
   background-image: "https://img.cifnews.com/dev/20180521/91f7d1f55c5e4b6a8642dea53c57546f.jpg";
 
 }
+.title{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:140%;
+}
+.subTitle{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:120%;
+  color:#707070
+}
+.mintitle{
+  font-size:100%;
+  color:#707070
+}
+.desc{
+  font-size:90%;
+  background-color:#EEEEEE;
+  border-radius: 4px;
+  display:inline-block
+}
 
+.tag{
+  margin-right:10px
+}
 </style>
 <template>
-  <view wx:for="{{list}}" wx:key="id">
-    <van-card thumb-class="picture" custom-class="" num="2" price="2.00" desc="描述信息" title="商品标题" thumb="{{ imageURL }}" thumb-mode="aspectFit">
+  <view class="contain" wx:for="{{list}}" wx:key="id">
+
+    <van-card  thumb-class="picture" custom-class="custom" thumb="{{ item.imageURL }}" thumb-mode="aspectFit">
       <view slot="title">
-        <view>降低通平台数据选品实操</view>
+
+        <view class="title"><van-tag custom-class="tag" type="danger">热门 </van-tag>{{item.title}}</view>
+        <view class="subTitle">{{item.subTitle}}</view>
+        <view class="mintitle">{{item.classCount}}人·{{item.people}}在学</view>
+        <view class="desc">
+          查看回放
+        </view>
       </view>
     </van-card>
+
   </view>
 </template>
 <script>
@@ -25,8 +59,8 @@ import wepy from 'wepy'
 
 export default class goodsItem extends wepy.component {
   data = {
-    list: [{ id: 1 }, { id: 2 }],
-    imageURL: "https://img.cifnews.com/dev/20180625/f0ecfcdb6fda4191bc0dd76bdd956e73.jpg"
+    list: [{ id: 1,title:"降低通平台数据选品实操降低通平台数据选品实操",subTitle:"全面了解德国税务物流的概况","classCount":2,"people":1000 ,"imageURL":"https://img.cifnews.com/dev/20180625/f0ecfcdb6fda4191bc0dd76bdd956e73.jpg"}, { id: 2,title:"降低通平台数据选品实操降低通平台数据选品实操",subTitle:"全面了解德国税务物流的概况","classCount":2,"people":1000 ,"imageURL":"https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png"}],
+    imageURL: ""
   }
   config = {
 
