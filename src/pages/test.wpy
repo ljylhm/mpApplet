@@ -1,7 +1,5 @@
 <template>
-  <view>hello</view>
   <goodsItem></goodsItem>
-  <van-rate value="{{ value }}" bind:change="onChange" />
 </template>
 <script>
 import wepy from 'wepy'
