@@ -1,30 +1,40 @@
 <template>
   <view>
-    <image src="https://img.cifnews.com/dev/20181130/13623e47b3fe4b2fbce724507a52bce0.jpg" mode="scaleToFill"></image>
+    <image style="width:100%; height:400rpx" src="https://img.cifnews.com/dev/20181130/13623e47b3fe4b2fbce724507a52bce0.jpg" mode="scaleToFill"></image>
   </view>
   <view>
-    <van-tabs bind:click="onClick" animated>
-      <van-tab title="课程介绍">内容 1</van-tab>
-      <van-tab title="课程目录">
-        <view Slot="Tab">
-          <view wx:for="{{list}}" wx:key="id">
-            <van-panel title="{{item.title}}" desc="时长:{{item.time}}">
-              
-            </van-panel>
-
-          </view>
-
-        </view>
+    <van-tabs bind:click="onClick">
+      <van-tab title="课程介绍">
+        <view class="intro_contain">内容 1</view>
       </van-tab>
-      <van-tab title="评价">内容 3</van-tab>
+      <van-tab title="课程目录">
+        <scroll-view scroll-y="true" style="height: 800rpx;">
+          <view Slot="Tab">
+            <view wx:for="{{list}}" wx:key="id">
+              <van-panel>
+               <view slot="header">
+                <image class="detail_header_img" src="../image/sssss.png"></image>
+                <view class="detail_header_title">{{item.title}}</view>
+                <view class="detail_header_status">开课中</view>
+                <view class="detail_header_time">时长:{{item.time}}</view></view>
+              </van-panel>
 
-    </van-tabs>
-  </view>
+            </view>
 
-</template>
-<script>
-import wepy from 'wepy'
-import goodsItem from '../components/goodsItem'
+          </view></scroll-view>
+
+        </van-tab>
+        <van-tab title="评价">
+          <view class="intro_contain" >内容 3</view>
+        </van-tab>
+
+      </van-tabs>
+    </view>
+
+  </template>
+  <script>
+  import wepy from 'wepy'
+  import goodsItem from '../components/goodsItem'
 import List from '../components/list' // aliasFields example
 import classlist from '../components/classlist'
 
@@ -47,7 +57,7 @@ export default class test extends wepy.page {
 
 
   data = {
-   list:[{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"}]
+   list:[{"title":"第一课 Coupons定义及作用Coupons定义及作用Coupons定义及作用Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"}]
  }
 
  computed = {
@@ -73,5 +83,40 @@ onLoad() {
 }
 
 </script>
-<style lang="less">
+<style lang="css">
+.detail_header_img{
+  width: 40rpx; 
+  height: 40rpx;
+  padding: 40rpx 10rpx 0rpx 20rpx;
+  float:left
+}
+
+.detail_header_title{
+  max-width: 500rpx;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  float:center;
+  padding: 30rpx 10rpx;
+  font-size:100%;
+  width: 400rpx;
+  
+}
+.detail_header_time{
+  font-size:80%;
+  color:#707070;
+  padding:10rpx 60rpx;
+
+}
+.detail_header_status{
+  float: right;
+  font-size:80%;
+  color:#FF0000;
+  padding-right: 40rpx;
+  padding-bottom: 20rpx;
+}
+.intro_contain{
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+}
 </style>
