@@ -8,14 +8,15 @@
     box-sizing: border-box;
   }
 </style>
-
 <script>
   import wepy from 'wepy'
   import 'wepy-async-function'
-  
+
+
   export default class extends wepy.app {
     config = {
       pages: [
+        'pages/test',
         'pages/index'
       ],
       window: {
@@ -23,6 +24,11 @@
         navigationBarBackgroundColor: '#fff',
         navigationBarTitleText: 'WeChat',
         navigationBarTextStyle: 'black'
+      },
+      usingComponents: {
+        "van-button": "../components/vant/button/index",
+        "van-card": "../components/vant/card/index",
+        "van-rate": "../components/vant/rate/index"
       }
     }
 
@@ -65,4 +71,5 @@
       })
     }
   }
+
 </script>
