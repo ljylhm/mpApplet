@@ -1,0 +1,77 @@
+<template>
+  <view>
+    <image src="https://img.cifnews.com/dev/20181130/13623e47b3fe4b2fbce724507a52bce0.jpg" mode="scaleToFill"></image>
+  </view>
+  <view>
+    <van-tabs bind:click="onClick" animated>
+      <van-tab title="课程介绍">内容 1</van-tab>
+      <van-tab title="课程目录">
+        <view Slot="Tab">
+          <view wx:for="{{list}}" wx:key="id">
+            <van-panel title="{{item.title}}" desc="时长:{{item.time}}">
+              
+            </van-panel>
+
+          </view>
+
+        </view>
+      </van-tab>
+      <van-tab title="评价">内容 3</van-tab>
+
+    </van-tabs>
+  </view>
+
+</template>
+<script>
+import wepy from 'wepy'
+import goodsItem from '../components/goodsItem'
+import List from '../components/list' // aliasFields example
+import classlist from '../components/classlist'
+
+
+
+
+export default class test extends wepy.page {
+  config = {
+    navigationBarTitleText: '雨课详情',
+    usingComponents: {
+      "van-tab": "../components/vant/tab/index",
+      "van-tabs": "../components/vant/tabs/index",
+      "van-panel": "../components/vant/panel/index"
+    }
+  }
+  components = {
+    goodsItem: goodsItem,
+  }
+
+
+
+  data = {
+   list:[{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"},{"title":"第一课 Coupons定义及作用","time":"26.08"}]
+ }
+
+ computed = {
+  now() {
+    return +new Date()
+  }
+}
+
+methods = {
+
+}
+
+events = {
+  'index-emit': (...args) => {
+    let $event = args[args.length - 1]
+    console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+  }
+}
+
+onLoad() {
+
+}
+}
+
+</script>
+<style lang="less">
+</style>
