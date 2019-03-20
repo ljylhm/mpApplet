@@ -1,0 +1,114 @@
+<template>  
+    <view>
+        <view class="index-page-item">
+            <view class="card-nav">
+                <text class="card-title">服务商课程</text>
+                <text class="card-service-more">查看更多></text>
+            </view>
+        </view>
+        <view class="card-slide-1">
+            <scroll-view scroll-x="true" style=" white-space: nowrap; display: flex" >
+                <!--  display: inline-block-->
+                <view style="background: red; width: 200px; height: 100px; display: inline-block" ></view>
+                <view style="background: green; width: 200px; height: 100px; display: inline-block"></view>
+                <view style="background: blue; width: 200px; height: 100px; display: inline-block"></view>
+                <view style="background: yellow; width: 200px; height: 100px; display: inline-block"></view>
+            </scroll-view>
+        </view>
+    </view>
+    <!-- <view >
+        <view class="card-nav">
+            <text class="card-title">{{title}}</text>
+        </view>
+    </view> -->
+</template>
+
+<script>
+    import wepy from 'wepy'
+
+    export default class cardself extends wepy.component {
+
+        props = {
+            title: String,
+            size: {
+                type: [Number, String],
+                default: 4
+            }
+        }
+
+        onLoad() {
+            console.log(321321);
+        }
+
+        computed = {
+            showData() {
+                console.log("xxxxxx", this.size);
+                return this.pageData.slice(0, this.size)
+            }
+        }
+
+        data = {
+            message: "免费专区",
+            pageData: [{
+                headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
+                title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
+                classTime: 30,
+                type: "初级",
+                peopleNum: 150,
+                sign: "开发先锋"
+            }, {
+                headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
+                title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
+                classTime: 30,
+                type: "初级",
+                peopleNum: 150,
+                sign: ""
+            }, {
+                headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
+                title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
+                classTime: 30,
+                type: "初级",
+                peopleNum: 150,
+                sign: ""
+            }]
+        }
+
+        methods = {
+
+        }
+    }
+</script>
+
+<style lang="less">
+    .index-page-item {
+      width: 95%;
+      margin: 0 auto;
+      height: auto;
+      overflow: hidden;
+    }
+    .card-nav {
+      margin: 8px auto;
+      height: 30rpx;
+      line-height: 30rpx;
+    }
+    .card-title {
+      font-size: 30rpx;
+      font-weight: 600;
+    }
+
+    .card-service-more {
+      float: right;
+      font-size: 30rpx;
+      color: #999;
+    }
+    .card-slide-1 {
+      width: 100%;
+      height: 120rpx;
+      border: 1rpx solid #000;
+    }
+    .scroll-item {
+      width: 150rpx;
+      height: 30rpx;
+      border: 1rpx solid #000;
+    }
+</style>
