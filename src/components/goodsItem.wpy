@@ -1,5 +1,5 @@
 <style lang="less">
-.picture {
+  .picture {
   margin-left: -10px;
   border-radius: 15px;
 }
@@ -39,11 +39,11 @@
 </style>
 <template>
   <view class="contain" wx:for="{{list}}" wx:key="id">
-
-    <van-card  thumb-class="picture" custom-class="custom" thumb="{{ item.imageURL }}" thumb-mode="aspectFit">
+    <van-card thumb-class="picture" custom-class="custom" thumb="{{ item.imageURL }}" thumb-mode="aspectFit">
       <view slot="title">
-
-        <view class="title"><van-tag custom-class="tag" type="danger">热门 </van-tag>{{item.title}}</view>
+        <view class="title">
+          <van-tag custom-class="tag" type="danger">热门 </van-tag>{{item.title}}
+        </view>
         <view class="subTitle">{{item.subTitle}}</view>
         <view class="mintitle">{{item.classCount}}人·{{item.people}}在学</view>
         <view class="desc">
@@ -51,7 +51,6 @@
         </view>
       </view>
     </van-card>
-
   </view>
 </template>
 <script>
@@ -59,7 +58,7 @@ import wepy from 'wepy'
 
 export default class goodsItem extends wepy.component {
   data = {
-    list: [{ id: 1,title:"降低通平台数据选品实操降低通平台数据选品实操",subTitle:"全面了解德国税务物流的概况","classCount":2,"people":1000 ,"imageURL":"https://img.cifnews.com/dev/20180625/f0ecfcdb6fda4191bc0dd76bdd956e73.jpg"}, { id: 2,title:"降低通平台数据选品实操降低通平台数据选品实操",subTitle:"全面了解德国税务物流的概况","classCount":2,"people":1000 ,"imageURL":"https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png"}],
+    list: [{ id: 1, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180625/f0ecfcdb6fda4191bc0dd76bdd956e73.jpg" }, { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" }],
     imageURL: ""
   }
   config = {
