@@ -7,7 +7,8 @@
     config = {
       pages: [
         'pages/test',
-        'pages/index'
+        'pages/index',
+        'pages/my',
       ],
       window: {
         backgroundTextStyle: 'light',
@@ -19,7 +20,26 @@
         "van-button": "../components/vant/button/index",
         "van-card": "../components/vant/card/index",
         "van-rate": "../components/vant/rate/index"
-      }
+      },
+      tabBar: {
+        "color": "#a9b7b7",
+        "selectedColor": "#11cd6e",
+        "backgroundColor": "#ffffff",
+        "list": [
+          {
+            "pagePath": "pages/index",
+            "iconPath": "image/home_tab.png",
+            "selectedIconPath": "image/home_tab_down.png",
+            "text": "首页"
+          },
+          {
+            "pagePath": "pages/index",
+            "iconPath": "image/home_tab_wd.png",
+            "selectedIconPath": "image/home_tab_wd_down.png",
+            "text": "我的"
+          }
+        ]
+      },
     }
 
     globalData = {

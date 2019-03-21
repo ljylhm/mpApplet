@@ -1,0 +1,38 @@
+<template>
+    <view>
+
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    export default class Index extends wepy.page {
+        config = {
+            navigationBarTitleText: '我的信息',
+        }
+
+        data = {
+            url: "https://img.qccip.com/Test/%E7%AE%B4%E5%88%9B%E7%AC%AC%E4%B8%80%E8%AF%BE%E7%B2%BE%E9%80%89%20%E6%9D%8E%E5%AF%BC%200301--20%E5%88%86%E9%92%9F.mp4"
+        }
+
+        onLoad() {
+            // wepy.getUserInfo({
+            //     success(res) {
+            //         console.log("获得用户信息结果", res)
+            //     }
+            // })
+        }
+    }
+</script>
+
+<style lang="less">
+    .video-contain {
+      width: 100%;
+      height: 400rpx;
+      border: 1rpx solid #000;
+    }
+    .video-contain video {
+      width: 100%;
+      height: 100%;
+    }
+</style>

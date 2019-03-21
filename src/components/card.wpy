@@ -78,6 +78,13 @@
                 type: "初级",
                 peopleNum: 150,
                 sign: ""
+            }, {
+                headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
+                title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
+                classTime: 30,
+                type: "初级",
+                peopleNum: 150,
+                sign: ""
             }]
         }
 

@@ -1,6 +1,14 @@
 <template>
   <view>
-      <view>
+      <view class="navtab">
+         <scroll-view scroll-x="true" class="scroll-contain navtab-contain">
+           <view class="navtab-item">免费专区</view>
+           <view class="navtab-item">专栏专区</view>
+           <view class="navtab-item">服务课程</view>
+           <view class="navtab-item">最新课程</view>
+         </scroll-view>
+      </view>
+      <view style="margin-top:60rpx">
           <swiper class="swiper-card">
             <block class="swiper-container" wx:for="{{bannerList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
               <swiper-item class="displex-center">
@@ -53,8 +61,9 @@
       ],
       area2: "免费专区",
       area1: "精品专栏",
-      num1: 1,
-      num2: 3
+      num1: 4,
+      num2: 2,
+      Appserect: "8e69a523943daff4a253d6a57a7c0cc1"
     }
 
     computed = {
@@ -73,21 +82,26 @@
     }
 
     onLoad() {
-      let self = this
-      this.$parent.getUserInfo(function (userInfo) {
-        if (userInfo) {
-          self.userInfo = userInfo
+      wepy.login({
+        success(res) {
+          console.log("here", res)
         }
-        self.normalTitle = '标题已被修改'
-
-        self.setTimeoutTitle = '标题三秒后会被修改'
-        setTimeout(() => {
-          self.setTimeoutTitle = '到三秒了'
-          self.$apply()
-        }, 3000)
-
-        self.$apply()
       })
+      // let self = this
+      // this.$parent.getUserInfo(function (userInfo) {
+      //   if (userInfo) {
+      //     self.userInfo = userInfo
+      //   }
+      //   self.normalTitle = '标题已被修改'
+
+      //   self.setTimeoutTitle = '标题三秒后会被修改'
+      //   setTimeout(() => {
+      //     self.setTimeoutTitle = '到三秒了'
+      //     self.$apply()
+      //   }, 3000)
+
+      //   self.$apply()
+      // })
     }
   }
 </script>
@@ -113,5 +127,26 @@
       height: 100%;
       border-radius: 15rpx;
     }
+  }
+
+  .navtab {
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+    top: 0%;
+  }
+  .navtab-contain {
+    width: 100%;
+    height: 60rpx;
+    background-color: rgba(255, 255, 255, 1);
+  }
+  .navtab-item {
+    width: 200rpx;
+    height: 100%;
+    color: #000;
+    display: inline-block;
+    font-size: 28rpx;
+    text-align: center;
+    line-height: 60rpx;
   }
 </style>
