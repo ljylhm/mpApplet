@@ -1,0 +1,65 @@
+<template>
+  <van-submit-bar
+  price="{{ 3050 }}"
+  button-text="提交订单"
+  bind:submit="onClickButton"
+  tip="{{ true }}"
+  >
+  <van-tag type="primary">标签</van-tag>
+  <view slot="tip">
+    课程使用金币购买
+  </view>
+</van-submit-bar>
+</template>
+<script>
+import wepy from 'wepy'
+import goodsItem from '../components/goodsItem'
+import List from '../components/list' // aliasFields example
+
+
+
+
+
+export default class test extends wepy.page {
+  config = {
+    navigationBarTitleText: '提交订单',
+    usingComponents: {
+
+      "van-submit-bar": "../components/vant/submit-bar/index"
+    }
+  }
+  components = {
+    goodsItem: goodsItem,
+  }
+
+
+
+  data = {
+
+  }
+
+  computed = {
+    now() {
+      return +new Date()
+    }
+  }
+
+  methods = {
+
+  }
+
+  events = {
+    'index-emit': (...args) => {
+      let $event = args[args.length - 1]
+      console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+    }
+  }
+
+  onLoad() {
+
+  }
+}
+
+</script>
+<style lang="less">
+</style>
