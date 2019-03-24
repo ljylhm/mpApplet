@@ -9,6 +9,7 @@
         'pages/test',
         'pages/index',
         'pages/my',
+        'pages/ticket'
       ],
       window: {
         backgroundTextStyle: 'light',
@@ -19,7 +20,12 @@
       usingComponents: {
         "van-button": "../components/vant/button/index",
         "van-card": "../components/vant/card/index",
-        "van-rate": "../components/vant/rate/index"
+        "van-rate": "../components/vant/rate/index",
+        "van-toast": "../components/vant/toast/index",
+        "van-icon": "../components/vant/icon/index",
+        "van-tab": "../components/vant/tab/index",
+        "van-tabs": "../components/vant/tabs/index",
+        "van-field":"../components/vant/field/index"
       },
       tabBar: {
         "color": "#a9b7b7",
@@ -33,7 +39,7 @@
             "text": "首页"
           },
           {
-            "pagePath": "pages/index",
+            "pagePath": "pages/my",
             "iconPath": "image/home_tab_wd.png",
             "selectedIconPath": "image/home_tab_wd_down.png",
             "text": "我的"
@@ -43,7 +49,7 @@
     }
 
     globalData = {
-      userInfo: null
+      userInfo: {}
     }
 
     constructor() {

@@ -37,15 +37,19 @@
   import wepy from 'wepy'
   import cardself from "../components/card"
   import cardservice from "../components/cardservice"
-
+  import http from "./../utils/request"
+  import toast from "./../utils/toast"
+  import config from "./../utils/config"
+  import helper from "./../utils/helper"
+  
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '首页',
       "usingComponents": {
-        "van-icon": "../components/vant/icon/index",
         "van-button": "../components/vant/button/index",
         "van-card": "../components/vant/card/index",
-        "van-rate": "../components/vant/rate/index"
+        "van-rate": "../components/vant/rate/index",
+        "van-toast": "../components/vant/toast/index"
       }
     }
 
@@ -82,11 +86,30 @@
     }
 
     onLoad() {
-      wepy.login({
-        success(res) {
-          console.log("here", res)
+      wepy.getUserInfo({
+        success(res){
+          if(res.userInfo.nickName) {
+              config.globalData = Object.assign({},config.globalData.userInfo,res.userInfo)
+          }
         }
       })
+
+      wepy.login({
+        success(res) {
+          if(res.code){
+            http.httpLogin(res.code,function(isOk,data){
+              config.globalData.openid = data.data.openid
+              console.log(data.data.openid)
+            })
+          }else{
+              console.log("here", res)
+          }   
+        },
+        fail(){
+          toast.showToast("获取用户信息失败")
+        }
+      })
+
       // let self = this
       // this.$parent.getUserInfo(function (userInfo) {
       //   if (userInfo) {

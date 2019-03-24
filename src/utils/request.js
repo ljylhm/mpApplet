@@ -1,37 +1,55 @@
 import wepy from "wepy"
 import verify from "./verify"
-export const request = function (method, url, data, cb, opts) {
 
-    // 默认值和空判断
-    opts = opts || {}
 
-    if (!verify.isStr(method) || !methodList.has(method.toLowerCase())) {
-        method = "get"
-    }
-
-    wepy.request({
-        method,
-        url,
-        data,
-        dataType: opts.dataType || "json",
-        responseType: opts.responseType || "text",
-        header: opts.header || {},
-        success(result) {
-            cb && cb(true, result)
-        },
-        fail(result) {
-            cb && cb(false, result)
-        },
-        complete() {
-            if (opts.finally) {
-                cb && cb()
-            }
-        }
-    })
+const baseInfo = {
+    appid:"wx020ed5b1ec4361c1",
+    secret:"8e69a523943daff4a253d6a57a7c0cc1",
+    grant_type:"authorization_code"
 }
 
-const methodList = new Set(["options", "get", "post", "head", "put", "delete", "trace", "connect"])
+let defineOpts = {
+    showLoading:"true",
+    loadMessage:"加载中..."
+}
+
+const request = {
+    http(method,url,data,cb,opts={}){
+
+        opts = Object.assign({},defineOpts,opts)
+
+        if(opts.showLoading){
+            wepy.showLoading({
+                title:opts.loadMessage || "加载中..."
+            })
+        }
+        wepy.request({
+            method: method || 'GET',
+            url:url,
+            data:data,
+            success(data) {
+                wepy.hideLoading()
+                cb && cb(true,data)
+            },
+            fail(error){
+                wepy.hideLoading()
+                cb && cb(false,error)
+            },
+            complete(){
+               opts.complete && opts.complete()
+            }
+        })
+    },
+    httpGet(url,data,cb,opts={}){
+        this.http("GET",url,data,cb,opts)
+    },
+    httpPost(url,data,cb,opts={}){
+        this.http("POST",url,data,cb,opts)
+    },
+    httpLogin(sessionKey,cb,opts={}){
+        this.httpGet(`https://api.weixin.qq.com/sns/jscode2session?appid=${baseInfo.appid}&secret=${baseInfo.secret}&js_code=${sessionKey}&grant_type=authorization_code'`,{},cb)
+    }
+}
 
 
-export const httpGet = (url, data, cb, opts) => request("get", url, data, cb, opts)
-export const httpPost = (url, data, cb, opts) => request("psot", url, data, cb, opts)
+export default request
