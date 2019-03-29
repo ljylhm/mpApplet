@@ -5,7 +5,7 @@
         </view>
         <view class="card-contain">
             <view 
-                wx:for="{{showData}}"
+                wx:for="{{showData}}" @tap="toUrl"
                 wx:for-index="index" 
                 wx:for-item="item"
                 wx:key="index">
@@ -89,7 +89,11 @@
         }
 
         methods = {
-
+            toUrl() {
+                wepy.navigateTo({
+                    url: 'detail'
+                })
+            }
         }
     }
 </script>

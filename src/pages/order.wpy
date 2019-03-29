@@ -1,0 +1,183 @@
+<template>
+  <view style="background-color:#F7F7F7;height:100%">
+    <van-cell custom-class="class-contain" title-class="class-title" border="{{ false }}" title="课程内容"></van-cell>
+    <van-cell  border="{{ false }}">
+      <view slot="title">
+
+        <image class="order-img" src="{{orderInfo.img}}"></image>
+        <view class="order-info-title"> {{orderInfo.title}}</view>
+        <view class="order-price" @tap="seerate">￥{{orderInfo.price}}</view>
+      </view>
+    </van-cell>
+    <view @tap="listcard" style="margin-top:20rpx;"><van-cell title="优惠券" value-class="price" value="{{coupon}}" border="{{ false }}"/></view>
+
+    <view style="margin-top:20rpx;"><van-cell 
+     value-class="price" title="商品金额"
+     value="￥{{ orderInfo.total}}"
+     border="{{ false }}"
+     /></view>
+     <view style="background-color:#F7F7F7;height:700rpx;"></view>
+
+     <view ><van-action-sheet 
+       show="{{ show }}"
+       actions="{{ actions }}"
+       bind:close="onClose"
+       bind:select="onSelect"
+       z-index="200" overlay="{{true}}" cancel-text="暂不使用" bind:cancel="cancel"
+       /></view>
+
+       <van-submit-bar
+       price="{{ orderInfo.total*100 }}"
+       button-text="提交订单"
+       bind:submit="onClickButton"
+       tip="{{ true }}"
+       >
+       <van-tag type="primary"></van-tag>
+       <view slot="tip">
+        课程使用金币购买
+      </view>
+    </van-submit-bar>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import goodsItem from '../components/goodsItem'
+    import List from '../components/list' // aliasFields example
+
+
+
+
+
+    export default class test extends wepy.page {
+      config = {
+        navigationBarTitleText: '提交订单',
+        usingComponents: {
+
+          "van-submit-bar": "../components/vant/submit-bar/index",
+          "van-panel": "../components/vant/panel/index",
+          "van-cell": "../components/vant/cell/index",
+          "van-cell-group": "../components/vant/cell-group/index",
+          "van-action-sheet": "../components/vant/action-sheet/index"
+        }
+      }
+      components = {
+        goodsItem: goodsItem,
+      }
+
+
+
+      data = {
+
+        orderInfo:{
+          img:"https://img.cifnews.com/dev/20190305/07470fdecd2b4e34ae8124be384002cd.jpg",
+          title:"降低ACOS之广告高阶攻略战降低ACOS之广告高阶攻略战",
+          price:599,
+          discount:0,
+          total:599
+        },
+        show: false,
+        actions: [
+        {
+          name: '10元优惠券',
+          discount:10
+        },
+        {
+          name: '5元优惠券',
+          discount:5
+        },
+        {
+          name: '1元优惠券',
+          discount:1
+        },
+        ],
+        coupon:"暂无可用"
+      }
+
+      computed = {
+        now() {
+          return +new Date()
+        }
+      }
+
+      methods = {
+        onSelect(e){
+
+          this.orderInfo.total=this.orderInfo.price-e.detail.discount;
+
+
+          this.coupon="-"+e.detail.discount;
+
+          this.show=false
+
+
+        },
+        onClose(e) {
+        //console.log(e)
+        this.show=false
+      },
+      cancel(){
+        this.orderInfo.total=this.orderInfo.price;
+        this.show=false;
+        this.coupon="不使用"
+
+      },
+      
+      listcard(e){
+        this.show=true
+      }
+
+    }
+
+    events = {
+      'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+
+    onLoad() {
+      if(this.actions.length>0){
+        this.coupon="您有可用优惠券"
+      }else{
+        this.coupon="暂无可用"
+      }
+    }
+  }
+
+  </script>
+  <style lang="css">
+  .class-contain{
+    margin-top: 20rpx;
+  }
+  .class-title
+  {
+    font-weight: bold;
+    color: #707070
+  }
+  .order-img{
+    width: 280rpx;
+    height: 140rpx;
+    border-radius: 8rpx;
+  }
+  .order-info-title{
+    left: 320rpx;
+    position: absolute;
+    top:20rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 50%;
+  }
+  .order-price{
+    color: #f44;
+    font-size: 90%;
+    left: 320rpx;
+    position: absolute;
+    top:65rpx;
+
+
+  }
+  .price{
+    color: #f44;
+  }
+  </style>

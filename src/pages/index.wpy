@@ -2,16 +2,16 @@
   <view>
       <view class="navtab">
          <scroll-view scroll-x="true" class="scroll-contain navtab-contain">
-           <view class="navtab-item">免费专区</view>
-           <view class="navtab-item">专栏专区</view>
-           <view class="navtab-item">服务课程</view>
-           <view class="navtab-item">最新课程</view>
+           <view class="navtab-item" @tap="toUrl">免费专区</view>
+           <view class="navtab-item" @tap="toUrl">专栏专区</view>
+           <view class="navtab-item" @tap="toUrl">服务课程</view>
+           <view class="navtab-item" @tap="toUrl">最新课程</view>
          </scroll-view>
       </view>
       <view style="margin-top:60rpx">
           <swiper class="swiper-card">
             <block class="swiper-container" wx:for="{{bannerList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
-              <swiper-item class="displex-center">
+              <swiper-item class="displex-center" @tap="toUrl1">
                 <view class="swiper-card-item">
                   <!-- width="355" height="150"  -->
                   <image src="{{item}}"/>
@@ -41,7 +41,7 @@
   import toast from "./../utils/toast"
   import config from "./../utils/config"
   import helper from "./../utils/helper"
-  
+
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '首页',
@@ -75,7 +75,16 @@
     }
 
     methods = {
-
+      toUrl() {
+        wepy.navigateTo({
+          url: 'test'
+        })
+      },
+      toUrl1() {
+        wepy.navigateTo({
+          url: 'detail'
+        })
+      }
     }
 
     events = {
@@ -87,25 +96,25 @@
 
     onLoad() {
       wepy.getUserInfo({
-        success(res){
-          if(res.userInfo.nickName) {
-              config.globalData = Object.assign({},config.globalData.userInfo,res.userInfo)
+        success(res) {
+          if (res.userInfo.nickName) {
+            config.globalData = Object.assign({}, config.globalData.userInfo, res.userInfo)
           }
         }
       })
 
       wepy.login({
         success(res) {
-          if(res.code){
-            http.httpLogin(res.code,function(isOk,data){
+          if (res.code) {
+            http.httpLogin(res.code, function (isOk, data) {
               config.globalData.openid = data.data.openid
               console.log(data.data.openid)
             })
-          }else{
-              console.log("here", res)
-          }   
+          } else {
+            console.log("here", res)
+          }
         },
-        fail(){
+        fail() {
           toast.showToast("获取用户信息失败")
         }
       })

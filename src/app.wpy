@@ -6,6 +6,8 @@
   export default class extends wepy.app {
     config = {
       pages: [
+        'pages/order',
+        'pages/detail',
         'pages/test',
         'pages/index',
         'pages/my',
@@ -25,7 +27,7 @@
         "van-icon": "../components/vant/icon/index",
         "van-tab": "../components/vant/tab/index",
         "van-tabs": "../components/vant/tabs/index",
-        "van-field":"../components/vant/field/index"
+        "van-field": "../components/vant/field/index"
       },
       tabBar: {
         "color": "#a9b7b7",

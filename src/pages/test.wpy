@@ -1,7 +1,5 @@
 <template>
-  <view>hello</view>
   <goodsItem></goodsItem>
-  <van-rate value="{{ value }}" bind:change="onChange" />
 </template>
 <script>
   import wepy from 'wepy'
@@ -14,7 +12,8 @@
       usingComponents: {
         "van-button": "../components/vant/button/index",
         "van-card": "../components/vant/card/index",
-        "van-rate": "../components/vant/rate/index"
+        "van-rate": "../components/vant/rate/index",
+        "van-tag": "../components/vant/tag/index"
       }
     }
     components = {
