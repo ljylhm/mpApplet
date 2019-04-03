@@ -36,7 +36,9 @@
     }
 
     data = {
+
     }
+
     events = {
       'index-broadcast': (...args) => {
         let $event = args[args.length - 1]
@@ -45,19 +47,19 @@
     }
 
     watch = {
-      num (curVal, oldVal) {
+      num(curVal, oldVal) {
         console.log(`旧值：${oldVal}，新值：${curVal}`)
       }
     }
 
     methods = {
-      plus () {
+      plus() {
         this.num = this.num + 1
         console.log(this.$name + ' plus tap')
 
         this.$emit('index-emit', 1, 2, 3)
       },
-      minus () {
+      minus() {
         this.num = this.num - 1
         console.log(this.$name + ' minus tap')
       }

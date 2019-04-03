@@ -1,0 +1,299 @@
+<template>  
+    <view>
+        <view class="index-page-item">
+            <view class="card-nav">
+                <text class="card-title">服务商课程</text>
+                <text class="card-service-more" @tap="toUrl">查看更多></text>
+            </view>
+        </view>
+        <view class="card-slide-1">
+            <scroll-view scroll-x="true" class="scroll-contain">
+                <!--  display: inline-block-->
+                <view class="scroll-contain-item">
+                    <view class="image-contain pos-center">
+                         <image src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=2158025072,2027875129&fm=58"/>
+                         <text>腾讯管家</text>
+                    </view>         
+                </view>
+                <view class="scroll-contain-item">
+                    <view class="image-contain pos-center">
+                         <image src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3007404610,34543020&fm=58"/>
+                         <text>腾讯视频</text>
+                    </view> 
+                </view>
+                <view class="scroll-contain-item">
+                    <view class="image-contain pos-center">
+                         <image src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=904427105,2732577523&fm=58"/>
+                         <text>哔哩哔哩</text>
+                    </view> 
+                </view>
+                <view class="scroll-contain-item">
+                    <view class="image-contain pos-center">
+                         <image src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1877897337,849796133&fm=58"/>
+                         <text>作业帮</text>
+                    </view> 
+                </view>
+                <view class="scroll-contain-item">
+                    <view class="image-contain pos-center">
+                         <image src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1877897337,849796133&fm=58"/>
+                         <text>作业帮</text>
+                    </view> 
+                </view>
+                <view class="scroll-contain-item">
+                    <view class="image-contain pos-center">
+                         <image src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1877897337,849796133&fm=58"/>
+                         <text>作业帮</text>
+                    </view> 
+                </view>
+            </scroll-view>
+        </view>
+
+        <view class="service-contain index-page-item">
+            <view class="service-contain-item" @tap="toUrl"
+                wx:for="{{mockData}}"
+                wx:for-index="index" 
+                wx:for-item="item"
+                wx:key="index"
+            >
+                <image src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1501503634,159434099&fm=58&bpow=800&bpoh=1164"/>
+                <text class="cover-image">浙大创业</text>
+                <text class="service-text service-title">谭诗雨：阿里巴巴国际站侵权规则</text>
+                <text class="service-text service-desc">最近更新: 团队三板斧打造高绩效的团队三班斧打造</text>
+                <view class="service-text service-num">
+                    <van-icon class="icon-time" 
+                    size="22rpx"
+                    color="#999999"
+                    name="underway">
+                    </van-icon>124天前
+                    <van-icon class="icon-view"
+                    size="22rpx"
+                    color="#999999"
+                    name="manager"
+                    ></van-icon>
+                    <text>21</text>
+                    <text class="service-money">19.9花币/4期</text>
+                </view>  
+            </view>
+        </view>
+        
+        <view class="another-button">
+             <van-icon class="icon-exange" 
+                size="22rpx"
+                color="#999999"
+                name="exchange">
+                </van-icon>
+                <text>换一批</text>  
+            </view>
+    </view>
+    <!-- <view >
+        <view class="card-nav">
+            <text class="card-title">{{title}}</text>
+        </view>
+    </view> -->
+</template>
+
+<script>
+    import wepy from 'wepy'
+
+    export default class cardself extends wepy.component {
+
+        props = {
+            title: String,
+            size: {
+                type: [Number, String],
+                default: 4
+            }
+        }
+
+        onLoad() {
+            console.log(321321);
+        }
+
+        computed = {
+            showData() {
+                console.log("xxxxxx", this.size);
+                return this.pageData.slice(0, this.size)
+            }
+        }
+
+        data = {
+            message: "免费专区",
+            mockData: ["1", "2"],
+            pageData: [{
+                headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
+                title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
+                classTime: 30,
+                type: "初级",
+                peopleNum: 150,
+                sign: "开发先锋"
+            }, {
+                headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
+                title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
+                classTime: 30,
+                type: "初级",
+                peopleNum: 150,
+                sign: ""
+            }, {
+                headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
+                title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
+                classTime: 30,
+                type: "初级",
+                peopleNum: 150,
+                sign: ""
+            }]
+        }
+
+        methods = {
+            toUrl() {
+                wepy.navigateTo({
+                    url: 'test'
+                })
+            }
+        }
+    }
+</script>
+
+<style lang="less">
+    .index-page-item {
+      width: 95%;
+      margin: 0 auto;
+      height: auto;
+      overflow: hidden;
+    }
+    .card-nav {
+      margin: 8px auto;
+      height: 30rpx;
+      line-height: 30rpx;
+    }
+    .card-title {
+      font-size: 30rpx;
+      font-weight: 600;
+    }
+
+    .card-service-more {
+      float: right;
+      font-size: 30rpx;
+      color: #999;
+    }
+    .card-slide-1 {
+      width: 100%;
+      height: 200rpx;
+    }
+    .scroll-contain {
+      white-space: nowrap;
+      display: flex;
+    }
+    .scroll-contain-item {
+      width: 160rpx;
+      height: 180rpx;
+      position: relative;
+      display: inline-block;
+    }
+    .image-contain {
+      width: 120rpx;
+      height: 120rpx;
+    }
+    .image-contain image {
+      width: 100%;
+      height: 100%;
+      border-radius: 15rpx;
+    }
+    .image-contain text {
+      position: absolute;
+      display: inline-block;
+      width: 120rpx;
+      text-align: center;
+      font-size: 26rpx;
+      bottom: -44rpx;
+      left: -2rpx;
+    }
+    .scroll-item {
+      width: 150rpx;
+      height: 30rpx;
+    }
+    .pos-center {
+      position: absolute;
+      top: 10rpx;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .cover-image {
+      position: absolute;
+      bottom: 0rpx;
+      left: 0rpx;
+      width: 158rpx;
+      height: 30rpx;
+      font-size: 22rpx;
+      line-height: 30rpx;
+      border-bottom-left-radius: 15rpx;
+      border-bottom-right-radius: 15rpx;
+      color: #fff;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    .service-contain {
+      border-radius: 15rpx;
+      box-sizing: border-box;
+      padding: 15rpx;
+      background-color: rgba(255, 255, 255, 1);
+    }
+    .service-contain-item {
+      width: 100%;
+      height: 200rpx;
+      margin-bottom: 15rpx;
+      position: relative;
+      font-size: 28rpx;
+    }
+    .service-contain-item image {
+      width: 160rpx;
+      height: 200rpx;
+      border-radius: 15rpx;
+    }
+    .service-text {
+      position: absolute;
+      left: 180rpx;
+    }
+    .service-title {
+      top: 20rpx;
+    }
+    .service-desc {
+      top: 100rpx;
+      color: #999999;
+      font-size: 24rpx;
+      display: -webkit-box;
+      word-break: break-all;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .service-num {
+      top: 150rpx;
+      font-size: 24rpx;
+      color: #999999;
+    }
+    .icon-time {
+      color: #999999;
+      margin: 22rpx 20rpx 0rpx 0rpx;
+    }
+    .icon-view {
+      margin: 22rpx 20rpx 0rpx 20rpx;
+    }
+    .icon-exange {
+      margin: 4rpx 10rpx 0rpx 0rpx;
+    }
+    .service-money {
+      margin-left: 100rpx;
+      color: red;
+    }
+    .another-button {
+      width: 140rpx;
+      height: 40rpx;
+      font-size: 26rpx;
+      text-align: center;
+      line-height: 40rpx;
+      margin: 15rpx auto 0rpx auto;
+      border: 2rpx solid #fff;
+      border-radius: 20rpx;
+    }
+</style>

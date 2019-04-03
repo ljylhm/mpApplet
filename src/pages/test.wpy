@@ -2,55 +2,51 @@
   <goodsItem></goodsItem>
 </template>
 <script>
-import wepy from 'wepy'
-import goodsItem from '../components/goodsItem'
-import List from '../components/list' // aliasFields example
+  import wepy from 'wepy'
+  import goodsItem from '../components/goodsItem'
+  import List from '../components/list' // aliasFields example
+
+  export default class test extends wepy.page {
+    config = {
+      navigationBarTitleText: '商品详情',
+      usingComponents: {
+        "van-button": "../components/vant/button/index",
+        "van-card": "../components/vant/card/index",
+        "van-rate": "../components/vant/rate/index",
+        "van-tag": "../components/vant/tag/index"
+      }
+    }
+    components = {
+      goodsItem: goodsItem,
+    }
 
 
 
+    data = {
 
+    }
 
-export default class test extends wepy.page {
-  config = {
-    navigationBarTitleText: '商品详情',
-    usingComponents: {
-      "van-button": "../components/vant/button/index",
-      "van-card": "../components/vant/card/index",
-      "van-rate": "../components/vant/rate/index",
-      "van-tag": "../components/vant/tag/index"
+    computed = {
+      now() {
+        return +new Date()
+      }
+    }
+
+    methods = {
+
+    }
+
+    events = {
+      'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }
+    }
+
+    onLoad() {
+
     }
   }
-  components = {
-    goodsItem: goodsItem,
-  }
-
-
-
-  data = {
-
-  }
-
-  computed = {
-    now() {
-      return +new Date()
-    }
-  }
-
-  methods = {
-
-  }
-
-  events = {
-    'index-emit': (...args) => {
-      let $event = args[args.length - 1]
-      console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-    }
-  }
-
-  onLoad() {
-
-  }
-}
 
 </script>
 <style lang="less">

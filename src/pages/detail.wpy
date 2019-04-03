@@ -122,8 +122,8 @@
 </view>
 </template>
 <script>
-import wepy from 'wepy'
-import goodsItem from '../components/goodsItem'
+  import wepy from 'wepy'
+  import goodsItem from '../components/goodsItem'
   import List from '../components/list' // aliasFields example
   import classlist from '../components/classlist'
   import Toast from '../components/vant/toast/toast'
@@ -152,21 +152,21 @@ import goodsItem from '../components/goodsItem'
 
 
     data = {
-      tabActive:0,
+      tabActive: 0,
       list: [{ "title": "第一课 Coupons定义及作用Coupons定义及作用Coupons定义及作用Coupons定义及作用", "time": "26.08", "video": "https://img.qccip.com/Test/%E7%AE%B4%E5%88%9B%E7%AC%AC%E4%B8%80%E8%AF%BE%E7%B2%BE%E9%80%89%20%E6%9D%8E%E5%AF%BC%200301--20%E5%88%86%E9%92%9F.mp4" }, { "title": "第一课 Coupons定义及作用", "time": "26.08" }, { "title": "第一课 Coupons定义及作用", "time": "26.08", "video": "https://img.qccip.com/WeChat_20190319195319.mp4" }, { "title": "第一课 Coupons定义及作用", "time": "26.08" }, { "title": "第一课 Coupons定义及作用", "time": "26.08" }, { "title": "第一课 Coupons定义及作用", "time": "26.08" }, { "title": "第一课 Coupons定义及作用", "time": "26.08" }, { "title": "第一课 Coupons定义及作用", "time": "26.08" }, { "title": "第一课 Coupons定义及作用", "time": "26.08" }, { "title": "第一课 Coupons定义及作用", "time": "26.08" }],
       videourl: "",
       showBanner: true,
-      classInfo:{
-        title:"降低ACOS之广告高阶攻略战",
-        difficult:"高级",
-        classCount:6,
-        type:"录播",
-        poeple:1102
+      classInfo: {
+        title: "降低ACOS之广告高阶攻略战",
+        difficult: "高级",
+        classCount: 6,
+        type: "录播",
+        poeple: 1102
       },
-      teachers:[{name:"阿甘",desc:"职业跨境卖家",content:"古风病女性感部位手绘意境短发背影黑白时尚海边原宿风小清新恩典森系可爱欧美范闺蜜伤感。",icon:"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1122649470,955539824&fm=27&gp=0.jpg"},{name:"Marty",desc:"资深跨境卖家",content:"古风病女性感部位手绘意境短发背影黑白时尚海边原宿风小清新恩典森系可爱欧美范闺蜜伤感。",icon:"http://img0.imgtn.bdimg.com/it/u=680412173,2594788837&fm=26&gp=0.jpg"}],
-      adurl:"https://img.cifnews.com/dev/20190122/f7a59d6b84ca4973afb6dc7f95ce7a5e.png",
-      adviceshort:[],
-      advice:[]
+      teachers: [{ name: "阿甘", desc: "职业跨境卖家", content: "古风病女性感部位手绘意境短发背影黑白时尚海边原宿风小清新恩典森系可爱欧美范闺蜜伤感。", icon: "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1122649470,955539824&fm=27&gp=0.jpg" }, { name: "Marty", desc: "资深跨境卖家", content: "古风病女性感部位手绘意境短发背影黑白时尚海边原宿风小清新恩典森系可爱欧美范闺蜜伤感。", icon: "http://img0.imgtn.bdimg.com/it/u=680412173,2594788837&fm=26&gp=0.jpg" }],
+      adurl: "https://img.cifnews.com/dev/20190122/f7a59d6b84ca4973afb6dc7f95ce7a5e.png",
+      adviceshort: [],
+      advice: []
 
 
     }
@@ -188,16 +188,18 @@ import goodsItem from '../components/goodsItem'
       },
       onClick(e) {
         console.log(e);
-        this.tabActive=e.detail.index;
+        this.tabActive = e.detail.index;
       },
-      seerate(){
+      seerate() {
         console.log("查看");
-        this.tabActive=2
+        this.tabActive = 2
       },
-      buy(){
-        Toast('点击购买')
+      buy() {
+        wepy.navigateTo({
+          url: 'order'
+        })
       },
-      share(){
+      share() {
         Toast('点击分享')
 
       }
@@ -212,29 +214,29 @@ import goodsItem from '../components/goodsItem'
 
     onLoad() {
 
-      this.advice=  [{
-        icon:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1218485516,264644399&fm=27&gp=0.jpg",
-        name:"阿康思密达",
-        rate:4,
-        content:"看了有一种变成高级运营的感觉哈哈哈哈哈哈"
-      },{
-        icon:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2796651835,2041654306&fm=27&gp=0.jpg",
-        name:"旧港凉薄",
-        rate:3,
-        content:"很棒随时随地学习"
+      this.advice = [{
+        icon: "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1218485516,264644399&fm=27&gp=0.jpg",
+        name: "阿康思密达",
+        rate: 4,
+        content: "看了有一种变成高级运营的感觉哈哈哈哈哈哈"
+      }, {
+        icon: "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2796651835,2041654306&fm=27&gp=0.jpg",
+        name: "旧港凉薄",
+        rate: 3,
+        content: "很棒随时随地学习"
       }];
-      this.adviceshort=this.advice.slice(0,1);
+      this.adviceshort = this.advice.slice(0, 1);
       console.log(this.adviceshort);
     }
   }
 
-  </script>
+</script>
   <style lang="css">
   .detail_header_img {
     width: 40rpx;
     height: 40rpx;
     padding: 35rpx 10rpx 0rpx 20rpx;
-    float: left
+    float: left;
   }
 
   .detail_header_title {
@@ -246,7 +248,6 @@ import goodsItem from '../components/goodsItem'
     padding: 30rpx 10rpx;
     font-size: 100%;
     width: 400rpx;
-
   }
 
   .detail-item {
@@ -257,7 +258,6 @@ import goodsItem from '../components/goodsItem'
     font-size: 80%;
     color: #707070;
     padding: 10rpx 60rpx;
-
   }
 
   .detail_header_status {
@@ -265,74 +265,71 @@ import goodsItem from '../components/goodsItem'
     font-size: 80%;
     right: 20rpx;
     top: 35rpx;
-    color: #FF0000;
+    color: #ff0000;
   }
 
   .intro_contain {
     padding-left: 30rpx;
     padding-right: 30rpx;
   }
-  .intro-title{
-    font-weight:bold;
+  .intro-title {
+    font-weight: bold;
     font-size: 150%;
     padding-left: -20rpx;
-    padding-top:15rpx;
-    padding-bottom:10rpx;
+    padding-top: 15rpx;
+    padding-bottom: 10rpx;
   }
-  .intro-desc{
+  .intro-desc {
     padding-top: 30rpx;
     padding-left: 15rpx;
     font-size: 80%;
     color: #707070;
-    font-weight:lighter
+    font-weight: lighter;
   }
-  .advice-icon{
+  .advice-icon {
     width: 80rpx;
     height: 80rpx;
     border-radius: 40rpx;
     margin-top: 10rpx;
     margin-right: 10rpx;
   }
-  .rate-font{
-    float:left;
+  .rate-font {
+    float: left;
     font-size: 80%;
     color: #707070;
   }
-  .see-rate{
+  .see-rate {
     /*margin: 0px 33%;*/
     text-align: center;
     /* bottom: 40rpx;*/
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     color: #ff6600;
     font-size: 90%;
     margin-bottom: 20rpx;
-
-
   }
-  .rate-number{
+  .rate-number {
     color: #ff6600;
-    font-weight: bold
+    font-weight: bold;
   }
-  .rate-title
-  {
-    font-weight: bold
+  .rate-title {
+    font-weight: bold;
   }
-  .teacher-icon{
+  .teacher-icon {
     width: 100rpx;
     height: 100rpx;
     border-radius: 50rpx;
     margin-top: 10rpx;
     margin-right: 10rpx;
   }
-  .teacher-desc{
+  .teacher-desc {
     font-size: 80%;
     color: #707070;
   }
-  .class-contain{
+  .class-contain {
     margin-top: 20rpx;
   }
-  .image-all{
-    width:100%;
-    height:400rpx
+  .image-all {
+    width: 100%;
+    height: 400rpx;
   }
-  </style>
+</style>

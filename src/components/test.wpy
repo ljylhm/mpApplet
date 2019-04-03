@@ -1,0 +1,146 @@
+<template>
+  <view>
+      <view class="index-page-item">
+            <view class="card-nav">
+                <text class="card-title">123</text>
+            </view>
+            <view class="card-contain">
+                <view>
+                    <view class="card-img">
+                        <text class="card-sign">开发先锋</text>
+                        <image src=https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png
+                        />
+                    </view>
+                    <view class="card-desc">
+                        <text class="card-desc-title">刘晓玲【外贸入门】30天打造优秀外贸业务员</text>
+                        <text class="card-desc-info">30</text>
+                        <text class="card-desc-info">初级</text>
+                        <van-icon class="icon-people" 
+                        size="22rpx"
+                        color="#999999"
+                        name="manager">
+                        </van-icon>
+                        <text class="card-desc-info people-num">150</text>
+                    </view>
+                </view>
+            </view>
+      </view>
+  </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    export default class test extends wepy.component {
+        data = {
+            message: "信息",
+            pageData: [{
+                headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
+                title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
+                classTime: 30,
+                type: "初级",
+                peopleNum: 150,
+                sign: "开发先锋"
+            }, {
+                headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
+                title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
+                classTime: 30,
+                type: "初级",
+                peopleNum: 150,
+                sign: ""
+            }, {
+                headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
+                title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
+                classTime: 30,
+                type: "初级",
+                peopleNum: 150,
+                sign: ""
+            }]
+        }
+    }
+</script>  
+
+<style lang="less">
+    .index-page-item {
+      width: 95%;
+      margin: 0 auto;
+      height: auto;
+    }
+    .card-nav {
+      margin: 12px auto;
+      height: 30rpx;
+      line-height: 30rpx;
+    }
+    .card-title {
+      font-size: 30rpx;
+      font-weight: 600;
+    }
+
+    .card-contain > view {
+      width: 49%;
+      height: auto;
+    }
+    .card-img {
+      width: 100%;
+      height: 200rpx;
+      position: relative;
+    }
+    .card-sign {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 5rpx 10rpx;
+      top: 10rpx;
+      right: 10rpx;
+      color: #fff;
+      font-size: 20rpx;
+      border-radius: 25rpx;
+    }
+    .card-contain > view {
+      margin-bottom: 15rpx;
+    }
+    .card-contain > view image {
+      width: 100%;
+      height: 100%;
+      border-top-left-radius: 15rpx;
+      border-top-right-radius: 15rpx;
+    }
+    .card-contain > view:nth-child(2n + 1) {
+      float: left;
+    }
+    .card-contain > view:nth-child(2n) {
+      float: right;
+    }
+    .card-desc {
+      width: 100%;
+      height: auto;
+      box-sizing: border-box;
+      padding: 12rpx;
+      background-color: #fff;
+      border-bottom-left-radius: 15rpx;
+      border-bottom-right-radius: 15rpx;
+    }
+    .card-desc-title {
+      display: -webkit-box;
+      font-size: 26rpx;
+      color: #000000;
+      line-height: 40rpx;
+      word-break: break-all;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-desc-info {
+      font-size: 24rpx;
+      color: #999999;
+      margin-right: 15rpx;
+    }
+
+    .icon-people {
+      position: relative;
+      //   margin-left: 10rpx;
+      top: 2rpx;
+    }
+    .people-num {
+      margin-left: 10rpx;
+    }
+</style>
