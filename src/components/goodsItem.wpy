@@ -53,47 +53,54 @@
   </view>
 </template>
 <script>
-  import wepy from 'wepy'
+import wepy from 'wepy'
 
-  export default class goodsItem extends wepy.component {
-    data = {
-      list: [{        id: 1,
-        title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180625/f0ecfcdb6fda4191bc0dd76bdd956e73.jpg"      },
-      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
-      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
-      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
-      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
-      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" }],
-      imageURL: ""
-    }
-    config = {
-
-    }
-
-    events = {
-      'index-broadcast': (...args) => {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.name}`)
-      }
-    }
-
-    methods = {
-      tap() {
-        // this.num = this.num + 1
-        console.log(this.$name + ' tap')
+export default class goodsItem extends wepy.component {
+  data = {
+    list: [{
+        id: 1,
+        title: "降低通平台数据选品实操降低通平台数据选品实操",
+        subTitle: "全面了解德国税务物流的概况",
+        "classCount": 2,
+        "people": 1000,
+        "imageURL": "https://img.cifnews.com/dev/20180625/f0ecfcdb6fda4191bc0dd76bdd956e73.jpg"
       },
-      add() {
-        let len = this.list.length
-        this.list.push({ id: len + 1, title: 'title_' + len })
-      },
-      toUrl() {
-        wepy.navigateTo({
-          url: 'detail'
-        })
-      }
-    }
-
-    onLoad() { }
+      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
+      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
+      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
+      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
+      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" }
+    ],
+    imageURL: ""
   }
+  config = {
+
+  }
+
+  events = {
+    'index-broadcast': (...args) => {
+      let $event = args[args.length - 1]
+      console.log(`${this.$name} receive ${$event.name} from ${$event.source.name}`)
+    }
+  }
+
+  methods = {
+    tap() {
+      // this.num = this.num + 1
+      console.log(this.$name + ' tap')
+    },
+    add() {
+      let len = this.list.length
+      this.list.push({ id: len + 1, title: 'title_' + len })
+    },
+    toUrl() {
+      wepy.navigateTo({
+        url: 'detail?id=1'
+      })
+    }
+  }
+
+  onLoad() {}
+}
 
 </script>
