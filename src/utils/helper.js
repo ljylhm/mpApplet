@@ -33,6 +33,19 @@ const helper = {
                 cb && cb(false,res)
             }
           })
+    },
+    toOtherPage(url,param){
+        if(!url) return
+        let serach = ""
+        if(param){
+            for(let i in param){
+                serach = serach + `${i}=${param[i]}&`
+            }
+            serach = serach.substr(0,serach.length-1)
+        }
+        wepy.navigateTo({
+            url:url+"?"+serach
+        })
     }
 }
 

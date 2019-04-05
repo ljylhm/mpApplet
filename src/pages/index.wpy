@@ -35,7 +35,6 @@
 import wepy from 'wepy'
 import cardself from "../components/card"
 import cardservice from "../components/cardservice"
-import http from "./../utils/request"
 import toast from "./../utils/toast"
 import config from "./../utils/config"
 import helper from "./../utils/helper"
@@ -68,19 +67,7 @@ export default class Index extends wepy.page {
     Appserect: "8e69a523943daff4a253d6a57a7c0cc1"
   }
 
-    methods = {
-      toUrl() {
-        console.log("进行到了这里>>")
-        wepy.navigateTo({
-          url: 'test'
-        })
-      },
-      toUrl1() {
-        wepy.navigateTo({
-          url: 'detail'
-        })
-      }
-    }
+  computed = {
 
   }
 
@@ -113,6 +100,7 @@ export default class Index extends wepy.page {
         }
       }
     })
+    
     request.httpGet(api.service.getHomeBannerInfo, {}, (isOk, data) => {
       console.log(data)
       if (data.Code == "200") {
