@@ -17,69 +17,62 @@
         <view class="pos-center-btn">
           <van-button round size="small" type="primary">充值</van-button>
         </view>
-      </view>
-      <view>
-        <view class="middle-contain pos-center-avt">
-          <van-icon name="after-sale" style="margin-right:10rpx" />
-          <text>50佣金</text>
-        </view>
-      </view>
-      <view>
-        <view class="pos-center-btn">
-          <van-button round size="small" type="primary">提现</van-button>
-        </view>
-      </view>
-    </view>
-    <view class="mypage-info-list">
-      <view class="myInfo-list-item">
-        <view class="show-list-item-icon">
-          <image src="./../image/record.png" class="pos-center-avt" />
-        </view>
-        <view class="show-list-item-title" @tap="myTicket">
-          我的课程
-        </view>
-        <view class="show-list-item-guide">
-          <van-icon name="arrow" />
-        </view>
-      </view>
-      <view class="myInfo-list-item">
-        <view class="show-list-item-icon">
-          <image src="./../image/ticket.png" class="pos-center-avt" />
-        </view>
-        <view class="show-list-item-title">
-          我的优惠券
-        </view>
-        <view class="show-list-item-guide">
-          <van-icon name="arrow" />
+
+        <view class="mypage-info-list">
+            <view class="myInfo-list-item">
+                <view class="show-list-item-icon">
+                    <image src="./../image/record.png" class="pos-center-avt" />
+                </view>
+                <view class="show-list-item-title" @tap="toUrl(1)">
+                    我的课程
+                </view>
+                <view class="show-list-item-guide">
+                    <van-icon name="arrow" />
+                </view>
+            </view>
+            <view class="myInfo-list-item">
+                <view class="show-list-item-icon">
+                    <image src="./../image/ticket.png" class="pos-center-avt" />
+                </view>
+                <view class="show-list-item-title" @tap="toUrl(2)">
+                    我的优惠券
+                </view>
+                <view class="show-list-item-guide">
+                    <van-icon name="arrow" />
+                </view>
+            </view>
         </view>
       </view>
     </view>
   </view>
 </template>
 <script>
-import wepy from 'wepy'
-import config from "./../utils/config"
-export default class Index extends wepy.page {
-  config = {
-    navigationBarTitleText: '我的信息',
-  }
+    import wepy from 'wepy'
+    import config from "./../utils/config"
+    export default class Index extends wepy.page {
+        config = {
+            navigationBarTitleText: '我的信息',
+        }
 
-  data = {
-    url: "https://img.qccip.com/Test/%E7%AE%B4%E5%88%9B%E7%AC%AC%E4%B8%80%E8%AF%BE%E7%B2%BE%E9%80%89%20%E6%9D%8E%E5%AF%BC%200301--20%E5%88%86%E9%92%9F.mp4"
-  }
+        data = {
+            url: "https://img.qccip.com/Test/%E7%AE%B4%E5%88%9B%E7%AC%AC%E4%B8%80%E8%AF%BE%E7%B2%BE%E9%80%89%20%E6%9D%8E%E5%AF%BC%200301--20%E5%88%86%E9%92%9F.mp4"
+        }
 
-  onLoad() {
-    console.log("xxxxx", config)
-  }
-  methods = {
-    myTicket() {
-      wepy.navigateTo({
-        url: 'ticket'
-      })
-    }
-  }
+        methods = {
+            toUrl(num){
+                let t = {
+                    1:"ticket",
+                    2:"course"
+                }
+                wepy.navigateTo({
+                    url: t[num]
+                })
+            }
+        }
 
-}
+        onLoad() {
+           console.log("xxxxx",config)
+        }
 
 </script>
 <style lang="less">

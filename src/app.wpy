@@ -1,56 +1,55 @@
 <script>
 import wepy from 'wepy'
 import 'wepy-async-function'
+import db from "./utils/db"
 
-
-export default class extends wepy.app {
-  config = {
-    pages: ['pages/detail','pages/index',
-
-    'pages/test',
-    'pages/order',
-    
-
-
-    'pages/my',
-    'pages/ticket'
-    ],
-    window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
-    },
-    usingComponents: {
-      "van-button": "../components/vant/button/index",
-      "van-card": "../components/vant/card/index",
-      "van-rate": "../components/vant/rate/index",
-      "van-toast": "../components/vant/toast/index",
-      "van-icon": "../components/vant/icon/index",
-      "van-tab": "../components/vant/tab/index",
-      "van-tabs": "../components/vant/tabs/index",
-      "van-field": "../components/vant/field/index"
-    },
-    tabBar: {
-      "color": "#a9b7b7",
-      "selectedColor": "#11cd6e",
-      "backgroundColor": "#ffffff",
-      "list": [{
-        "pagePath": "pages/index",
-        "iconPath": "image/home_tab.png",
-        "selectedIconPath": "image/home_tab_down.png",
-        "text": "首页"
+  export default class extends wepy.app {
+    config = {
+      pages: [
+        'pages/index',
+        'pages/order',
+        'pages/detail',
+        'pages/test',
+        'pages/my',
+        'pages/ticket',
+        'pages/course'
+      ],
+      window: {
+        backgroundTextStyle: 'light',
+        navigationBarBackgroundColor: '#fff',
+        navigationBarTitleText: 'WeChat',
+        navigationBarTextStyle: 'black'
       },
-      {
-        "pagePath": "pages/my",
-        "iconPath": "image/home_tab_wd.png",
-        "selectedIconPath": "image/home_tab_wd_down.png",
-        "text": "我的"
-      }
-      ]
-    },
-  }
-
+      usingComponents: {
+        "van-button": "../components/vant/button/index",
+        "van-card": "../components/vant/card/index",
+        "van-rate": "../components/vant/rate/index",
+        "van-toast": "../components/vant/toast/index",
+        "van-icon": "../components/vant/icon/index",
+        "van-tab": "../components/vant/tab/index",
+        "van-tabs": "../components/vant/tabs/index",
+        "van-field": "../components/vant/field/index"
+      },
+      tabBar: {
+        "color": "#a9b7b7",
+        "selectedColor": "#11cd6e",
+        "backgroundColor": "#ffffff",
+        "list": [
+          {
+            "pagePath": "pages/index",
+            "iconPath": "image/home_tab.png",
+            "selectedIconPath": "image/home_tab_down.png",
+            "text": "首页"
+          },
+          {
+            "pagePath": "pages/my",
+            "iconPath": "image/home_tab_wd.png",
+            "selectedIconPath": "image/home_tab_wd_down.png",
+            "text": "我的"
+          }
+        ]
+      },
+    }
   globalData = {
     userInfo: {}
   }
@@ -62,6 +61,7 @@ export default class extends wepy.app {
 
   onLaunch() {
     this.testAsync()
+    db.Set("token","123321")
   }
 
   sleep(s) {
@@ -93,7 +93,7 @@ export default class extends wepy.app {
 
 </script>
 <style lang="less">
-// 公用全局的样式放置
+// 公用全局的样式放�
 .container {
   height: 100%;
   display: flex;
@@ -109,7 +109,7 @@ export default class extends wepy.app {
 //   height: auto;
 // }
 
-// center 居中的样式
+// center 居中的样�
 .displex-center {
   display: flex;
   justify-content: center;

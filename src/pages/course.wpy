@@ -1,68 +1,23 @@
 <template>
-  <view class="course-page">
-    <view class="course-page-navtab">
-      <van-tabs swipeable>
-        <van-tab title="未使用">
-          <view class="ticket-item-contain">
-            <view>
-              <van-cell-group>
-                <van-field value="{{ sms }}" center clearable label="" placeholder="请输入兑换码" border="{{ true }}" use-button-slot>
-                  <van-button slot="button" size="small" type="primary">确定</van-button>
-                </van-field>
-              </van-cell-group>
-            </view>
-            <!-- <view class="show-no-ticket"> 
-                          <image src="../image/no-record.png" />
-                          <text>暂无记录</text>
-                      </view> -->
-
-                      <view class="show-all-ticket"
-                        wx:for={{ticketList}}
-                        wx:for-index="index" 
-                        wx:for-item="item" 
-                        wx:key="index"
-                      >
-                          <view style="border-radius:10rpx">
-                              <view class="up-ticket">
-                                  <view class="show-money">
-                                      ￥<text>{{item.money}}</text>
-                                  </view>
-                                  <view class="show-ticket-info">
-                                      <view class="ticket-title">{{item.title}}</view>
-                                      <view class="ticket-sub-title">{{item.subtitle}}</view>
-                                  </view>
-                              </view>
-                              <view class="how-to-use">
-                                  <!-- <text data-index="{{index}}" wx:if={{!item.isShowRule}}  @tap="showTicketRule">使用说明</text> -->
-                                  <!-- <van-icon wx:if={{!item.isShowRule}}
-                                    size="22rpx"
-                                    color="#999999"
-                                    name="arrow-down">
-                                  </van-icon> -->
-                                  <!-- <view class="show-hide-text" wx:if={{item.isShowRule}}>
-                                    {{mock.rule}}
-                                    <view @tap="showTicketRule(item)">
-                                        收起
-                                        <van-icon 
-                                            size="22rpx"
-                                            color="#999999"
-                                            name="arrow-up">
-                                        </van-icon>
-                                    </view>
-                                  </view> -->
-                              </view>
-                              <view class="down-ticket">
-                                  <view class="down-ticket-1">
-                                    {{item.time}}
-                                  </view>
-                                  <view class="down-ticket-2">
-                                    <van-button size="mini" round type="primary">去使用</van-button>
-                                  </view>
-                              </view>
-                          </view>
+    <view class="course-page">
+        <view class="course-page-navtab">
+            <van-tabs swipeable>
+                <van-tab title="已购买的课程">
+                  
+                      <view class="contain" wx:for="{{list}}" wx:key="id">
+                        <van-card　@tap="toUrl" thumb-class="picture" custom-class="custom" thumb="{{ item.imageURL }}" thumb-mode="aspectFit">
+                        <view slot="title">
+                            <view class="title">
+                            <van-tag custom-class="tag" type="danger">热门 </van-tag>{{item.title}}
+                            </view>
+                            <view class="subTitle">{{item.subTitle}}</view>
+                            <view class="mintitle">{{item.classCount}}人·{{item.people}}在学</view>
+                            <view class="desc">
+                            查看回放
+                            </view>
+                        </view>
+                        </van-card>
                       </view>
-
-                   </view> 
                 </van-tab>
                 <van-tab title="已使用">
                   <view class="ticket-item-contain-1">
@@ -119,71 +74,18 @@
 
                    </view> 
                 </van-tab>
-                <van-tab title="已失效">
-                  <view class="ticket-item-contain-1">
-                      <!-- <view class="show-no-ticket"> 
-                          <image src="../image/no-record.png" />
-                          <text>暂无记录</text>
-                      </view> -->
-
-                      <view class="show-all-ticket"
-                        wx:for={{ticketList1}}
-                        wx:for-index="index" 
-                        wx:for-item="item" 
-                        wx:key="index"
-                      >
-                          <view style="border-radius:10rpx">
-                              <view class="up-ticket">
-                                  <view class="show-money show-money-1">
-                                      ￥<text>{{item.money}}</text>
-                                  </view>
-                                  <view class="show-ticket-info">
-                                      <view class="ticket-title">{{item.title}}</view>
-                                      <view class="ticket-sub-title">{{item.subtitle}}</view>
-                                  </view>
-                              </view>
-                              <view class="how-to-use">
-                                  <!-- <text data-index="{{index}}" wx:if={{!item.isShowRule}}  @tap="showTicketRule">使用说明</text> -->
-                                  <!-- <van-icon wx:if={{!item.isShowRule}}
-                                    size="22rpx"
-                                    color="#999999"
-                                    name="arrow-down">
-                                  </van-icon> -->
-                                  <!-- <view class="show-hide-text" wx:if={{item.isShowRule}}>
-                                    {{mock.rule}}
-                                    <view @tap="showTicketRule(item)">
-                                        收起
-                                        <van-icon 
-                                            size="22rpx"
-                                            color="#999999"
-                                            name="arrow-up">
-                                        </van-icon>
-                                    </view>
-                                  </view> -->
-                              </view>
-                              <view class="down-ticket">
-                                  <view class="down-ticket-1">
-                                    {{item.time}}
-                                  </view>
-                                  <!-- <view class="down-ticket-2">
-                                    <van-button size="mini" round type="primary">去使用</van-button>
-                                  </view> -->
-                              </view>
-                          </view>
-                      </view>
-                  </view>
-                </van-tab>
             </van-tabs>
         </view>
-  </view>
+    </view>
 </template>
+
 <script>
     import wepy from 'wepy'
     import config from "./../utils/config"
     var rule = "1、使用走秀礼品卡(以下简称礼品卡)只能在走秀网(www.xiu.com)购买产品时使用。购买产品使用的金额及配送费用将从礼品卡中扣除，每笔订单可以使用多张礼品卡，没有使用完的余额将仍然保留在礼品卡中。如果当次消费金额超过礼品卡的金额，不足部份需由顾客使用其它支付方式付清。如果需要记录并查看购买记录，请登录走秀网，在“我的走秀”页面中，选择我的礼品卡，进入我的礼品卡页面进行绑定。如果需要查看礼品卡中的金额，请登录走秀网，在“我的走秀”页面中，选择我的礼品卡，进入我的礼品卡页面进行查看。2、规则a. 礼品卡需要在有效期内使用，过期作废。b. 礼品卡不予兑现，购物金额不足部分以现金补足。c. 礼品卡支付部分不开发票。d. 发生退货时，礼品卡支付部分退回卡内，不予兑现。e. 礼品卡一旦绑定，将只能被绑定账户使用，不能跨账户使用。3、声明走秀网不对礼品卡的丢失和被窃负责。请妥善保管卡号及密码,礼品卡不计名不挂失。如果客户在走秀网使用通过不正当手段获得的礼品卡，走秀网有权利关闭此客户的账户，或要求此客户通过其它方式支付。走秀网保留修改上述条款和条件的权利，所有条款和条件将在法律允许的最大限度内适用。"
     export default class Index extends wepy.page {
         config = {
-            navigationBarTitleText: '我的优惠券',
+            navigationBarTitleText: '我的课程',
         }
         onReady() {
             this.initTicketList();
@@ -192,6 +94,13 @@
             mock: {
                 rule: ""
             },
+            list: [{        id: 1,
+        title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180625/f0ecfcdb6fda4191bc0dd76bdd956e73.jpg"      },
+      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
+      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
+      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
+      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
+      { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" }],
             isShowRule: false,
             ticketList: [{
                 title: "1元视频抵扣券",
@@ -246,8 +155,11 @@
                 i.isShowRule = false
             }
         }
+
+
     }
 </script>
+
 <style lang="less">
     page {
       background: #eee;
@@ -372,8 +284,40 @@
       align-items: center;
     }
 
+    .picture {
+    margin-left: -10px;
+    border-radius: 15px;
+  }
 
-    .space-top{
-      margin-top:50rpx;
-    }
+  .out {
+    border-radius: 15px;
+    background-image: 'https://img.cifnews.com/dev/20180521/91f7d1f55c5e4b6a8642dea53c57546f.jpg';
+  }
+  .title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 140%;
+  }
+  .subTitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 120%;
+    color: #707070;
+  }
+  .mintitle {
+    font-size: 100%;
+    color: #707070;
+  }
+  .desc {
+    font-size: 90%;
+    background-color: #eeeeee;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  .tag {
+    margin-right: 10px;
+  }
 </style>
