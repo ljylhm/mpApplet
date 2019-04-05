@@ -1,78 +1,72 @@
 <template>
   <view>
-      <view class="navtab">
-         <scroll-view scroll-x="true" class="scroll-contain navtab-contain">
-           <view class="navtab-item" @tap="toUrl">免费专区</view>
-           <view class="navtab-item" @tap="toUrl">专栏专区</view>
-           <view class="navtab-item" @tap="toUrl">服务课程</view>
-           <view class="navtab-item" @tap="toUrl">最新课程</view>
-         </scroll-view>
-      </view>
-      <view style="margin-top:60rpx">
-          <swiper class="swiper-card">
-            <block class="swiper-container" wx:for="{{bannerList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
-              <swiper-item class="displex-center" @tap="toUrl1">
-                <view class="swiper-card-item">
-                  <!-- width="355" height="150"  -->
-                  <image src="{{item}}"/>
-                </view>
-              </swiper-item>
-            </block>
-          </swiper>
-      </view> 
-
-      <view>
-        <cardself :title="area1" :size="num1"></cardself>
-      </view>
-      <view>
-        <cardself1 :title="area2" :size="num2"></cardself1>
-      </view>
-      <view>
-        <cardservice></cardservice>
-      </view>
+    <view class="navtab">
+      <scroll-view scroll-x="true" class="scroll-contain navtab-contain">
+        <view class="navtab-item" @tap="toUrl">免费专区</view>
+        <view class="navtab-item" @tap="toUrl">专栏专区</view>
+        <view class="navtab-item" @tap="toUrl">服务课程</view>
+        <view class="navtab-item" @tap="toUrl">最新课程</view>
+      </scroll-view>
+    </view>
+    <view style="margin-top:60rpx">
+      <swiper class="swiper-card">
+        <block class="swiper-container" wx:for="{{bannerList}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+          <swiper-item class="displex-center" @tap="toUrl1">
+            <view class="swiper-card-item">
+              <!-- width="355" height="150"  -->
+              <image src="{{item.ImageUrl}}" />
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <view>
+      <cardself :title="area1" :size="num1"></cardself>
+    </view>
+    <view>
+      <cardself1 :title="area2" :size="num2"></cardself1>
+    </view>
+    <view>
+      <cardservice></cardservice>
+    </view>
   </view>
 </template>
-
 <script>
-  import wepy from 'wepy'
-  import cardself from "../components/card"
-  import cardservice from "../components/cardservice"
-  import http from "./../utils/request"
-  import toast from "./../utils/toast"
-  import config from "./../utils/config"
-  import helper from "./../utils/helper"
+import wepy from 'wepy'
+import cardself from "../components/card"
+import cardservice from "../components/cardservice"
+import http from "./../utils/request"
+import toast from "./../utils/toast"
+import config from "./../utils/config"
+import helper from "./../utils/helper"
+import api from "./../utils/api"
+import request from "./../utils/request"
 
-  export default class Index extends wepy.page {
-    config = {
-      navigationBarTitleText: '首页',
-      "usingComponents": {
-        "van-button": "../components/vant/button/index",
-        "van-card": "../components/vant/card/index",
-        "van-rate": "../components/vant/rate/index",
-        "van-toast": "../components/vant/toast/index"
-      }
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '首页',
+    "usingComponents": {
+      "van-button": "../components/vant/button/index",
+      "van-card": "../components/vant/card/index",
+      "van-rate": "../components/vant/rate/index",
+      "van-toast": "../components/vant/toast/index"
     }
+  }
 
-    components = {
-      cardself: cardself,
-      cardself1: cardself,
-      cardservice: cardservice
-    }
+  components = {
+    cardself: cardself,
+    cardself1: cardself,
+    cardservice: cardservice
+  }
 
-    data = {
-      bannerList: [
-        "http://file.40017.cn/huochepiao/activity/MyPic/banner1.png", "http://file.40017.cn/huochepiao/activity/MyPic/banner2.png", "http://file.40017.cn/huochepiao/activity/MyPic/banner3.png"
-      ],
-      area2: "免费专区",
-      area1: "精品专栏",
-      num1: 4,
-      num2: 2,
-      Appserect: "8e69a523943daff4a253d6a57a7c0cc1"
-    }
-
-    computed = {
-
-    }
+  data = {
+    bannerList: [],
+    area2: "免费专区",
+    area1: "精品专栏",
+    num1: 4,
+    num2: 2,
+    Appserect: "8e69a523943daff4a253d6a57a7c0cc1"
+  }
 
     methods = {
       toUrl() {
@@ -88,98 +82,112 @@
       }
     }
 
-    events = {
-      // 'index-emit': (...args) => {
-      //   let $event = args[args.length - 1]
-      //   console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-      // }
-    }
+  }
 
-    onLoad() {
-      wepy.getUserInfo({
-        success(res) {
-          if (res.userInfo.nickName) {
-            config.globalData = Object.assign({}, config.globalData.userInfo, res.userInfo)
-          }
-        }
+  methods = {
+    toUrl() {
+      wepy.navigateTo({
+        url: 'test'
       })
-
-      wepy.login({
-        success(res) {
-          if (res.code) {
-            http.httpLogin(res.code, function (isOk, data) {
-              config.globalData.openid = data.data.openid
-              console.log(data.data.openid)
-            })
-          } else {
-            console.log("here", res)
-          }
-        },
-        fail() {
-          toast.showToast("获取用户信息失败")
-        }
+    },
+    toUrl1() {
+      wepy.navigateTo({
+        url: 'detail'
       })
-
-      // let self = this
-      // this.$parent.getUserInfo(function (userInfo) {
-      //   if (userInfo) {
-      //     self.userInfo = userInfo
-      //   }
-      //   self.normalTitle = '标题已被修改'
-
-      //   self.setTimeoutTitle = '标题三秒后会被修改'
-      //   setTimeout(() => {
-      //     self.setTimeoutTitle = '到三秒了'
-      //     self.$apply()
-      //   }, 3000)
-
-      //   self.$apply()
-      // })
     }
   }
+
+  events = {
+    // 'index-emit': (...args) => {
+    //   let $event = args[args.length - 1]
+    //   console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+    // }
+  }
+
+  onLoad() {
+    var that = this;
+    wepy.getUserInfo({
+      success(res) {
+        if (res.userInfo.nickName) {
+          config.globalData = Object.assign({}, config.globalData.userInfo, res.userInfo)
+        }
+      }
+    })
+    request.httpGet(api.service.getHomeBannerInfo, {}, (isOk, data) => {
+      console.log(data)
+      if (data.Code == "200") {
+        that.bannerList = data.BannerList;
+        that.$apply();
+      }
+    })
+
+    // let self = this
+    // this.$parent.getUserInfo(function (userInfo) {
+    //   if (userInfo) {
+    //     self.userInfo = userInfo
+    //   }
+    //   self.normalTitle = '标题已被修改'
+
+    //   self.setTimeoutTitle = '标题三秒后会被修改'
+    //   setTimeout(() => {
+    //     self.setTimeoutTitle = '到三秒了'
+    //     self.$apply()
+    //   }, 3000)
+
+    //   self.$apply()
+    // })
+  }
+}
+
 </script>
-
 <style lang="less">
-  page {
-    background: #eee;
-  }
-  .swiper-card {
-    width: 100%;
-    height: 320rpx;
-  }
-  .swiper-container {
-    width: 100%;
-    height: 100%;
-  }
-  .swiper-card-item {
-    width: 95%;
-    height: 300rpx;
-    border-radius: 15rpx;
-    image {
-      width: 100%;
-      height: 100%;
-      border-radius: 15rpx;
-    }
-  }
+page {
+  background: #eee;
+}
 
-  .navtab {
+.swiper-card {
+  width: 100%;
+  height: 320rpx;
+}
+
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-card-item {
+  width: 95%;
+  height: 300rpx;
+  border-radius: 15rpx;
+
+  image {
     width: 100%;
-    position: fixed;
-    z-index: 1000;
-    top: 0%;
-  }
-  .navtab-contain {
-    width: 100%;
-    height: 60rpx;
-    background-color: rgba(255, 255, 255, 1);
-  }
-  .navtab-item {
-    width: 200rpx;
     height: 100%;
-    color: #000;
-    display: inline-block;
-    font-size: 28rpx;
-    text-align: center;
-    line-height: 60rpx;
+    border-radius: 15rpx;
   }
+}
+
+.navtab {
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
+  top: 0%;
+}
+
+.navtab-contain {
+  width: 100%;
+  height: 60rpx;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.navtab-item {
+  width: 200rpx;
+  height: 100%;
+  color: #000;
+  display: inline-block;
+  font-size: 28rpx;
+  text-align: center;
+  line-height: 60rpx;
+}
+
 </style>

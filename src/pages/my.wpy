@@ -1,35 +1,21 @@
 <template>
-    <view>
-        <view class="mypage-info">
-            <view class="mypage-info-image-cover pos-center-avt">
-                <image src="https://wx.qlogo.cn/mmopen/vi_32/HKa7zTMZQPWFKUZqUaxSPgALqwplZpgiaWF8HCFibem0rm1YLybsJPB3zLOk5hNXGEdg7PUvjCHibSMzf5WROVn0A/132"/>
-            </view>
-            <text class="mypage-info-nickname">钧元</text>
+  <view>
+    <view class="mypage-info">
+      <view class="mypage-info-image-cover pos-center-avt">
+        <image src="https://wx.qlogo.cn/mmopen/vi_32/HKa7zTMZQPWFKUZqUaxSPgALqwplZpgiaWF8HCFibem0rm1YLybsJPB3zLOk5hNXGEdg7PUvjCHibSMzf5WROVn0A/132" />
+      </view>
+      <text class="mypage-info-nickname">钧元</text>
+    </view>
+    <view class="mypage-info-middle">
+      <view>
+        <view class="middle-contain pos-center-avt">
+          <van-icon name="balance-o" style="margin-right:10rpx" />
+          <text>50花币</text>
         </view>
-
-        <view class="mypage-info-middle">
-            <view>
-                <view class="middle-contain pos-center-avt">
-                    <van-icon name="balance-o" style="margin-right:10rpx" />
-                    <text>50花币</text>
-                </view>
-            </view>
-            <view>
-                <view class="pos-center-btn">
-                    <van-button round  size="small" type="primary">充值</van-button>
-                </view>
-            </view>
-            <view>
-                <view class="middle-contain pos-center-avt">
-                    <van-icon name="after-sale" style="margin-right:10rpx" />
-                    <text>50佣金</text>
-                </view>
-            </view>
-            <view>
-                <view class="pos-center-btn">
-                    <van-button round  size="small" type="primary">提现</van-button>
-                </view>
-            </view>
+      </view>
+      <view>
+        <view class="pos-center-btn">
+          <van-button round size="small" type="primary">充值</van-button>
         </view>
 
         <view class="mypage-info-list">
@@ -56,9 +42,10 @@
                 </view>
             </view>
         </view>
+      </view>
     </view>
+  </view>
 </template>
-
 <script>
     import wepy from 'wepy'
     import config from "./../utils/config"
@@ -87,112 +74,116 @@
            console.log("xxxxx",config)
         }
 
-    }
 </script>
-
 <style lang="less">
-    page {
-        background: #eee;
-    }
-    .mypage-info{
-        width: 100%;
-        height: 380rpx;
-        background-color: #fff;
-        position: relative;
-    }
-    .mypage-info-image-cover{
-        width: 140rpx;
-        height: 140rpx;
-    }
-    .mypage-info-image-cover image{
-        width: 100%;
-        height: 100%;
-    }
-    .mypage-info-nickname{
-        position: absolute;
-        top: 50%;
-        text-align: center;
-        margin-top: 80rpx;
-        width: 100%;
-    }
+page {
+  background: #eee;
+}
 
-    .mypage-info-middle{
-        width: 100%;
-        height: 120rpx;
-        margin-top:30rpx;
-        display: flex;
-        background-color: #fff
-    }
+.mypage-info {
+  width: 100%;
+  height: 380rpx;
+  background-color: #fff;
+  position: relative;
+}
 
-    .mypage-info-middle > view{
-        flex:1;
-        height: 100%;
-        position: relative;
-    }
+.mypage-info-image-cover {
+  width: 140rpx;
+  height: 140rpx;
+}
+
+.mypage-info-image-cover image {
+  width: 100%;
+  height: 100%;
+}
+
+.mypage-info-nickname {
+  position: absolute;
+  top: 50%;
+  text-align: center;
+  margin-top: 80rpx;
+  width: 100%;
+}
+
+.mypage-info-middle {
+  width: 100%;
+  height: 120rpx;
+  margin-top: 30rpx;
+  display: flex;
+  background-color: #fff
+}
+
+.mypage-info-middle>view {
+  flex: 1;
+  height: 100%;
+  position: relative;
+}
 
 
-    .mypage-info-list{
-        margin-top: 30rpx;
-        background-color: #fff;
-    }
+.mypage-info-list {
+  margin-top: 30rpx;
+  background-color: #fff;
+}
 
-    .myInfo-list-item{
-        width: 100%;
-        height: 120rpx;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-    }
+.myInfo-list-item {
+  width: 100%;
+  height: 120rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
 
-    .show-list-item-icon{
-        position: relative;
-        width: 120rpx;
-        height: 100%;
-    }
+.show-list-item-icon {
+  position: relative;
+  width: 120rpx;
+  height: 100%;
+}
 
-    .show-list-item-icon image{
-        width: 50rpx;
-        height: 50rpx;
-    }
-    .show-list-item-title{
-        width: 570rpx;
-        line-height: 120rpx;
-    }
+.show-list-item-icon image {
+  width: 50rpx;
+  height: 50rpx;
+}
 
-    .show-list-item-guide{
-        margin-top:5rpx;
-        line-height: 120rpx;
-        color: #8a8a8a;
-    }
+.show-list-item-title {
+  width: 570rpx;
+  line-height: 120rpx;
+}
 
-    .middle-contain{
-        width: 100%;
-        text-align: center; 
-        font-size: 34rpx;
-    }
+.show-list-item-guide {
+  margin-top: 5rpx;
+  line-height: 120rpx;
+  color: #8a8a8a;
+}
 
-    .pos-center-avt{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%)
-    }
+.middle-contain {
+  width: 100%;
+  text-align: center;
+  font-size: 34rpx;
+}
 
-    .pos-center-btn{
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%)
-    }
-   
-    // #show-border{
-    //    position: relative;
-    // }
-    // #show-border:after{
-    //     content: "";
-    //     position: absolute;
-    //     top: 5rpx;
-    //     right: 5rpx;
-    //     height: 60rpx;
-    //     border: 1rpx solid #999999; 
-    // }
+.pos-center-avt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
+.pos-center-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%)
+}
+
+// #show-border{
+//    position: relative;
+// }
+// #show-border:after{
+//     content: "";
+//     position: absolute;
+//     top: 5rpx;
+//     right: 5rpx;
+//     height: 60rpx;
+//     border: 1rpx solid #999999; 
+// }
+
 </style>

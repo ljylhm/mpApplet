@@ -1,27 +1,17 @@
 <template>
-    <view class="course-page">
-        <view class="course-page-navtab">
-            <van-tabs swipeable>
-                <van-tab title="未使用">
-                   <view class="ticket-item-contain">
-                      <view>
-                          <van-cell-group>
-                            <van-field
-                               value="{{ sms }}"
-                               center
-                               clearable
-                               label=""
-                               placeholder="请输入兑换码"
-                               border="{{ true }}"
-                               use-button-slot
-                            >
-                            <van-button slot="button" size="small" type="primary">确定</van-button>
-                            </van-field>
-                          </van-cell-group>
-                      </view>
-                      
-
-                      <!-- <view class="show-no-ticket"> 
+  <view class="course-page">
+    <view class="course-page-navtab">
+      <van-tabs swipeable>
+        <van-tab title="未使用">
+          <view class="ticket-item-contain">
+            <view>
+              <van-cell-group>
+                <van-field value="{{ sms }}" center clearable label="" placeholder="请输入兑换码" border="{{ true }}" use-button-slot>
+                  <van-button slot="button" size="small" type="primary">确定</van-button>
+                </van-field>
+              </van-cell-group>
+            </view>
+            <!-- <view class="show-no-ticket"> 
                           <image src="../image/no-record.png" />
                           <text>暂无记录</text>
                       </view> -->
@@ -185,9 +175,8 @@
                 </van-tab>
             </van-tabs>
         </view>
-    </view>
+  </view>
 </template>
-
 <script>
     import wepy from 'wepy'
     import config from "./../utils/config"
@@ -257,11 +246,8 @@
                 i.isShowRule = false
             }
         }
-
-
     }
 </script>
-
 <style lang="less">
     page {
       background: #eee;
