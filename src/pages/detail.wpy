@@ -11,7 +11,7 @@
       <van-tabs bind:click="onClick" swipeable active={{tabActive}}>
         <van-tab title="课程介绍">
           <view>
-            <van-cell title-class="intro-title" label-class="intro-desc" title="{{classInfo.title}}" label="难度：{{classInfo.difficult}} | 时长：{{cclassInfo.classCount}} | 教学类型：{{classInfo.type}} | 人数：{{classInfo.poeple}}" border="{{ true }}" />
+            <van-cell title-class="intro-title" label-class="intro-desc" title="{{collegeDetailEntity.Title}}" label="难度：{{collegeDetailEntity.Level==1?'初级':collegeDetailEntity.Level==1?'中级':'高级'}} |  人数：{{collegeDetailEntity.ViewCount}}" border="{{ true }}" />
           </view>
           <image style="width:100%; height:120rpx" src="{{adurl}}"></image>
           <van-cell title-class="rate-title" title="综合评价" value-class="rate-number" value="10.00"></van-cell>
@@ -150,8 +150,10 @@ export default class test extends wepy.page {
     teachers: [{ name: "阿甘", desc: "职业跨境卖家", content: "古风病女性感部位手绘意境短发背影黑白时尚海边原宿风小清新恩典森系可爱欧美范闺蜜伤感。", icon: "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1122649470,955539824&fm=27&gp=0.jpg" }, { name: "Marty", desc: "资深跨境卖家", content: "古风病女性感部位手绘意境短发背影黑白时尚海边原宿风小清新恩典森系可爱欧美范闺蜜伤感。", icon: "http://img0.imgtn.bdimg.com/it/u=680412173,2594788837&fm=26&gp=0.jpg" }],
     adurl: "https://img.cifnews.com/dev/20190122/f7a59d6b84ca4973afb6dc7f95ce7a5e.png",
     adviceshort: [],
-    advice: []
+    advice: [],
 
+
+    collegeDetailEntity:{}
 
   }
 
@@ -197,13 +199,17 @@ export default class test extends wepy.page {
   }
 
   onLoad(item) {
+    var that=this;
     console.log(item.id);
-    request.httpGet(api.service.getCollageDetail + item.id, {},
+    item.id=1;
+    request.httpGet(api.service.getCollageDetail + "1", {},
       (isOk, data) => {
         console.log(data)
+        that.collegeDetailEntity=data.collegeDetailEntity;
+        that.$apply();
 
       }
-    )
+      )
     /*this.advice = [{
       icon: "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1218485516,264644399&fm=27&gp=0.jpg",
       name: "阿康思密达",

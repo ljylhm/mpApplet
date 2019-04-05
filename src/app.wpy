@@ -5,15 +5,15 @@ import 'wepy-async-function'
 
 export default class extends wepy.app {
   config = {
-    pages: ['pages/index',
+    pages: ['pages/detail','pages/index',
 
-      'pages/test',
-      'pages/order',
-      'pages/detail',
+    'pages/test',
+    'pages/order',
+    
 
 
-      'pages/my',
-      'pages/ticket'
+    'pages/my',
+    'pages/ticket'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -36,17 +36,17 @@ export default class extends wepy.app {
       "selectedColor": "#11cd6e",
       "backgroundColor": "#ffffff",
       "list": [{
-          "pagePath": "pages/index",
-          "iconPath": "image/home_tab.png",
-          "selectedIconPath": "image/home_tab_down.png",
-          "text": "首页"
-        },
-        {
-          "pagePath": "pages/my",
-          "iconPath": "image/home_tab_wd.png",
-          "selectedIconPath": "image/home_tab_wd_down.png",
-          "text": "我的"
-        }
+        "pagePath": "pages/index",
+        "iconPath": "image/home_tab.png",
+        "selectedIconPath": "image/home_tab_down.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/my",
+        "iconPath": "image/home_tab_wd.png",
+        "selectedIconPath": "image/home_tab_wd_down.png",
+        "text": "我的"
+      }
       ]
     },
   }
