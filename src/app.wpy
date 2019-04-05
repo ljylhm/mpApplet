@@ -11,7 +11,8 @@
         'pages/test',
         'pages/index',
         'pages/my',
-        'pages/ticket'
+        'pages/ticket',
+        'pages/course'
       ],
       window: {
         backgroundTextStyle: 'light',

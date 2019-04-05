@@ -76,6 +76,7 @@
 
     methods = {
       toUrl() {
+        console.log("进行到了这里>>")
         wepy.navigateTo({
           url: 'test'
         })
