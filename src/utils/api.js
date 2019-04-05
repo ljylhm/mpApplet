@@ -21,11 +21,11 @@ var api = {
 
     getHomeBannerInfo: `${host}/api/v1/home/GetHomeBannerInfo`,
 
-    addTopics: `${host}/addTopics`,
+    createOrder: `${host}/api/v1/wechat/WechatCreateOrder`,
 
-    postdelete: `${host}/postdelete`,
+    saveRecharge: `${host}/api/v1/recharge/SaveRecharge`,
 
-    addpost: `${host}/addpost`,
+    getCollageList: `${host}/api/v1/college/GetCollageList`,
 
     topicdetail: `${host}/topicdetail`,
 

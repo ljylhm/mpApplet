@@ -4,7 +4,7 @@
       <video 
       class="image-all" 
       wx:if="{{videourl}}" 
-      custom-cache=“{{false}}�
+      custom-cache="{{false}}"
       src="{{videourl}}"
       enable-play-gesture
       auto-pause-if-open-native
@@ -14,348 +14,349 @@
       show-progress
       bindplay="playVideo"
       bindwaiting="waitVideo">
-       <cover-view class="video-control">
-         123
-       </cover-view>
-      </video>
-    </view>
-    <view>
-      <image wx:if="{{showBanner}}" class="image-all" src="https://img.cifnews.com/dev/20181130/13623e47b3fe4b2fbce724507a52bce0.jpg" mode="scaleToFill"></image>
-    </view>
-    <view>
-      <van-tabs bind:click="onClick" swipeable active={{tabActive}}>
-        <van-tab title="课程介绍">
-          <view>
-            <van-cell title-class="intro-title" label-class="intro-desc" title="{{collegeDetailEntity.Title}}" label="难度：{{collegeDetailEntity.Level==1?'初级':collegeDetailEntity.Level==1?'中级':'高级'}} |  人数：{{collegeDetailEntity.ViewCount}}" border="{{ true }}" />
-          </view>
-          <image style="width:100%; height:120rpx" src="{{adurl}}"/>
-          <van-cell title-class="rate-title" title="综合评价" value-class="rate-number" value="10.00"></van-cell>
-          <van-cell-group border="{{ false }}">
-            <view wx:for="{{adviceshort}}" wx:key="name" wx:for-item="item">
-              <van-cell border="{{ false }}">
-                <view slot="icon">
-                  <image class="advice-icon" src="{{item.icon}}"/>
-                </view>
-                <view slot="title">
-                  <view>{{item.name}} </view>
-                  <view><text class="rate-font">评分�/text>
-                    <van-rate value="{{ item.rate }}" size=14 count=5 readonly></van-rate>
-                  </view>
-                  <view>{{item.content}}</view>
-                </view>
-              </van-cell>
-            </view>
-          </van-cell-group>
-          <view class="see-rate" @tap="seerate">查看全部评价({{advice.length}})</view>
-          <van-cell title-class="rate-title" title="课程讲师"></van-cell>
-          <van-cell-group>
-            <view wx:for="{{teachers}}" wx:key="name" wx:for-item="item">
-              <van-cell>
-                <view slot="icon">
-                  <image class="teacher-icon" src="{{item.icon}}"/>
-                </view>
-                <view slot="title">
-                  <view>{{item.name}} </view>
-                  <view class="teacher-desc">{{item.desc}}</view>
-                  <br />
-                  <view>{{item.content}}</view>
-                </view>
-              </van-cell>
-            </view>
-          </van-cell-group>
-          <van-cell custom-class="class-contain" title-class="rate-title" border="{{ false }}" title="课程内容"></van-cell>
+      <cover-view class="video-control">
+       123
+     </cover-view>
+   </video>
+ </view>
+ <view>
+  <image wx:if="{{showBanner}}" class="image-all" src="{{collegeDetailEntity.SmallImageUrl}}" mode="scaleToFill"></image>
+</view>
+<view>
+  <van-tabs bind:click="onClick" swipeable active={{tabActive}}>
+    <van-tab title="课程介绍">
+      <view>
+        <van-cell title-class="intro-title" label-class="intro-desc" title="{{collegeDetailEntity.Title}}" label="难度：{{collegeDetailEntity.Level==0?'初级':collegeDetailEntity.Level==1?'中级':'高级'}} |  人数：{{collegeDetailEntity.ViewCount}}" border="{{ true }}" />
+      </view>
+      <image style="width:100%; height:120rpx" src="{{adurl}}"/>
+      <van-cell title-class="rate-title" title="综合评价" value-class="rate-number" value="10.00"></van-cell>
+      <van-cell-group border="{{ false }}">
+        <view wx:for="{{adviceshort}}" wx:key="name" wx:for-item="item">
           <van-cell border="{{ false }}">
+            <view slot="icon">
+              <image class="advice-icon" src="{{item.LogoUrl}}"/>
+            </view>
             <view slot="title">
-              <view> 已购买此课程的同学可以直接观看学�/view>
-              <image class="image-all" src="https://img.cifnews.com/dev/20190305/07470fdecd2b4e34ae8124be384002cd.jpg"></image>
+              <view>{{item.UserName}} </view>
+              <view><text class="rate-font">评分</text></view>
+              <van-rate value="{{ item.Scroe }}" size=14 count=5 readonly></van-rate>
+              <view>{{item.Content}}</view>
             </view>
-          </van-cell>
-        </van-tab>
-        <van-tab title="课程目录">
-          <scroll-view scroll-y="true" style="height: 800rpx;">
-            <view Slot="Tab">
-              <view wx:for="{{list}}" wx:key="id" wx:for-item="item">
-                <van-panel data-item="{{item}}" @tap="clickitem">
-                  <view slot="header" class="detail-item">
-                    <image class="detail_header_img" src="../image/video.png"></image>
-                    <view class="detail_header_title">{{item.title}}</view>
-                    <view class="detail_header_status">开课中</view>
-                    <view class="detail_header_time">时长:{{item.time}}</view>
-                  </view>
-                </van-panel>
-              </view>
-            </view>
-          </scroll-view>
-        </van-tab>
-        <van-tab title="评价">
-          <view class="intro_contain">
-            <van-cell title-class="rate-title" title="综合评价" value-class="rate-number" value="10.00"></van-cell>
-            <van-cell-group border="{{ false }}">
-              <view wx:for="{{advice}}" wx:key="name" wx:for-item="item">
-                <van-cell border="{{ false }}">
-                  <view slot="icon">
-                    <image class="advice-icon" src="{{item.icon}}"></image>
-                  </view>
-                  <view slot="title">
-                    <view>{{item.name}} </view>
-                    <view><text class="rate-font">评分�/text>
-                      <van-rate value="{{ item.rate }}" size=14 count=5 readonly></van-rate>
-                    </view>
-                    <view>{{item.content}}</view>
-                  </view>
-                </van-cell>
-              </view>
-            </van-cell-group>
           </view>
-        </van-tab>
-      </van-tabs>
-    </view>
-    <van-toast id="van-toast" />
-    <van-goods-action>
-      <van-goods-action-icon icon="chat-o" text="客服" bind:click="onClickIcon" />
-      <van-goods-action-button text="分享赚佣� type="warning" bind:click="share" />
-      <van-goods-action-button text="立即购买" bind:click="buy" />
-    </van-goods-action>
+        </van-cell>
+      </view>
+    </van-cell-group>
+    <view class="see-rate" @tap="seerate">查看全部评价({{collegeDetailEntity.collageEvaluateEntities.length}})</view>
+    <van-cell title-class="rate-title" title="课程讲师"></van-cell>
+    <van-cell-group>
+      <view wx:for="{{collegeDetailEntity.teacherInfoEntity}}" wx:key="name" wx:for-item="item">
+        <van-cell>
+          <view slot="icon">
+            <image class="teacher-icon" src="{{item.LogoUrl}}"/>
+          </view>
+          <view slot="title">
+            <view>{{item.Name}} </view>
+            <view class="teacher-desc">{{item.Title}}</view>
+            <br />
+            <view>{{item.Tags}}</view>
+          </view>
+        </van-cell>
+      </view>
+    </van-cell-group>
+    <van-cell custom-class="class-contain" title-class="rate-title" border="{{ false }}" title="课程内容"></van-cell>
+    <van-cell border="{{ false }}">
+      <view slot="title">
+        <wxparser rich-text="{{collegeDetailEntity.CollageContent}}"></wxparser>
+      </view>
+    </van-cell>
+  </van-tab>
+  <van-tab title="课程目录">
+    <scroll-view scroll-y="true" style="height: 800rpx;">
+      <view Slot="Tab">
+        <view wx:for="{{collegeDetailEntity.collageClassEntities}}" wx:key="id" wx:for-item="item">
+          <van-panel >
+            <view data-item="{{item}}" @tap="clickitem" slot="header" class="detail-item">
+              <image class="detail_header_img" src="../image/video.png"></image>
+              <view class="detail_header_title">{{item.ClassName}}</view>
+              <view class="detail_header_time">时长:{{item.ClassTimeLong}}</view>
+            </view>
+          </van-panel>
+        </view>
+      </view>
+    </scroll-view>
+  </van-tab>
+  <van-tab title="评价">
+    <view class="intro_contain">
+      <van-cell title-class="rate-title" title="综合评价" value-class="rate-number" value="10.00"></van-cell>
+      <van-cell-group border="{{ false }}">
+        <view wx:for="{{collegeDetailEntity.collageEvaluateEntities}}" wx:key="name" wx:for-item="item">
+          <van-cell border="{{ false }}">
+            <view slot="icon">
+              <image class="advice-icon" src="{{item.LogoUrl}}"></image>
+            </view>
+            <view slot="title">
+              <view>{{item.UserName}} </view>
+              <view><text class="rate-font">评分</text></view>
+              <van-rate value="{{ item.Scroe }}" size=14 count=5 readonly></van-rate>
+              <view>{{item.Content}}</view>
+            </view>
+
+          </view>
+        </van-cell>
+      </view>
+    </van-cell-group>
   </view>
+</van-tab>
+</van-tabs>
+</view>
+<van-toast id="van-toast" />
+<van-goods-action>
+  <van-goods-action-icon icon="chat-o" text="客服" bind:click="onClickIcon" />
+  <van-goods-action-button text="分享赚佣" type="warning" bind:click="share" />
+  <van-goods-action-button text="立即购买" bind:click="buy" />
+</van-goods-action>
+</view>
 </template>
 <script>
 import wepy from 'wepy'
 import goodsItem from '../components/goodsItem'
-import List from '../components/list' // aliasFields example
-import classlist from '../components/classlist'
-import Toast from '../components/vant/toast/toast'
-import request from '../utils/request'
-import api from '../utils/api'
+  import List from '../components/list' // aliasFields example
+  import classlist from '../components/classlist'
+  import Toast from '../components/vant/toast/toast'
+  import request from '../utils/request'
+  import api from '../utils/api'
+  import db from '../utils/db'
 
-
-export default class test extends wepy.page {
-  config = {
-    navigationBarTitleText: '雨课详情',
-    usingComponents: {
-      "van-tab": "../components/vant/tab/index",
-      "van-tabs": "../components/vant/tabs/index",
-      "van-panel": "../components/vant/panel/index",
-      "van-cell": "../components/vant/cell/index",
-      "van-cell-group": "../components/vant/cell-group/index",
-      "van-rate": "../components/vant/rate/index",
-      "van-goods-action": "../components/vant/goods-action/index",
-      "van-goods-action-icon": "../components/vant/goods-action-icon/index",
-      "van-goods-action-button": "../components/vant/goods-action-button/index",
-      "van-toast": "../components/vant/toast/index"
+  export default class test extends wepy.page {
+    config = {
+      navigationBarTitleText: '雨课详情',
+      usingComponents: {
+        "van-tab": "../components/vant/tab/index",
+        "van-tabs": "../components/vant/tabs/index",
+        "van-panel": "../components/vant/panel/index",
+        "van-cell": "../components/vant/cell/index",
+        "van-cell-group": "../components/vant/cell-group/index",
+        "van-rate": "../components/vant/rate/index",
+        "van-goods-action": "../components/vant/goods-action/index",
+        "van-goods-action-icon": "../components/vant/goods-action-icon/index",
+        "van-goods-action-button": "../components/vant/goods-action-button/index",
+        "van-toast": "../components/vant/toast/index",
+        "wxparser":"plugin://wxparserPlugin/wxparser"
+        
+      }
     }
-  }
-  components = {
-    goodsItem: goodsItem,
-  }
+    components = {
+      goodsItem: goodsItem,
+    }
 
 
 
     data = {
-      tabActive: 0,
-      list: [
-        { "title": "第一�Coupons定义及作用Coupons定义及作用Coupons定义及作用Coupons定义及作�, 
-        "time": "26.08", 
-        "video": "https://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400.mp4" }, { "title": "第一�Coupons定义及作�, "time": "26.08" }, { "title": "第一�Coupons定义及作�, "time": "26.08", "video": "https://img.qccip.com/WeChat_20190319195319.mp4" }, { "title": "第一�Coupons定义及作�, "time": "26.08" }, { "title": "第一�Coupons定义及作�, "time": "26.08" }, { "title": "第一�Coupons定义及作�, "time": "26.08" }, { "title": "第一�Coupons定义及作�, "time": "26.08" }, { "title": "第一�Coupons定义及作�, "time": "26.08" }, { "title": "第一�Coupons定义及作�, "time": "26.08" }, { "title": "第一�Coupons定义及作�, "time": "26.08" }],
-      videourl: "",
-      showBanner: true,
-      classInfo: {
-        title: "降低ACOS之广告高阶攻略战",
-        difficult: "高级",
-        classCount: 6,
-        type: "录播",
-        poeple: 1102
+
+
+      tabActive:0,
+      collegeDetailEntity:{},
+      showBanner:true,
+      adviceshort:[],
+      adurl:"https://img.cifnews.com/dev/20190122/f7a59d6b84ca4973afb6dc7f95ce7a5e.png",
+      videourl:""
+
+    }
+
+    computed = {
+      now() {
+        return +new Date()
+      }
+    }
+
+    methods = {
+      clickitem(e) {
+
+        console.log(e.currentTarget.dataset.item);
+        let item= e.currentTarget.dataset.item
+        if (item.VadioUrl !== "") {
+          this.videourl = item.VadioUrl;
+          this.showBanner = false;
+          wx.setKeepScreenOn({
+            keepScreenOn: true
+          })
+        }
+        /*if(item.IsFree==1){
+          //直接观看
+
+        }else{
+           //收费
+           if(item.IsFreeForVip==1){
+
+            //vip免费
+          }else{
+            //必须收费
+          }
+        }*/
+        
       },
-      teachers: [{ name: "阿甘", desc: "职业跨境卖家", content: "古风病女性感部位手绘意境短发背影黑白时尚海边原宿风小清新恩典森系可爱欧美范闺蜜伤感�, icon: "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1122649470,955539824&fm=27&gp=0.jpg" }, { name: "Marty", desc: "资深跨境卖家", content: "古风病女性感部位手绘意境短发背影黑白时尚海边原宿风小清新恩典森系可爱欧美范闺蜜伤感�, icon: "http://img0.imgtn.bdimg.com/it/u=680412173,2594788837&fm=26&gp=0.jpg" }],
-      adurl: "https://img.cifnews.com/dev/20190122/f7a59d6b84ca4973afb6dc7f95ce7a5e.png",
-      adviceshort: [],
-      advice: []
-
-
-    collegeDetailEntity:{}
-
-  }
-
-  computed = {
-    now() {
-      return +new Date()
-    }
-  }
-
-  methods = {
-    clickitem(e) {
-      var item = e.currentTarget.dataset.item;
-      console.log(item)
-      if (item.video !== "") {
-        this.videourl = item.video;
-        this.showBanner = false;
-      }
-    },
-    onClick(e) {
-      console.log(e);
-      this.tabActive = e.detail.index;
-    },
-    seerate() {
-      console.log("查看");
-      this.tabActive = 2
-    },
-    buy() {
-      wepy.navigateTo({
-        url: 'order'
-      })
-    },
-    share() {
-      Toast('点击分享')
-
-    }
-  }
-
-  events = {
-    'index-emit': (...args) => {
-      let $event = args[args.length - 1]
-      console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-    }
-  }
-
-  onLoad(item) {
-    var that=this;
-    console.log(item.id);
-    item.id=1;
-    request.httpGet(api.service.getCollageDetail + "1", {},
-      (isOk, data) => {
-        console.log(data)
-        that.collegeDetailEntity=data.collegeDetailEntity;
-        that.$apply();
+      onClick(e) {
+        this.tabActive = e.detail.index;
+      },
+      seerate() {
+        console.log("查看");
+        this.tabActive = 2
+      },
+      buy() {
+        wepy.navigateTo({
+          url: 'order'
+        })
+      },
+      share() {
+        Toast('点击分享')
 
       }
-      )
-    /*this.advice = [{
-      icon: "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1218485516,264644399&fm=27&gp=0.jpg",
-      name: "阿康思密�,
-      rate: 4,
-      content: "看了有一种变成高级运营的感觉哈哈哈哈哈哈"
-    }, {
-      icon: "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2796651835,2041654306&fm=27&gp=0.jpg",
-      name: "旧港凉薄",
-      rate: 3,
-      content: "很棒随时随地学习"
-    }];
-    this.adviceshort = this.advice.slice(0, 1);
-    console.log(this.adviceshort);*/
+    }
+
+    events = {
+      /*'index-emit': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      }*/
+    }
+
+    onLoad(item) {
+      var that=this;
+      console.log(item.id);
+      item.id=1;
+      console.log(db.Get("token")) 
+      request.httpGetJY(api.service.getCollageDetail + "1", {},
+        (isOk, data) => {
+          console.log(data)
+          that.collegeDetailEntity=data.Data;
+          let e=data.Data.teacherInfoEntity;
+          that.collegeDetailEntity.teacherInfoEntity=[data.Data.teacherInfoEntity];
+
+          if(that.collegeDetailEntity.collageEvaluateEntities.length>2){
+            that.adviceshort = data.Data.collageEvaluateEntities.slice(0, 1);
+          }else{
+            this.adviceshort =data.Data.collageEvaluateEntities;
+          }
+          that.$apply();
+        })
+      console.log(this.adviceshort);
+      console.log(this.$parent.globalData)  ;
+
+    }
   }
-}
 
-</script>
-<style lang="css">
-.detail_header_img {
-  width: 40rpx;
-  height: 40rpx;
-  padding: 35rpx 10rpx 0rpx 20rpx;
-  float: left;
-}
+  </script>
+  <style lang="css">
+  .detail_header_img {
+    width: 40rpx;
+    height: 40rpx;
+    padding: 35rpx 10rpx 0rpx 20rpx;
+    float: left;
+  }
 
-.detail_header_title {
-  max-width: 500rpx;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  float: center;
-  padding: 30rpx 10rpx;
-  font-size: 100%;
-  width: 400rpx;
-}
+  .detail_header_title {
+    max-width: 500rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float: center;
+    padding: 30rpx 10rpx;
+    font-size: 100%;
+    width: 400rpx;
+  }
 
-.detail-item {
-  position: relative;
-}
+  .detail-item {
+    position: relative;
+  }
 
-.detail_header_time {
-  font-size: 80%;
-  color: #707070;
-  padding: 10rpx 60rpx;
-}
+  .detail_header_time {
+    font-size: 80%;
+    color: #707070;
+    padding: 10rpx 60rpx;
+  }
 
-.detail_header_status {
-  position: absolute;
-  font-size: 80%;
-  right: 20rpx;
-  top: 35rpx;
-  color: #ff0000;
-}
+  .detail_header_status {
+    position: absolute;
+    font-size: 80%;
+    right: 20rpx;
+    top: 35rpx;
+    color: #ff0000;
+  }
 
-.intro_contain {
-  padding-left: 30rpx;
-  padding-right: 30rpx;
-}
+  .intro_contain {
+    padding-left: 30rpx;
+    padding-right: 30rpx;
+  }
 
-.intro-title {
-  font-weight: bold;
-  font-size: 150%;
-  padding-left: -20rpx;
-  padding-top: 15rpx;
-  padding-bottom: 10rpx;
-}
+  .intro-title {
+    font-weight: bold;
+    font-size: 150%;
+    padding-left: -20rpx;
+    padding-top: 15rpx;
+    padding-bottom: 10rpx;
+  }
 
-.intro-desc {
-  padding-top: 30rpx;
-  padding-left: 15rpx;
-  font-size: 80%;
-  color: #707070;
-  font-weight: lighter;
-}
+  .intro-desc {
+    padding-top: 30rpx;
+    padding-left: 15rpx;
+    font-size: 80%;
+    color: #707070;
+    font-weight: lighter;
+  }
 
-.advice-icon {
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: 40rpx;
-  margin-top: 10rpx;
-  margin-right: 10rpx;
-}
+  .advice-icon {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 40rpx;
+    margin-top: 10rpx;
+    margin-right: 10rpx;
+  }
 
-.rate-font {
-  float: left;
-  font-size: 80%;
-  color: #707070;
-}
+  .rate-font {
+    float: left;
+    font-size: 80%;
+    color: #707070;
+  }
 
-.see-rate {
-  /*margin: 0px 33%;*/
-  text-align: center;
-  /* bottom: 40rpx;*/
-  background-color: #ffffff;
-  color: #ff6600;
-  font-size: 90%;
-  margin-bottom: 20rpx;
-}
+  .see-rate {
+    /*margin: 0px 33%;*/
+    text-align: center;
+    /* bottom: 40rpx;*/
+    background-color: #ffffff;
+    color: #ff6600;
+    font-size: 90%;
+    margin-bottom: 20rpx;
+  }
 
-.rate-number {
-  color: #ff6600;
-  font-weight: bold;
-}
+  .rate-number {
+    color: #ff6600;
+    font-weight: bold;
+  }
 
-.rate-title {
-  font-weight: bold;
-}
+  .rate-title {
+    font-weight: bold;
+  }
 
-.teacher-icon {
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 50rpx;
-  margin-top: 10rpx;
-  margin-right: 10rpx;
-}
+  .teacher-icon {
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50rpx;
+    margin-top: 10rpx;
+    margin-right: 10rpx;
+  }
 
-.teacher-desc {
-  font-size: 80%;
-  color: #707070;
-}
+  .teacher-desc {
+    font-size: 80%;
+    color: #707070;
+  }
 
-.class-contain {
-  margin-top: 20rpx;
-}
+  .class-contain {
+    margin-top: 20rpx;
+  }
 
-.image-all {
-  width: 100%;
-  height: 400rpx;
-}
+  .image-all {
+    width: 100%;
+    height: 400rpx;
+  }
 
-</style>
+  </style>

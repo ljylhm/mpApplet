@@ -109,6 +109,8 @@ export default class Index extends wepy.page {
       }
     })
 
+    console.log(this.$parent())  ;
+
     // let self = this
     // this.$parent.getUserInfo(function (userInfo) {
     //   if (userInfo) {

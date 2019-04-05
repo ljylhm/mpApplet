@@ -2,6 +2,7 @@ import wepy from "wepy"
 import verify from "./verify"
 import db from "./db"
 import helper from "./helper"
+import toast from "./toast"
 import api from "./api"
 
 const baseInfo = {
@@ -15,7 +16,8 @@ let defineOpts = {
   loadMessage: "加载中..."
 }
 
-const AUTH_URL = api.getOpenid
+const AUTH_URL = api.service.getOpenid
+const GET_OPENID_GUID = "23a9f532-9725-40df-96df-84b52d14cdf3"
 
 const request = {
   http(method, url, data, cb, opts = {}) {
@@ -45,29 +47,28 @@ const request = {
       }
     })
   },
-  httpLogin(url, data, cb, opts = {}){
-    // 校验登录状态
+  httpLogin(method,url,data, cb, opts = {}){ // 校验登录状态
+
     if(!db.Get('token')){
-      helper.toOtherPage("auth",{
-
-      })
-    }else{
-
-    }
-
-    let fn = function(data){ // 获取状态后的回调
-      cb && cb()
-    }
-    this.http(AUTH_URL,data,cb,opts = {
-      header:{
-        'Authorization': db.Get('token') || ""
+      // 没有拿到token 获取用户信息
+      this.httpGetOpenid(fn) 
+    }else { // 获取之后的回调函数
+      if(!cb) cb = function(){}
+      if(!db.Get('token')){ // 容错提醒
+        toast.showToast("服务器开小差，请退出小程序重试~")
+      }else{
+        this.http(method,url,data,cb,opts = {
+          header:{
+            'Token': db.Get('token') || ""
+          }
+        })
       }
-    })
+    }
   },
-  httpGetJY(){
+  httpGetJY(url, data, cb, opts = {}){
     this.httpLogin("GET", url, data, cb, opts)
   },
-  httpPostJY(){
+  httpPostJY(url, data, cb, opts = {}){
     this.httpLogin("POST", url, data, cb, opts)
   },
   httpGet(url, data, cb, opts = {}) {
@@ -79,18 +80,24 @@ const request = {
 
   httpGetOpenid (cb){ // 获取openid&&token的方法
     let that = this
-    wepy.login().then(res=>{
-      console.log("进入到login的阶段")
-      if (res.code) {
-        that.httpGet(AUTH_URL,{
-          code:res.code
-        },function(){
-          db.Set("token","")
-          cb && cb()
-        })
+    wepy.login({
+      success(res) {
+        if (res.code) {
+          console.log("res.code",res)
+          // that.httpGet(AUTH_URL+res.code,{},function(data){
+          //   console.log("进入到login的阶段",data)
+          //   db.Set("token","")
+          //   cb && cb()
+          // },{
+          //   header:{
+          //     "Token":GET_OPENID_GUID
+          //   }
+          // })
+        }
+      },
+      fail(){
+        console.log("发生了一点错误的信息")
       }
-    }).error(e=>{
-      console.log("请求发生了一点错误...")
     })
   }
 

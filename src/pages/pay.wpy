@@ -1,0 +1,71 @@
+<template>
+  <view>充值</view>
+</template>
+<script>
+import wepy from 'wepy'
+import goodsItem from '../components/goodsItem'
+import List from '../components/list' // aliasFields example
+import helper from '../utils/helper'
+import api from '../utils/api'
+import request from '../utils/request'
+export default class pay extends wepy.page {
+  config = {
+    navigationBarTitleText: '充值',
+    usingComponents: {
+      "van-button": "../components/vant/button/index",
+      "van-card": "../components/vant/card/index",
+      "van-rate": "../components/vant/rate/index",
+      "van-tag": "../components/vant/tag/index"
+    }
+  }
+  components = {
+  }
+
+
+
+  data = {
+
+  }
+
+  computed = {
+    now() {
+      return +new Date()
+    }
+  }
+
+  methods = {
+
+  }
+
+  onLoad() {
+    wx.login({
+      success: function (data) {
+        console.log(data)
+      }
+    });
+    request.httpPostJY(api.service.saveRecharge,{
+      userId: 1,
+      amount: 200
+    },(isOk,data)=>{
+      console.log(data)
+    })
+    
+/*    request.httpPostJY(api.service.createOrder,{out_trade_no:"111",recharge_id:"111",openid:"oO1hH4-y4R27m39IVhUQOzoXsln4"},(isOk,data)=>{
+      console.log(data)
+    })
+    */
+    wx.requestPayment({
+      timeStamp: Date.now().toString(),
+      nonceStr: 'aaa',
+      package: "5K8264ILTKCH16CQ2502SI8ZNMTM67VS",
+      signType: 'MD5',
+      paySign: 'aaaaa',
+      success(res) { },
+      fail(res) { }
+    })
+  }
+}
+
+</script>
+<style lang="less">
+</style>
