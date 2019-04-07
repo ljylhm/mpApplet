@@ -101,15 +101,21 @@ export default class Index extends wepy.page {
       }
     })
     
-    request.httpGet(api.service.getHomeBannerInfo, {}, (isOk, data) => {
+    request.httpGetJY(api.service.getHomeBannerInfo, {}, (isOk, data) => {
       console.log(data)
       if (data.Code == "200") {
-        that.bannerList = data.BannerList;
+        that.bannerList = data.Data;
         that.$apply();
       }
     })
 
-    console.log(this.$parent())  ;
+    request.httpPostJY(api.service.getCollageCategoryList, {}, (isOk, data) => {
+      console.log(data)
+      if (data.Code == "200") {
+       // that.bannerList = data.BannerList;
+        //that.$apply();
+      }
+    })
 
     // let self = this
     // this.$parent.getUserInfo(function (userInfo) {

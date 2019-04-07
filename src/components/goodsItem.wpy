@@ -55,6 +55,7 @@
 <script>
 import wepy from 'wepy'
 import request from '../utils/request'
+import api from '../utils/api'
 
 export default class goodsItem extends wepy.component {
   data = {
@@ -103,15 +104,18 @@ export default class goodsItem extends wepy.component {
 
   onLoad() {
 
-    {
-      "CategoryId": 1,
-      "TeacherName": "sample string 2",
-      "CollageName": "sample string 3",
-      "PageSiz": 4,
-      "PageIndex": 5,
-      "OpenId": "sample string 6"
-    }
-  }
+   request.httpPostJY(api.service.getCollageList,{
+    "CategoryId": 0,
+    "TeacherName": "",
+    "CollageName": "",
+    "PageSiz": 4,
+    "PageIndex": 5,
+    "OpenId": ""
+  },(isOk,data)=>{
+    console.log(data)
+  })
+
+ }
 }
 
 </script>
