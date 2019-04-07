@@ -1,5 +1,6 @@
 <template>
   <view>
+    
     <view class="navtab">
       <scroll-view scroll-x="true" class="scroll-contain navtab-contain">
         <view class="navtab-item" @tap="toUrl">免费专区</view>
@@ -8,6 +9,7 @@
         <view class="navtab-item" @tap="toUrl">最新课程</view>
       </scroll-view>
     </view>
+    
     <view style="margin-top:60rpx">
       <swiper class="swiper-card">
         <block class="swiper-container" wx:for="{{bannerList}}" wx:for-index="index" wx:for-item="item" wx:key="id">
@@ -81,6 +83,11 @@ export default class Index extends wepy.page {
       wepy.navigateTo({
         url: 'detail'
       })
+    },
+    test1(){
+      helper.toOtherPage("redirect",{
+        route:"index"
+      })
     }
   }
 
@@ -93,19 +100,18 @@ export default class Index extends wepy.page {
 
   onLoad() {
     var that = this;
-    wepy.getUserInfo({
-      success(res) {
-        if (res.userInfo.nickName) {
-          config.globalData = Object.assign({}, config.globalData.userInfo, res.userInfo)
-        }
-      }
-    })
+    console.log("进入了index")
     
-    request.httpGet(api.service.getHomeBannerInfo, {}, (isOk, data) => {
-      console.log(data)
-      if (data.Code == "200") {
-        that.bannerList = data.BannerList;
-        that.$apply();
+    request.httpGetOpenid(function(data){
+      console.log("data",data);
+    })
+
+    request.httpGetJY(api.service.getHomeBannerInfo, {}, (isOk, data) => {
+      let result = data.data;
+      if (result.Code == "200") {
+        console.log("xxxxsssss",result.Data)
+        that.bannerList = result.Data;
+        that.$apply()
       }
     })
 

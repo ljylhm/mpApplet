@@ -2,17 +2,20 @@
 import wepy from 'wepy'
 import 'wepy-async-function'
 import db from "./utils/db"
+import config from "./utils/config"
+import helper from './utils/helper';
 
   export default class extends wepy.app {
     config = {
       pages: [
-        'pages/index',
+        'pages/index',        
         'pages/order',
         'pages/detail',
         'pages/test',
         'pages/my',
         'pages/ticket',
-        'pages/course'
+        'pages/course',
+        'pages/redirect',
       ],
       window: {
         backgroundTextStyle: 'light',
@@ -28,7 +31,9 @@ import db from "./utils/db"
         "van-icon": "../components/vant/icon/index",
         "van-tab": "../components/vant/tab/index",
         "van-tabs": "../components/vant/tabs/index",
-        "van-field": "../components/vant/field/index"
+        "van-field": "../components/vant/field/index",
+        "van-dialog":"../components/vant/dialog/index",
+        "van-popup": "../components/vant/popup/index"
       },
       tabBar: {
         "color": "#a9b7b7",
@@ -61,6 +66,28 @@ import db from "./utils/db"
 
   onLaunch() {
     this.testAsync()
+    console.log("ssssssssssssssssssssssss")
+    var that = this
+    helper.checkAuth("userInfo",function(isOk,data){
+      if(!isOk) {
+        helper.toOtherPage("redirect")
+      }else{
+        wx.getUserInfo({
+          success(res){
+            let data = res.userInfo
+            that.globalData.userInfo = data
+            console.log("这里>>")
+            helper.toOtherPage("index")
+            // that.imgurl = data.avatarUrl
+            // that.nickname = data.nickName
+            // that.$apply()
+          },
+          fail(){
+            // helper.toOtherPage("index")
+          }
+        })
+      }
+    })
     db.Set("token","123321")
   }
 

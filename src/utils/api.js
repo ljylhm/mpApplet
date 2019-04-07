@@ -15,7 +15,9 @@ var api = {
 
     login: `${host}/api/v1/user/login`,
 
-    getOpenid: `${host}/api/v1/wechat/GetOpenId`,
+    registe:`${host}/api/v1/user/regist`,
+    
+    getOpenid: `${host}/api/v1/wechat/GetOpenId/`,
 
     getCollageDetail: `${host}/api/v1/college/GetCollageDetail/`,
 

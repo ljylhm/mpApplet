@@ -1,4 +1,5 @@
 import wepy from "wepy"
+import verify from "./verify"
 const helper = {
     // 默认是取得userinfo的授权
     checkAuth(item,cb){
@@ -30,11 +31,11 @@ const helper = {
         wepy.authorize({
             scope: name.indexOf("scope.") == 0 ? name : 'scope.'+name,
             success (res) {
-                cb && cb(false,res)
+                cb && cb(true,res)
             }
           })
     },
-    toOtherPage(url,param){
+    toOtherPage(url,param={}){
         if(!url) return
         let serach = ""
         if(param){
@@ -43,9 +44,14 @@ const helper = {
             }
             serach = serach.substr(0,serach.length-1)
         }
+        if(serach !== "") url = url+"?"+serach
         wepy.navigateTo({
-            url:url+"?"+serach
+            url:url
         })
+    },
+    getCurrentRoute(){
+        var pages = getCurrentPages()
+        return pages[0].route.substr(6)
     }
 }
 

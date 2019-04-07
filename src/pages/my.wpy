@@ -2,9 +2,8 @@
   <view>
     <view class="mypage-info">
       <view class="mypage-info-image-cover pos-center-avt">
-        <image src="https://wx.qlogo.cn/mmopen/vi_32/HKa7zTMZQPWFKUZqUaxSPgALqwplZpgiaWF8HCFibem0rm1YLybsJPB3zLOk5hNXGEdg7PUvjCHibSMzf5WROVn0A/132" />
-      </view>
-      <text class="mypage-info-nickname">钧元</text>
+        <image src={{imgurl}}>  </view>
+      <text class="mypage-info-nickname">{{nickname}}</text>
     </view>
     <view class="mypage-info-middle">
       <view>
@@ -17,9 +16,22 @@
         <view class="pos-center-btn">
           <van-button round size="small" type="primary">充值</van-button>
         </view>
-
-        <view class="mypage-info-list">
-            <view class="myInfo-list-item">
+      </view>
+      <view>
+        <view class="middle-contain pos-center-avt">
+          <van-icon name="balance-o" style="margin-right:10rpx" />
+          <text>50花币</text>
+        </view>
+      </view>
+      <view>
+        <view class="pos-center-btn">
+          <van-button round size="small" type="primary">充值</van-button>
+        </view>
+      </view>
+    </view>
+        
+    <view class="mypage-info-list">
+        <view class="myInfo-list-item">
                 <view class="show-list-item-icon">
                     <image src="./../image/record.png" class="pos-center-avt" />
                 </view>
@@ -42,20 +54,21 @@
                 </view>
             </view>
         </view>
-      </view>
     </view>
-  </view>
 </template>
 <script>
     import wepy from 'wepy'
     import config from "./../utils/config"
+    import helper from "./../utils/helper"
     export default class Index extends wepy.page {
         config = {
             navigationBarTitleText: '我的信息',
         }
 
         data = {
-            url: "https://img.qccip.com/Test/%E7%AE%B4%E5%88%9B%E7%AC%AC%E4%B8%80%E8%AF%BE%E7%B2%BE%E9%80%89%20%E6%9D%8E%E5%AF%BC%200301--20%E5%88%86%E9%92%9F.mp4"
+            url: "https://img.qccip.com/Test/%E7%AE%B4%E5%88%9B%E7%AC%AC%E4%B8%80%E8%AF%BE%E7%B2%BE%E9%80%89%20%E6%9D%8E%E5%AF%BC%200301--20%E5%88%86%E9%92%9F.mp4",
+            imgurl:"",
+            nickname:""
         }
 
         methods = {
@@ -71,9 +84,19 @@
         }
 
         onLoad() {
-           console.log("xxxxx",config)
+            // 判断是否有用户信息
+            var that = this
+            let userinfo = this.$parent.globalData.userInfo
+            if(this.$parent.globalData.userInfo.nickname){
+              // 已经有用户信息了
+              that.imgurl = userinfo.avatarUrl
+              that.nickname = userinfo.nickname
+              that.$apply()
+            }else{
+                
+            } 
         }
-
+  }
 </script>
 <style lang="less">
 page {

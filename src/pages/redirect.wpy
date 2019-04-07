@@ -1,0 +1,101 @@
+<template>
+    <view class="page-redirect">
+        
+            <button class='btn1' 
+            open-type='getUserInfo'
+            bindgetuserinfo="getUserInfo">
+            <image class='btnImg' src='./../image/wechat.png'/>
+            <view>微信登录</view>
+            </button>
+    </view>
+</template>
+
+<script>
+import wepy from "wepy"
+import helper from "./../utils/helper"
+import toast from "../utils/toast";
+import request from "../utils/request";
+export default class Index extends wepy.page{
+    data = {
+        fromRoute:""
+    }
+
+    onLoad(option) {
+        if(option){
+            this.fromRoute = option.route
+        }else{
+            this.fromRoute = "index"
+        }
+    }
+
+    methods = {
+        getUserInfo(user){
+            if(user.detail){
+                console.log("here")
+                this.$parent.globalData.userInfo =  user.detail.userInfo
+                helper.toOtherPage("index")
+            }else{
+                toast.showToast("获取信息失败~",function(){
+                    helper.toOtherPage("index")
+                })   
+            }
+        },
+        getPhoneNumber(e){
+            let detail = e.detail
+            
+            if(detail.encryptedData){ // 获取到了用户的信息
+                console.log(1)
+                helper.toOtherPage(this.fromRoute)
+            }else{
+                console.log(2)
+                helper.toOtherPage(this.fromRoute)  
+            }
+        }
+    }
+}
+</script>
+
+<style>
+page{
+     /* backgroun */
+}
+.page-redirect{
+    width: 100%;
+    height: 1000rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pop_btn{
+    font-size: 32rpx;
+    line-height: 100rpx;
+    text-align: center;
+    width: 200rpx;
+    color: white;
+    background-color: burlywood;
+    height: 100rpx;
+}
+.btn1 {
+  width: 80%;
+  margin-top: 20rpx;
+  background-color: burlywood;
+  color: white;
+  border-radius: 98rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnImg {
+  margin-right: 8rpx;
+  width: 46rpx;
+  height: 46rpx;
+}
+
+.btn1::after {
+  border-radius: 98rpx;
+  border: 0; 
+}
+</style>
+
