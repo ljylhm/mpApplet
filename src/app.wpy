@@ -2,19 +2,23 @@
 import wepy from 'wepy'
 import 'wepy-async-function'
 import db from "./utils/db"
+import config from "./utils/config"
+import helper from './utils/helper';
+import request from "./utils/request"
 
 export default class extends wepy.app {
   config = {
     pages: [
-    'pages/index',
-    'pages/test',
-    'pages/my',
+    'pages/index',    
     'pages/pay',
-    'pages/detail',
     
+    'pages/collageList',
+    'pages/my',
+    'pages/detail',
     'pages/order',
     'pages/ticket',
-    'pages/course'
+    'pages/course',
+    'pages/redirect',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -30,7 +34,9 @@ export default class extends wepy.app {
       "van-icon": "../components/vant/icon/index",
       "van-tab": "../components/vant/tab/index",
       "van-tabs": "../components/vant/tabs/index",
-      "van-field": "../components/vant/field/index"
+      "van-field": "../components/vant/field/index",
+      "van-dialog":"../components/vant/dialog/index",
+      "van-popup": "../components/vant/popup/index"
     },
     tabBar: {
       "color": "#a9b7b7",
@@ -57,10 +63,11 @@ export default class extends wepy.app {
         "provider":"wx9d4d4ffa781ff3ac"
       }
 
-    }
+    },
   }
   globalData = {
-    userInfo: {}
+    userInfo: {},
+    deviceInfo:{}
   }
 
   constructor() {
@@ -69,21 +76,37 @@ export default class extends wepy.app {
   }
 
   onLaunch() {
-    this.testAsync()
-    db.Set("token","123321")
-  }
 
-  sleep(s) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('promise resolved')
-      }, s * 1000)
+    var that = this
+    wx.getSystemInfo({
+      success(res) {
+        console.log(res)
+        that.globalData.deviceInfo=res
+      }
+
     })
-  }
-
-  async testAsync() {
-    const data = await this.sleep(3)
-    console.log(data)
+    /*helper.checkAuth("userInfo",function(isOk,data){
+      if(!isOk) {
+        helper.toOtherPage("redirect")
+      }else{
+        wx.getUserInfo({
+          success(res){
+            let data = res.userInfo
+            that.globalData.userInfo = data
+            
+            helper.toOtherPage("index")
+            console.log("这里>>",that.globalData.userInfo) 
+            // that.imgurl = data.avatarUrl
+            // that.nickname = data.nickName
+            // that.$apply()
+          },
+          fail(){
+            // helper.toOtherPage("index")
+          }
+        })
+      }
+    })
+    db.Set("token","123321")
   }
 
   getUserInfo(cb) {
@@ -96,8 +119,14 @@ export default class extends wepy.app {
         that.globalData.userInfo = res.userInfo
         cb && cb(res.userInfo)
       }
-    })
-  }
+    })*/
+   // that.globalData.userInfo=db.Get("userInfo");
+   request.httpGetOpenid(function(data){
+    that.globalData.userInfo=db.Get("userInfo");
+    
+    console.log(that.globalData.userInfo)
+  })
+ }
 }
 
 </script>

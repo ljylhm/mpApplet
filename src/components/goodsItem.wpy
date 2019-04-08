@@ -1,11 +1,13 @@
 <style lang="less">
 .picture {
-  margin-left: -10px;
-  border-radius: 15px;
+  margin-left: -15rpx;
+  border-radius: 15rpx;
+  border-radius: 8rpx;
+  margin-top:-30rpx
 }
 
 .out {
-  border-radius: 15px;
+  border-radius: 15rpx;
   background-image: 'https://img.cifnews.com/dev/20180521/91f7d1f55c5e4b6a8642dea53c57546f.jpg';
 }
 .title {
@@ -28,29 +30,63 @@
 .desc {
   font-size: 90%;
   background-color: #eeeeee;
-  border-radius: 4px;
+  border-radius: 4rpx;
   display: inline-block;
 }
 
 .tag {
-  margin-right: 10px;
+  margin-right: 10rpx;
+}
+.weui-loadmore__tips_in-line{
+  position: relative;
+  top:-.9em;
+  padding:0 .55em;
+  background-color: #FFFFFF;
+  color:#999999;
+}
+.weui-loadmore__tips{
+  display: inline-block;
+  vertical-align: middle;
+}
+.weui-loadmore{
+  width: 65%;
+  margin:1.5em auto;
+  line-height: 1.6em;
+  font-size:14px;
+  text-align: center;
+}
+.weui-loadmore_line{
+  border-top:1px solid #E5E5E5;
+  margin-top:2.4em;
+}
+.weui-loadmore{
+  width: 65%;
+  margin:1.5em auto;
+  line-height: 1.6em;
+  font-size:14px;
+  text-align: center;
+}
+.weui-loadmore__tips{
+  display: inline-block;
+  vertical-align: middle;
 }
 </style>
 <template>
-  <view class="contain" wx:for="{{list}}" wx:key="id">
-    <van-card　@tap="toUrl" thumb-class="picture" custom-class="custom" thumb="{{ item.imageURL }}" thumb-mode="aspectFit">
+  <view class="contain" wx:for="{{CollageList}}" wx:key="id">
+    <van-card　@tap="toUrl" thumb-class="picture" custom-class="custom" thumb="{{ item.SmallImageUrl }}" thumb-mode="aspectFit">
       <view slot="title">
         <view class="title">
-          <van-tag custom-class="tag" type="danger">热门 </van-tag>{{item.title}}
+          <van-tag wx:if="{{item.ViewCount>0}}" custom-class="tag" type="danger">热门 </van-tag>{{item.Title}}
         </view>
-        <view class="subTitle">{{item.subTitle}}</view>
-        <view class="mintitle">{{item.classCount}}人·{{item.people}}在学</view>
-        <view class="desc">
+        <view class="subTitle">{{item.Description}}</view>
+        <view class="mintitle">{{item.ViewCount}}人·{{item.ViewCount}}在学</view>
+        <!-- <view class="desc">
           查看回放
-        </view>
+        </view> -->
       </view>
     </van-card>
   </view>
+</view>
 </template>
 <script>
 import wepy from 'wepy'
@@ -59,26 +95,21 @@ import api from '../utils/api'
 
 export default class goodsItem extends wepy.component {
   data = {
-    list: [{
-      id: 1,
-      title: "降低通平台数据选品实操降低通平台数据选品实操",
-      subTitle: "全面了解德国税务物流的概况",
-      "classCount": 2,
-      "people": 1000,
-      "imageURL": "https://img.cifnews.com/dev/20180625/f0ecfcdb6fda4191bc0dd76bdd956e73.jpg"
-    },
-    { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
-    { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
-    { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
-    { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" },
-    { id: 2, title: "降低通平台数据选品实操降低通平台数据选品实操", subTitle: "全面了解德国税务物流的概况", "classCount": 2, "people": 1000, "imageURL": "https://img.cifnews.com/dev/20180911/0c04a9ff0ef649f0a37984df4711a8e5.png" }
-    ],
-    imageURL: ""
+
+    imageURL: "",
+    CollageList:[],
+    PageIndex: 0,
+
+
   }
   config = {
 
   }
+  
 
+  props={
+    categoryId:""
+  }
   events = {
     'index-broadcast': (...args) => {
       let $event = args[args.length - 1]
@@ -101,21 +132,32 @@ export default class goodsItem extends wepy.component {
       })
     }
   }
+  getCollageList(){
+    var that=this;
+    request.httpPostJY(api.service.getCollageList,{
+      "CategoryId": this.categoryId,
+      "TeacherName": "",
+      "CollageName": "",
+      "PageSiz": 6,
+      "OpenId": "",
+      "PageIndex":that.PageIndex+1
+    },(isOk,data)=>{
+      that.CollageList=that.CollageList.concat(data.Data)
+      that.$apply()
+      console.log(that.CollageList);
 
+
+    })
+  };
+  addPageIndex(){
+    this.PageIndex=this.PageIndex+1
+  }
   onLoad() {
-
-   request.httpPostJY(api.service.getCollageList,{
-    "CategoryId": 0,
-    "TeacherName": "",
-    "CollageName": "",
-    "PageSiz": 4,
-    "PageIndex": 5,
-    "OpenId": ""
-  },(isOk,data)=>{
-    console.log(data)
-  })
+   console.log("zizjujian"+this.categoryId)
+   this.getCollageList()
 
  }
+
 }
 
 </script>

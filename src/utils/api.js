@@ -15,7 +15,9 @@ var api = {
 
     login: `${host}/api/v1/user/login`,
 
-    getOpenid: `${host}/api/v1/wechat/GetOpenId`,
+    registe:`${host}/api/v1/user/regist`,
+    
+    getOpenid: `${host}/api/v1/wechat/GetOpenId/`,
 
     getCollageDetail: `${host}/api/v1/college/GetCollageDetail/`,
 
@@ -27,11 +29,11 @@ var api = {
 
     getCollageList: `${host}/api/v1/college/GetCollageList`,
 
-    topicdetail: `${host}/topicdetail`,
+    getCollageCategoryList: `${host}/api/v1/college/GetCollageCategoryList`,
 
-    pageMyTopic: `${host}/pageMyTopic`,
+    getJsApiTicket: `${host}/api/v1/wechat/GetJsApiTicket`,
 
-    getMyCount: `${host}/getMyCount`,
+    createOrder: `${host}/api/v1/wechat/WechatCreateOrder`,
 
     DeleteTopic: `${host}/DeleteTopic`,
 

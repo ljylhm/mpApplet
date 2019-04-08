@@ -1,5 +1,5 @@
 <template>
-  <goodsItem></goodsItem>
+  <goodsItem :categoryId.sync="categoryId"></goodsItem>
 </template>
 <script>
 import wepy from 'wepy'
@@ -8,13 +8,14 @@ import List from '../components/list' // aliasFields example
 
 export default class test extends wepy.page {
   config = {
-    navigationBarTitleText: '商品详情',
+    navigationBarTitleText: '正在加载',
     usingComponents: {
       "van-button": "../components/vant/button/index",
       "van-card": "../components/vant/card/index",
       "van-rate": "../components/vant/rate/index",
       "van-tag": "../components/vant/tag/index"
-    }
+    },
+
   }
   components = {
     goodsItem: goodsItem,
@@ -23,7 +24,7 @@ export default class test extends wepy.page {
 
 
   data = {
-
+    categoryId:""
   }
 
   computed = {
@@ -43,9 +44,20 @@ export default class test extends wepy.page {
     }
   }
 
-  onLoad() {
+  onLoad(e) {
+   console.log(e);
+   this.categoryId=e.Id;
+   this.$apply()
+   wx.setNavigationBarTitle({
+    title: e.categoryName
+  })
+ }
+ onReachBottom(e){
+  console.log("ssssssss");
+  this.$invoke('goodsItem','addPageIndex')
+  this.$invoke('goodsItem','getCollageList')
+}
 
-  }
 }
 
 </script>
