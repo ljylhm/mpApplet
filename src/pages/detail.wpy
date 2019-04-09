@@ -108,11 +108,9 @@
       <van-rate value="{{ rateValue }}" bind:change="onChange" />
     </view>
     <van-cell-group>
-      <form bindsubmit="formSubmit" bindreset="formReset">
-        <van-field bind:confirm="complete" data-rate="{{message}}" value="{{ message }}" type="text" placeholder="说说课程的亮点和不足吧" border="{{ true }}" use-button-slot>
-          <van-button slot="button" size="small" type="primary" value="{{ message }}" form-type="submit">发表</van-button>
-        </van-field>
-      </form>
+      <van-field bind:blur="complete" data-rate="{{message}}" value="{{ message }}" type="text" placeholder="说说课程的亮点和不足吧" border="{{ true }}" use-button-slot>
+        <van-button slot="button" size="small" type="primary" data-rate="{{ message }}" bind:click="sendRate">发表</van-button>
+      </van-field>
     </van-cell-group>
   </van-popup>
   </view>
@@ -224,17 +222,19 @@ export default class test extends wepy.page {
       this.$apply()
     },
     sendRate(e) {
-      console.log(e)
+      console.log(e);
+      console.log(e.target.dataset.rate.value);
+
+      this.message = "";
+      this.$apply();
     },
     onChange(e) {
       console.log(e.detail);
       this.rateValue = e.detail;
     },
     complete(e) {
-      console.log(e)
-    },
-    formSubmit(e) {
-      console.log(e)
+      console.log(e);
+      this.message = e.detail;
 
     }
   }
