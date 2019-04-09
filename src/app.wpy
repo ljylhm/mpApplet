@@ -9,16 +9,18 @@ import request from "./utils/request"
 export default class extends wepy.app {
   config = {
     pages: [
-    'pages/index',    
-    'pages/pay',
-    
-    'pages/collageList',
-    'pages/my',
-    'pages/detail',
-    'pages/order',
-    'pages/ticket',
-    'pages/course',
-    'pages/redirect',
+      'pages/detail',
+
+      'pages/index',
+      'pages/pay',
+      'pages/rate',
+      'pages/collageList',
+      'pages/my',
+
+      'pages/order',
+      'pages/ticket',
+      'pages/course',
+      'pages/redirect',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -35,39 +37,38 @@ export default class extends wepy.app {
       "van-tab": "../components/vant/tab/index",
       "van-tabs": "../components/vant/tabs/index",
       "van-field": "../components/vant/field/index",
-      "van-dialog":"../components/vant/dialog/index",
-      "van-popup": "../components/vant/popup/index"
+      "van-dialog": "../components/vant/dialog/index",
+      "van-popup": "../components/vant/popup/index",
     },
     tabBar: {
       "color": "#a9b7b7",
       "selectedColor": "#11cd6e",
       "backgroundColor": "#ffffff",
-      "list": [
-      {
-        "pagePath": "pages/index",
-        "iconPath": "image/home_tab.png",
-        "selectedIconPath": "image/home_tab_down.png",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/my",
-        "iconPath": "image/home_tab_wd.png",
-        "selectedIconPath": "image/home_tab_wd_down.png",
-        "text": "我的"
-      }
+      "list": [{
+          "pagePath": "pages/index",
+          "iconPath": "image/home_tab.png",
+          "selectedIconPath": "image/home_tab_down.png",
+          "text": "首页"
+        },
+        {
+          "pagePath": "pages/my",
+          "iconPath": "image/home_tab_wd.png",
+          "selectedIconPath": "image/home_tab_wd_down.png",
+          "text": "我的"
+        }
       ]
     },
-    "plugins":{
-      "wxparserPlugin":{
-        "version":"0.2.1",
-        "provider":"wx9d4d4ffa781ff3ac"
+    "plugins": {
+      "wxparserPlugin": {
+        "version": "0.2.1",
+        "provider": "wx9d4d4ffa781ff3ac"
       }
 
     },
   }
   globalData = {
     userInfo: {},
-    deviceInfo:{}
+    deviceInfo: {}
   }
 
   constructor() {
@@ -81,7 +82,7 @@ export default class extends wepy.app {
     wx.getSystemInfo({
       success(res) {
         console.log(res)
-        that.globalData.deviceInfo=res
+        that.globalData.deviceInfo = res
       }
 
     })
@@ -120,18 +121,17 @@ export default class extends wepy.app {
         cb && cb(res.userInfo)
       }
     })*/
-   // that.globalData.userInfo=db.Get("userInfo");
-   request.httpGetOpenid(function(data){
-    that.globalData.userInfo=db.Get("userInfo");
-    
-    console.log(that.globalData.userInfo)
-  })
- }
+    // that.globalData.userInfo=db.Get("userInfo");
+    request.httpGetOpenid(function(data) {
+      that.globalData.userInfo = db.Get("userInfo");
+
+      console.log(that.globalData.userInfo)
+    })
+  }
 }
 
 </script>
 <style lang="less">
-
 .container {
   height: 100%;
   display: flex;

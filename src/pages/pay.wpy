@@ -3,23 +3,26 @@
     <view class="contain" style="height:{{height}}px;">
       <view class="amount">选择充值金额</view>
       <form bindsubmit="formSubmit" bindreset="formReset">
-        <input class="amount" type="Nume" value="" name="充值金额"/>
-        <view style="display:flex;flex-wrap: row">
-          <button class="btn">50元</button>
-          <button class="btn">100元</button>
-          <button class="btn">200元</button>
+        <view @tap="click">
+          <input class="amount" type="Nume" value="{{amount}}" name="充值金额" />
+          <view style="display:flex;flex-wrap: row">
+            <button data-amount="20" class="btn">20元</button>
+            <button data-amount="50" class="btn">50元</button>
+            <button data-amount="100" class="btn">100元</button>
+          </view>
+          <view style="display:flex;flex-wrap: row">
+            <button data-amount="200" class="btn">200元</button>
+            <button data-amount="500" class="btn">500元</button>
+            <button data-amount="1000" class="btn">1000元</button>
+          </view>
         </view>
-        <view style="display:flex;flex-wrap: row">
-          <button class="btn">50元</button>
-          <button class="btn">100元</button>
-          <button class="btn">200元</button>
-        </view> 
-
         <button class='btn1' form-type="submit">
           <view>去充值</view>
         </button>
       </form>
       <van-toast id="van-toast" />
+      <van-notify id="custom-selector" />
+      <van-notify id="van-notify" />
     </view>
   </view>
 </template>
@@ -33,115 +36,137 @@ import request from '../utils/request'
 import db from "./../utils/db"
 import toast from "./../utils/toast"
 import Toast from '../components/vant/toast/toast'
-
+import Notify from '../components/vant/notify/notify';
 export default class pay extends wepy.page {
   config = {
     navigationBarTitleText: '钱包',
-    navigationBarBackgroundColor:"#F7F7F7",
+    navigationBarBackgroundColor: "#F7F7F7",
     usingComponents: {
       "van-button": "../components/vant/button/index",
       "van-card": "../components/vant/card/index",
       "van-rate": "../components/vant/rate/index",
       "van-tag": "../components/vant/tag/index",
       "van-toast": "../components/vant/toast/index",
+      "van-notify": "../components/vant/notify/index"
+
     }
   }
-  components = {
-  }
+  components = {}
 
 
 
   data = {
-   height:480,
-   heightTotal:504,
-   userInfo:{},
-   amount:""
- }
-
- computed = {
-  now() {
-    return +new Date()
+    height: 480,
+    heightTotal: 504,
+    userInfo: {},
+    amount: ""
   }
-}
 
-methods = {
-  /*(e){
-    console.log(e)
-  },*/
-  formSubmit(e){
-    var that=this;
-    request.httpPostJY(api.service.saveRecharge,{
-      userId: 1,
-      amount: 1
-    },(isOk,data)=>{
-      console.log("saveRecharge",data)
-      let rechargeId=data.rechargeId
-      let rechargeNo=data.rechargeNo
-      request.httpPostJY(api.service.createOrder,{
-        out_trade_no: rechargeNo,
-        recharge_id: rechargeId,
-        openid:that.userInfo.OpenId
-      },(isOk,data)=>{
-       console.log("createOrder",data)
-       console.log({
-        timeStamp: data.timeStamp,
-        nonceStr: data.noncestr,
-        package:data.prepay_id,
-        signType: 'MD5',
-        paySign: data.paySign})
-       wx.requestPayment({
-        timeStamp: data.timeStamp,
-        nonceStr: data.noncestr,
-        package:"prepay_id="+data.prepay_id,
-        signType: 'MD5',
-        paySign: data.paySign,
-        success(res) {
-          console.log(res)
-        },
-        fail(res) { 
-          console.log(res)
-        }
+  computed = {
+    now() {
+      return +new Date()
+    }
+  }
+
+  watch = {
+
+  }
+
+
+  methods = {
+    /*formSubmit(e) {
+      console.log(e)
+    },*/
+    formSubmit(e) {
+      console.log(e.detail.value['充值金额'])
+      var that = this;
+      that.amount = e.detail.value['充值金额']
+      if (that.amount == "" || that.amount == 0) {
+        // wx.showToast({ title: "金额错误", icon: "none" })
+        Notify('金额错误');
+        return
+      }
+      if (!that.userInfo.UserId || !that.userInfo.OpenId) {
+        Notify('用户信息获取失败');
+        return
+      }
+
+      request.httpPostJY(api.service.saveRecharge, {
+        userId: that.userInfo.UserId,
+        amount: that.amount * 100
+      }, (isOk, data) => {
+        console.log("saveRecharge", data)
+        let rechargeId = data.rechargeId
+        let rechargeNo = data.rechargeNo
+        request.httpPostJY(api.service.createOrder, {
+          out_trade_no: rechargeNo,
+          recharge_id: rechargeId,
+          openid: that.userInfo.OpenId
+        }, (isOk, data) => {
+          console.log("createOrder", data)
+          console.log({
+            timeStamp: data.timeStamp,
+            nonceStr: data.noncestr,
+            package: data.prepay_id,
+            signType: 'MD5',
+            paySign: data.paySign
+          })
+          wx.requestPayment({
+            timeStamp: data.timeStamp,
+            nonceStr: data.noncestr,
+            package: "prepay_id=" + data.prepay_id,
+            signType: 'MD5',
+            paySign: data.paySign,
+            success(res) {
+              Toast.success('支付成功');
+              request.httpGetOpenid();
+            },
+            fail(res) {
+              Toast.fail('失败');
+            }
+          })
+        })
       })
-     })
-    })
+    },
+    click(e) {
+      console.log(e.target.dataset.amount);
+      this.amount = e.target.dataset.amount;
+      this.$apply();
+    }
   }
-}
 
-onLoad() {
- var that=this
- console.log(that.$parent.globalData.deviceInfo.windowHeight)
- that.heightTotal=that.$parent.globalData.deviceInfo.windowHeight
- that.height=that.$parent.globalData.deviceInfo.windowHeight-20
- console.log("ddddddd",db.Get("userInfo"))
- console.log(that.userInfo.UserId)
- that.userInfo= db.Get("userInfo")
- if(!that.userInfo.UserId){
-   Toast.fail('失败');
- }
+  onLoad() {
+    var that = this
+    console.log(that.$parent.globalData.deviceInfo.windowHeight)
+    that.heightTotal = that.$parent.globalData.deviceInfo.screenHeight - 60
+    that.height = that.$parent.globalData.deviceInfo.screenHeight - 80
+    console.log("ddddddd", db.Get("userInfo"))
+    console.log(that.userInfo.UserId)
+    that.userInfo = db.Get("userInfo")
+    if (!that.userInfo.UserId) {
+      Toast.fail('失败');
+    }
+    that.$apply();
 
- wx.login({
-  success: function (data) {
-    console.log(data)
+
+
+
+
   }
-});
-
-
- 
-
-}
 }
 
 </script>
 <style lang="less">
-.caontainer{
-  background-color:#F7F7F7;
+.caontainer {
+  background-color: #F7F7F7;
 }
-.contain{
-  background-color:#ffffff;
-  margin-left:30rpx;
-  margin-right:35rpx;
-  border-radius:20rpx;
-  margin-bottom:20rpx;
+
+.contain {
+  background-color: #ffffff;
+  margin-left: 30rpx;
+  margin-right: 35rpx;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
 }
 
 .btn {
@@ -150,28 +175,31 @@ onLoad() {
   background-color: burlywood;
   color: white;
   border-radius: 30rpx;
-  height:100rpx;
+  height: 100rpx;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  
+
 }
-.amount{
-  padding-left:30rpx;
-  padding-top:30rpx;
+
+.amount {
+  padding-left: 30rpx;
+  padding-top: 30rpx;
 
 
 }
-.btn1{
+
+.btn1 {
   width: 80%;
   bottom: 60rpx;
   background-color: burlywood;
   color: white;
   border-radius: 98rpx;
-  margin-left:35rpx;
-  position:absolute;
+  margin-left: 35rpx;
+  position: absolute;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
+
 </style>

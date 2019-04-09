@@ -1,5 +1,5 @@
 <style lang="less">
-.picture {
+  .picture {
   margin-left: -15rpx;
   border-radius: 15rpx;
   border-radius: 8rpx;
@@ -86,7 +86,7 @@
       </view>
     </van-card>
   </view>
-</view>
+  </view>
 </template>
 <script>
 import wepy from 'wepy'
@@ -97,7 +97,7 @@ export default class goodsItem extends wepy.component {
   data = {
 
     imageURL: "",
-    CollageList:[],
+    CollageList: [],
     PageIndex: 0,
 
 
@@ -105,10 +105,10 @@ export default class goodsItem extends wepy.component {
   config = {
 
   }
-  
 
-  props={
-    categoryId:""
+
+  props = {
+    categoryId: ""
   }
   events = {
     'index-broadcast': (...args) => {
@@ -132,31 +132,33 @@ export default class goodsItem extends wepy.component {
       })
     }
   }
-  getCollageList(){
-    var that=this;
-    request.httpPostJY(api.service.getCollageList,{
+  getCollageList() {
+    var that = this;
+    request.httpPostJY(api.service.getCollageList, {
       "CategoryId": this.categoryId,
       "TeacherName": "",
       "CollageName": "",
       "PageSiz": 6,
       "OpenId": "",
-      "PageIndex":that.PageIndex+1
-    },(isOk,data)=>{
-      that.CollageList=that.CollageList.concat(data.Data)
+      "PageIndex": that.PageIndex + 1
+    }, (isOk, data) => {
+      that.CollageList = that.CollageList.concat(data.Data)
       that.$apply()
       console.log(that.CollageList);
 
 
     })
   };
-  addPageIndex(){
-    this.PageIndex=this.PageIndex+1
+  addPageIndex() {
+    this.PageIndex = this.PageIndex + 1
   }
   onLoad() {
-   console.log("zizjujian"+this.categoryId)
-   this.getCollageList()
+    console.log("zizjujian" + this.categoryId);
+    this.CollageList = [];
+    this.$apply()
+    this.getCollageList()
 
- }
+  }
 
 }
 

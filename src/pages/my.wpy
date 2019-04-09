@@ -1,217 +1,215 @@
-
 <template>
   <view>
     <view class="mypage-info">
       <view class="mypage-info-image-cover pos-center-avt">
-        <image src={{imgurl}}>  </view>
-          <text class="mypage-info-nickname">{{nickname}}</text>
-        </view>
-        <view class="mypage-info-middle">
-          <view>
-            <view class="middle-contain pos-center-avt">
-              <text> 当前余额：</text>
-              <van-icon name="balance-o" style="margin-right:10rpx" />
-              <text>{{myPoint}} 创币</text>
-            </view>
-          </view>
-          <view>
-            <view class="pos-center-btn">
-              <van-button @tap="recharge" round size="small" style="margin-left:150rpx" type="primary" >充</van-button>
-            </view>
-          </view>
-        </view>
-
-        <view class="mypage-info-list">
-          <view class="myInfo-list-item">
-            <view class="show-list-item-icon">
-              <image src="./../image/record.png" class="pos-center-avt" />
-            </view>
-            <view class="show-list-item-title" @tap="toUrl(1)">
-              我的优惠
-            </view>
-            <view class="show-list-item-guide">
-              <van-icon name="arrow" />
-            </view>
-          </view>
-          <view class="myInfo-list-item">
-            <view class="show-list-item-icon">
-              <image src="./../image/ticket.png" class="pos-center-avt" />
-            </view>
-            <view class="show-list-item-title" @tap="toUrl(2)">
-              我的课程
-
-            </view>
-            <view class="show-list-item-guide">
-              <van-icon name="arrow" />
-            </view>
-          </view>
+        <image src={{imgurl}}>
+      </view>
+      <text class="mypage-info-nickname">{{nickname}}</text>
+    </view>
+    <view class="mypage-info-middle">
+      <view>
+        <view class="middle-contain pos-center-avt">
+          <text> 当前余额：</text>
+          <van-icon name="balance-o" style="margin-right:10rpx" />
+          <text>{{myPoint}} 创币</text>
         </view>
       </view>
-    </template>
+      <view>
+        <view class="pos-center-btn">
+          <van-button @tap="recharge" round size="small" style="margin-left:150rpx" type="primary">充</van-button>
+        </view>
+      </view>
+    </view>
+    <view class="mypage-info-list">
+      <view class="myInfo-list-item">
+        <view class="show-list-item-icon">
+          <image src="./../image/record.png" class="pos-center-avt" />
+        </view>
+        <view class="show-list-item-title" @tap="toUrl(1)">
+          我的优惠
+        </view>
+        <view class="show-list-item-guide">
+          <van-icon name="arrow" />
+        </view>
+      </view>
+      <view class="myInfo-list-item">
+        <view class="show-list-item-icon">
+          <image src="./../image/ticket.png" class="pos-center-avt" />
+        </view>
+        <view class="show-list-item-title" @tap="toUrl(2)">
+          我的课程
+        </view>
+        <view class="show-list-item-guide">
+          <van-icon name="arrow" />
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import config from "./../utils/config"
+import helper from "./../utils/helper"
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的信息',
+  }
 
-    <script>
-    import wepy from 'wepy'
-    import config from "./../utils/config"
-    import helper from "./../utils/helper"
-    export default class Index extends wepy.page {
-      config = {
-        navigationBarTitleText: '我的信息',
+  data = {
+    url: "https://img.qccip.com/Test/%E7%AE%B4%E5%88%9B%E7%AC%AC%E4%B8%80%E8%AF%BE%E7%B2%BE%E9%80%89%20%E6%9D%8E%E5%AF%BC%200301--20%E5%88%86%E9%92%9F.mp4",
+    imgurl: "",
+    nickname: "",
+    myPoint: ""
+  }
+
+  methods = {
+    toUrl(num) {
+      let t = {
+        1: "ticket",
+        2: "course"
       }
+      wepy.navigateTo({
+        url: t[num]
+      })
+    },
+    recharge() {
+      wepy.navigateTo({
+        url: "pay"
+      })
+    }
+  }
 
-      data = {
-        url: "https://img.qccip.com/Test/%E7%AE%B4%E5%88%9B%E7%AC%AC%E4%B8%80%E8%AF%BE%E7%B2%BE%E9%80%89%20%E6%9D%8E%E5%AF%BC%200301--20%E5%88%86%E9%92%9F.mp4",
-        imgurl:"",
-        nickname:"",
-        myPoint:""
-      }
+  onLoad() {
+    // 判断是否有用户信?
+    var that = this
+    let userinfo = that.$parent.globalData.userInfo
+    console.log(userinfo, "assss")
+    if (userinfo.Nickname) {
+      // 已经有用户信息了
 
-      methods = {
-        toUrl(num){
-          let t = {
-            1:"ticket",
-            2:"course"
-          }
-          wepy.navigateTo({
-            url: t[num]
-          })
-        },
-        recharge(){
-          wepy.navigateTo({
-            url: "pay"
-          })
-        }
-      }
+      that.imgurl = userinfo.LogoUrl
+      that.nickname = userinfo.Nickname
+      that.myPoint = userinfo.MyPoints
+      that.$apply()
+    } else {
 
-      onLoad() {
-            // 判断是否有用户信?
-            var that = this
-            let userinfo = that.$parent.globalData.userInfo
-            console.log(userinfo,"assss")
-            if(userinfo.Nickname){
-              // 已经有用户信息了
+    }
+  }
+}
 
-              that.imgurl = userinfo.LogoUrl
-              that.nickname = userinfo.Nickname
-              that.myPoint=userinfo.MyPoints
-              that.$apply()
-            }else{
+</script>
+<style lang="less">
+page {
+  background: #eee;
+}
 
-            } 
-          }
-        }
-        </script>
-        <style lang="less">
-        page {
-          background: #eee;
-        }
+.mypage-info {
+  width: 100%;
+  height: 380rpx;
+  background-color: #fff;
+  position: relative;
+}
 
-        .mypage-info {
-          width: 100%;
-          height: 380rpx;
-          background-color: #fff;
-          position: relative;
-        }
+.mypage-info-image-cover {
+  width: 140rpx;
+  height: 140rpx;
+}
 
-        .mypage-info-image-cover {
-          width: 140rpx;
-          height: 140rpx;
-        }
+.mypage-info-image-cover image {
+  width: 100%;
+  height: 100%;
+  border-radius: 100rpx
+}
 
-        .mypage-info-image-cover image {
-          width: 100%;
-          height: 100%;
-          border-radius:100rpx
-        }
+.mypage-info-nickname {
+  position: absolute;
+  top: 50%;
+  text-align: center;
+  margin-top: 80rpx;
+  width: 100%;
+}
 
-        .mypage-info-nickname {
-          position: absolute;
-          top: 50%;
-          text-align: center;
-          margin-top: 80rpx;
-          width: 100%;
-        }
+.mypage-info-middle {
+  width: 100%;
+  height: 120rpx;
+  margin-top: 30rpx;
+  display: flex;
+  background-color: #fff
+}
 
-        .mypage-info-middle {
-          width: 100%;
-          height: 120rpx;
-          margin-top: 30rpx;
-          display: flex;
-          background-color: #fff
-        }
-
-        .mypage-info-middle>view {
-          flex: 1;
-          height: 100%;
-          position: relative;
-        }
+.mypage-info-middle>view {
+  flex: 1;
+  height: 100%;
+  position: relative;
+}
 
 
-        .mypage-info-list {
-          margin-top: 30rpx;
-          background-color: #fff;
-        }
+.mypage-info-list {
+  margin-top: 30rpx;
+  background-color: #fff;
+}
 
-        .myInfo-list-item {
-          width: 100%;
-          height: 120rpx;
-          display: flex;
-          flex-direction: row;
-          justify-content: flex-start;
-        }
+.myInfo-list-item {
+  width: 100%;
+  height: 120rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
 
-        .show-list-item-icon {
-          position: relative;
-          width: 120rpx;
-          height: 100%;
-        }
+.show-list-item-icon {
+  position: relative;
+  width: 120rpx;
+  height: 100%;
+}
 
-        .show-list-item-icon image {
-          width: 50rpx;
-          height: 50rpx;
-        }
+.show-list-item-icon image {
+  width: 50rpx;
+  height: 50rpx;
+}
 
-        .show-list-item-title {
-          width: 570rpx;
-          line-height: 120rpx;
-        }
+.show-list-item-title {
+  width: 570rpx;
+  line-height: 120rpx;
+}
 
-        .show-list-item-guide {
-          margin-top: 5rpx;
-          line-height: 120rpx;
-          color: #8a8a8a;
-        }
+.show-list-item-guide {
+  margin-top: 5rpx;
+  line-height: 120rpx;
+  color: #8a8a8a;
+}
 
-        .middle-contain {
-          width: 100%;
-          text-align: center;
-          font-size: 34rpx;
-        }
+.middle-contain {
+  width: 100%;
+  text-align: center;
+  font-size: 34rpx;
+}
 
-        .pos-center-avt {
-          position: absolute;
+.pos-center-avt {
+  position: absolute;
 
 
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%)
-        }
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
 
-        .pos-center-btn {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%)
-        }
+.pos-center-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%)
+}
 
-        // #show-border{
-          //    position: relative;
-          // }
-          // #show-border:after{
-            //     content: "";
-            //     position: absolute;
-            //     top: 5rpx;
-            //     right: 5rpx;
-            //     height: 60rpx;
-            //     border: 1rpx solid #999999; 
-            // }
+// #show-border{
+//    position: relative;
+// }
+// #show-border:after{
+//     content: "";
+//     position: absolute;
+//     top: 5rpx;
+//     right: 5rpx;
+//     height: 60rpx;
+//     border: 1rpx solid #999999; 
+// }
 
-            </style>
+</style>

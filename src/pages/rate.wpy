@@ -1,0 +1,66 @@
+<template>
+  <view class="rate">
+  <van-rate value="{{ value }}" bind:change="onChange" />
+</view>
+
+  <van-cell-group>
+    <van-field value="{{ message }}" type="textarea" placeholder="说说课程的亮点和不足吧" autosize border="{{ true }}" />
+  </van-cell-group>
+</template>
+<script>
+import wepy from 'wepy'
+import goodsItem from '../components/goodsItem'
+import List from '../components/list' // aliasFields example
+
+
+
+
+
+export default class test extends wepy.page {
+  config = {
+    navigationBarTitleText: '评价',
+    usingComponents: {
+
+      "van-rate": "../components/vant/rate/index",
+      "van-field": "../components/vant/field/index"
+
+    }
+  }
+  components = {
+    goodsItem: goodsItem,
+  }
+
+
+
+  data = {
+
+  }
+
+  computed = {
+    now() {
+      return +new Date()
+    }
+  }
+
+  methods = {
+
+
+
+  }
+
+  events = {
+
+  }
+
+  onLoad() {
+
+  }
+}
+
+</script>
+<style lang="css">
+.rate {
+  margin-left: 30rpx;
+}
+
+</style>
