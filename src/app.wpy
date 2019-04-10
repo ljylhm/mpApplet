@@ -8,10 +8,11 @@ import request from "./utils/request"
 
 export default class extends wepy.app {
   config = {
-    pages: [
+    pages: ['pages/index',
+
       'pages/detail',
 
-      'pages/index',
+      
       'pages/pay',
       'pages/rate',
       'pages/collageList',

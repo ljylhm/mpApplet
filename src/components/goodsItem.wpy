@@ -73,7 +73,7 @@
 </style>
 <template>
   <view class="contain" wx:for="{{CollageList}}" wx:key="id">
-    <van-card　@tap="toUrl" thumb-class="picture" custom-class="custom" thumb="{{ item.SmallImageUrl }}" thumb-mode="aspectFit">
+    <van-card　@tap="toUrl" data-id="{{item.Id}}" thumb-class="picture" custom-class="custom" thumb="{{ item.SmallImageUrl }}" thumb-mode="aspectFit">
       <view slot="title">
         <view class="title">
           <van-tag wx:if="{{item.ViewCount>0}}" custom-class="tag" type="danger">热门 </van-tag>{{item.Title}}
@@ -85,7 +85,6 @@
         </view> -->
       </view>
     </van-card>
-  </view>
   </view>
 </template>
 <script>
@@ -126,9 +125,9 @@ export default class goodsItem extends wepy.component {
       let len = this.list.length
       this.list.push({ id: len + 1, title: 'title_' + len })
     },
-    toUrl() {
+    toUrl(e) {
       wepy.navigateTo({
-        url: 'detail?id=1'
+        url: 'detail?id=' + e.currentTarget.dataset.id
       })
     }
   }

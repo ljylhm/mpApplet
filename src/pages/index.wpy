@@ -1,6 +1,5 @@
 <template>
   <view>
-
     <view class="navtab">
       <scroll-view scroll-x="true" class="scroll-contain navtab-contain">
         <block wx:for="{{groups}}" wx:for-index="index" wx:for-item="item" wx:key="Id">
@@ -8,11 +7,10 @@
         </block>
       </scroll-view>
     </view>
-
     <view style="margin-top:60rpx">
       <swiper class="swiper-card">
         <block class="swiper-container" wx:for="{{bannerList}}" wx:for-index="index" wx:for-item="item" wx:key="id">
-          <swiper-item class="displex-center" @tap="toUrl1">
+          <swiper-item class="displex-center" data-id="{{item.Id}}" @tap="toUrl1">
             <view class="swiper-card-item">
               <!-- width="355" height="150"  -->
               <image src="{{item.ImageUrl}}" />
@@ -63,7 +61,7 @@ export default class Index extends wepy.page {
 
   data = {
     bannerList: [],
-    groups:[],
+    groups: [],
     area2: "免费专区",
     area1: "精品专栏",
     num1: 4,
@@ -78,19 +76,19 @@ export default class Index extends wepy.page {
   methods = {
     toUrl(e) {
       console.log(e.currentTarget.dataset.bind)
-      let detail=e.currentTarget.dataset.bind;
+      let detail = e.currentTarget.dataset.bind;
       wepy.navigateTo({
-        url: 'collageList?Id='+detail.Id+'&categoryName='+detail.CategoryName
+        url: 'collageList?Id=' + detail.Id + '&categoryName=' + detail.CategoryName
       })
     },
-    toUrl1() {
+    toUrl1(e) {
       wepy.navigateTo({
-        url: 'detail'
+        url: 'detail?id=' + e.currentTarget.dataset.id
       })
     },
-    test1(){
-      helper.toOtherPage("redirect",{
-        route:"index"
+    test1() {
+      helper.toOtherPage("redirect", {
+        route: "index"
       })
     }
   }
@@ -106,21 +104,21 @@ export default class Index extends wepy.page {
     var that = this;
 
     //console.log("进入了index",that.$parent.globalData.userInfo)
-    request.httpGetOpenid(function(data){
-      that.$parent.globalData.userInfo=db.Get("userInfo");
+    request.httpGetOpenid(function(data) {
+      that.$parent.globalData.userInfo = db.Get("userInfo");
       console.log("赋值")
     })
-
 
     request.httpGetJY(api.service.getHomeBannerInfo, {}, (isOk, data) => {
       let result = data;
       if (result.Code == "200") {
-        console.log("xxxxsssss",result.Data)
+        console.log("xxxxsssss", result.Data)
         that.bannerList = result.Data;
         that.$apply()
-      }})
+      }
+    })
 
-    request.httpPostJY(api.service.getCollageCategoryList, {"GroupName":"首页导航"}, (isOk, data) => {
+    request.httpPostJY(api.service.getCollageCategoryList, { "GroupName": "首页导航" }, (isOk, data) => {
       console.log(data)
       if (data.Code == "200") {
         that.groups = data.Data;
@@ -166,6 +164,7 @@ page {
   width: 95%;
   height: 300rpx;
   border-radius: 15rpx;
+
   image {
     width: 100%;
     height: 100%;

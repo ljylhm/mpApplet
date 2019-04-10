@@ -10,8 +10,8 @@
       <view>
         <view class="middle-contain pos-center-avt">
           <text> 当前余额：</text>
-          <van-icon name="balance-o" style="margin-right:10rpx" />
-          <text>{{myPoint}} 创币</text>
+          <van-icon name="balance-o" style="margin-right:5rpx" />
+          <text style="position:float">{{myPoint}}创币</text>
         </view>
       </view>
       <view>
@@ -89,7 +89,7 @@ export default class Index extends wepy.page {
 
       that.imgurl = userinfo.LogoUrl
       that.nickname = userinfo.Nickname
-      that.myPoint = userinfo.MyPoints
+      that.myPoint = userinfo.Balance
       that.$apply()
     } else {
 
@@ -187,8 +187,6 @@ page {
 
 .pos-center-avt {
   position: absolute;
-
-
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%)
@@ -197,7 +195,7 @@ page {
 .pos-center-btn {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%)
+  transform: translateY(-50%) margin-right:50rpx;
 }
 
 // #show-border{

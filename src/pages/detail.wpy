@@ -34,7 +34,7 @@
             </van-cell>
     </view>
     </van-cell-group>
-    <view class="see-rate" @tap="seerate">查看全部评价({{collegeDetailEntity.collageEvaluateEntities.length}})</view>
+    <view class="see-rate" @tap="seerate">查看全部评价({{collegeDetailEntity.collageEvaluateEntities?collegeDetailEntity.collageEvaluateEntities.length:'0'}})</view>
     <van-cell title-class="rate-title" title="课程讲师"></van-cell>
     <van-cell-group>
       <view wx:for="{{collegeDetailEntity.teacherInfoEntity}}" wx:key="name" wx:for-item="item">
@@ -99,9 +99,9 @@
   <van-toast id="van-toast" />
   <van-goods-action>
     <van-goods-action-icon icon="chat-o" text="客服" bind:click="onClickIcon" />
-    <van-goods-action-button text="分享赚佣" type="warning" bind:click="share" />
-    <van-goods-action-button text="立即购买" bind:click="buy" />
-    <van-goods-action-button text="评论" bind:click="rate" />
+    <van-goods-action-button data-share="{{userinfo}}" open-type="share" text="分享赚佣" type="warning" />
+    <van-goods-action-button wx:if="{{!isBuy}}" text="立即购买" bind:click="buy" />
+    <van-goods-action-button wx:if="{{isBuy}}" text="评论" bind:click="rate" />
   </van-goods-action>
   <van-popup position="bottom" show="{{ show }}" bind:close="onClose">
     <view class="rate">
@@ -145,7 +145,7 @@ export default class test extends wepy.page {
     }
   }
   components = {
-    goodsItem: goodsItem,
+
   }
 
 
@@ -161,7 +161,10 @@ export default class test extends wepy.page {
     videourl: "",
     show: false,
     rateValue: 5,
-    message: ""
+    message: "",
+    id: "",
+    isBuy: false,
+    userinfo: {}
 
   }
 
@@ -172,29 +175,32 @@ export default class test extends wepy.page {
   }
 
   methods = {
+    onClickIcon() {
+      wx.showShareMenu({ withShareTicket: false })
+    },
     clickitem(e) {
 
       console.log(e.currentTarget.dataset.item);
       let item = e.currentTarget.dataset.item
-      if (item.VadioUrl !== "") {
-        this.videourl = item.VadioUrl;
-        this.showBanner = false;
-        wx.setKeepScreenOn({
-          keepScreenOn: true
-        })
-      }
-      /*if(item.IsFree==1){
-        //直接观看
 
-      }else{
-         //收费
-         if(item.IsFreeForVip==1){
+      if (item.IsFree == 1) {
+        //直接观看
+        if (item.VadioUrl !== "") {
+          this.videourl = item.VadioUrl;
+          this.showBanner = false;
+          wx.setKeepScreenOn({
+            keepScreenOn: true
+          })
+        }
+      } else {
+        //收费
+        if (item.IsFreeForVip == 1) {
 
           //vip免费
-        }else{
+        } else {
           //必须收费
         }
-      }*/
+      }
 
     },
     onClick(e) {
@@ -206,13 +212,10 @@ export default class test extends wepy.page {
     },
     buy() {
       wepy.navigateTo({
-        url: 'order'
+        url: 'order?CollageId=' + this.collegeDetailEntity.Id + "&CollageTitle=" + this.collegeDetailEntity.Title + "&CollagePrice=" + this.collegeDetailEntity.CollagePrice + "&PayAmount=" + this.collegeDetailEntity.SalePrice + "&SmallImageUrl=" + this.collegeDetailEntity.SmallImageUrl + "&ShareUserId=" + this.ShareUserId
       })
     },
-    share() {
-      Toast('点击分享')
 
-    },
     rate() {
       this.show = true;
       this.$apply()
@@ -222,11 +225,23 @@ export default class test extends wepy.page {
       this.$apply()
     },
     sendRate(e) {
-      console.log(e);
-      console.log(e.target.dataset.rate.value);
+      var that = this;
+      var userinfo = this.$parent.globalData.userInfo;
+      var para = { UserId: userinfo.UserId, LogoUrl: userinfo.LogoUrl, UserName: userinfo.Nickname, CollageId: this.id, Scroe: this.rateValue, Content: e.target.dataset.rate.value, OpenId: userinfo.OpenId };
+      console.log(para)
+      request.httpPostJY(api.service.evaluate, para, (isOk, data) => {
+        if (data.IsSuccess) {
+          Toast('发送成功');
+          that.getDetail();
 
+        } else {
+          Toast('网络在开小差');
+        }
+      })
+      this.show = false;
       this.message = "";
       this.$apply();
+
     },
     onChange(e) {
       console.log(e.detail);
@@ -245,29 +260,68 @@ export default class test extends wepy.page {
       console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
     }*/
   }
-
-  onLoad(item) {
+  getDetail() {
     var that = this;
-    console.log(item.id);
-    item.id = 1;
-    console.log(db.Get("token"))
-    request.httpGetJY(api.service.getCollageDetail + "1", {},
+    request.httpGetJY(api.service.getCollageDetail + this.id, {},
       (isOk, data) => {
         console.log(data)
         that.collegeDetailEntity = data.Data;
         let e = data.Data.teacherInfoEntity;
         that.collegeDetailEntity.teacherInfoEntity = [data.Data.teacherInfoEntity];
-
-        if (that.collegeDetailEntity.collageEvaluateEntities.length > 2) {
-          that.adviceshort = data.Data.collageEvaluateEntities.slice(0, 1);
-        } else {
-          this.adviceshort = data.Data.collageEvaluateEntities;
+        if (that.collegeDetailEntity.collageEvaluateEntities) {
+          if (that.collegeDetailEntity.collageEvaluateEntities.length > 2) {
+            that.adviceshort = data.Data.collageEvaluateEntities.slice(0, 1);
+          } else {
+            this.adviceshort = data.Data.collageEvaluateEntities;
+          }
         }
+
         that.$apply();
       })
-    console.log(this.adviceshort);
-    console.log(this.$parent.globalData);
-
+  }
+  checkUserWetherBuyCollage() {
+    var userinfo = this.$parent.globalData.userInfo;
+    var para = new Object()
+    para.UserId = userinfo.UserId;
+    para.OpenId = userinfo.OpenId;
+    para.CollageId = this.id;
+    request.httpPostJY(api.service.checkUserWetherBuyCollage, para, (isOk, data) => {
+      console.log(data)
+      if (data.IsSuccess) {
+        if (data.isBuy != 0) {
+          this.isBuy = true
+          this.$apply()
+        } else {
+          this.isBuy = false
+          this.$apply()
+        }
+      } else {
+        Toast('网络在开小差');
+      }
+    })
+  }
+  onLoad(item) {
+    var that = this;
+    console.log(item)
+    console.log(db.Get("token"))
+    this.ShareUserId = item.ShareUserId;
+    this.userinfo = this.$parent.globalData.userInfo;
+    this.id = item.id;
+    this.$apply()
+  }
+  onShow() {
+    this.checkUserWetherBuyCollage()
+    this.getDetail()
+    this.$apply()
+  }
+  onShareAppMessage(e) {
+    return {
+      title: this.collegeDetailEntity.Title,
+      desc: "发现一款很棒的课程，点进来看看吧",
+      path: "pages/detail?ShareUserId=" +
+        this.userinfo.UserId + "&id=" + this.id
+      // imageUrl: "qqq"
+    }
   }
 }
 

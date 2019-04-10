@@ -4,35 +4,28 @@
       <text class="card-title">{{title}}</text>
     </view>
     <view class="card-contain">
-      <view 
-      wx:for="{{showData}}" @tap="toUrl"
-      wx:for-index="index" 
-      wx:for-item="item"
-      wx:key="index">
-      <view class="card-img">
-        <text class="card-sign" wx:if="{{item.sign !== ''}}">{{item.sign}}</text>
-        <image  
-        src={{item.headimg}}
-        />
+      <view wx:for="{{showData}}" @tap="toUrl" data-id="{{item.Id}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+        <view class="card-img">
+          <text class="card-sign" wx:if="{{item.sign !== ''}}">{{item.sign}}</text>
+          <image src={{item.SmallImageUrl}} />
+        </view>
+        <view class="card-desc">
+          <text class="card-desc-title">{{item.Title}}</text>
+          <text class="card-desc-info">{{item.classTime}}</text>
+          <text class="card-desc-info">{{item.CollageType==0?'初级':item.CollageType==1?'中级':'高级'}}</text>
+          <van-icon class="icon-people" size="22rpx" color="#999999" name="manager">
+          </van-icon>
+          <text class="card-desc-info people-num">{{item.ViewCount}}</text>
+        </view>
       </view>
-      <view class="card-desc">
-        <text class="card-desc-title">{{item.title}}</text>
-        <text class="card-desc-info">{{item.classTime}}</text>
-        <text class="card-desc-info">{{item.type}}</text>
-        <van-icon class="icon-people" 
-        size="22rpx"
-        color="#999999"
-        name="manager">
-      </van-icon>
-      <text class="card-desc-info people-num">{{item.peopleNum}}</text>
     </view>
   </view>
-</view>
-</view>
 </template>
-
 <script>
 import wepy from 'wepy'
+import request from './../utils/request'
+import api from './../utils/api'
+
 
 export default class cardself extends wepy.component {
 
@@ -46,6 +39,30 @@ export default class cardself extends wepy.component {
 
   onLoad() {
     console.log(321321);
+    console.log(this.title);
+    if (this.title == "精品专栏") {
+      this.GetExcellentCollage()
+
+    } else {
+      this.getCollageList()
+
+    }
+
+  }
+  GetExcellentCollage() {
+    request.httpPostJY(api.service.getExcellentCollage, {}, (isOk, data) => {
+      console.log(data);
+      this.pageData = data.Data;
+      this.$apply()
+    })
+  }
+
+  getCollageList() {
+    request.httpPostJY(api.service.getCollageList, { CollageName: this.title, PageSiz: 5, PageIndex: 1 }, (isOk, data) => {
+      console.log(data)
+      this.pageData = data.Data;
+      this.$apply()
+    })
   }
 
   computed = {
@@ -57,47 +74,20 @@ export default class cardself extends wepy.component {
 
   data = {
     message: "免费专区",
-    pageData: [{
-      headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
-      title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
-      classTime: 30,
-      type: "初级",
-      peopleNum: 150,
-      sign: "开发先锋"
-    }, {
-      headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
-      title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
-      classTime: 30,
-      type: "初级",
-      peopleNum: 150,
-      sign: ""
-    }, {
-      headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
-      title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
-      classTime: 30,
-      type: "初级",
-      peopleNum: 150,
-      sign: ""
-    }, {
-      headimg: "https://unitefactory-column.oss-cn-hangzhou.aliyuncs.com/1550826866408/big.png",
-      title: "刘晓玲【外贸入门】30天打造优秀外贸业务员",
-      classTime: 30,
-      type: "初级",
-      peopleNum: 150,
-      sign: ""
-    }]
+    pageData: []
+
   }
 
   methods = {
-    toUrl() {
+    toUrl(e) {
       wepy.navigateTo({
-        url: 'detail'
+        url: 'detail?id=' + e.currentTarget.dataset.id
       })
     }
   }
 }
-</script>
 
+</script>
 <style lang="less">
 .index-page-item {
   width: 95%;
@@ -105,25 +95,29 @@ export default class cardself extends wepy.component {
   height: auto;
   overflow: hidden;
 }
+
 .card-nav {
   margin: 8px auto;
   height: 30rpx;
   line-height: 30rpx;
 }
+
 .card-title {
   font-size: 30rpx;
   font-weight: 600;
 }
 
-.card-contain > view {
+.card-contain>view {
   width: 49%;
   height: auto;
 }
+
 .card-img {
   width: 100%;
   height: 200rpx;
   position: relative;
 }
+
 .card-sign {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.5);
@@ -134,21 +128,26 @@ export default class cardself extends wepy.component {
   font-size: 20rpx;
   border-radius: 25rpx;
 }
-.card-contain > view {
+
+.card-contain>view {
   margin-bottom: 15rpx;
 }
-.card-contain > view image {
+
+.card-contain>view image {
   width: 100%;
   height: 100%;
   border-top-left-radius: 15rpx;
   border-top-right-radius: 15rpx;
 }
-.card-contain > view:nth-child(2n + 1) {
+
+.card-contain>view:nth-child(2n + 1) {
   float: left;
 }
-.card-contain > view:nth-child(2n) {
+
+.card-contain>view:nth-child(2n) {
   float: right;
 }
+
 .card-desc {
   width: 100%;
   height: auto;
@@ -158,6 +157,7 @@ export default class cardself extends wepy.component {
   border-bottom-left-radius: 15rpx;
   border-bottom-right-radius: 15rpx;
 }
+
 .card-desc-title {
   display: -webkit-box;
   font-size: 26rpx;
@@ -169,6 +169,7 @@ export default class cardself extends wepy.component {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .card-desc-info {
   font-size: 24rpx;
   color: #999999;
@@ -180,7 +181,9 @@ export default class cardself extends wepy.component {
   //   margin-left: 10rpx;
   top: 2rpx;
 }
+
 .people-num {
   margin-left: 10rpx;
 }
+
 </style>

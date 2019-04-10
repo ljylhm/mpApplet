@@ -15,8 +15,8 @@ var api = {
 
     login: `${host}/api/v1/user/login`,
 
-    registe:`${host}/api/v1/user/regist`,
-    
+    registe: `${host}/api/v1/user/regist`,
+
     getOpenid: `${host}/api/v1/wechat/GetOpenId/`,
 
     getCollageDetail: `${host}/api/v1/college/GetCollageDetail/`,
@@ -35,19 +35,19 @@ var api = {
 
     createOrder: `${host}/api/v1/wechat/WechatCreateOrder`,
 
-    DeleteTopic: `${host}/DeleteTopic`,
+    evaluate: `${host}/api/v1/college/AddCollageEvaluate`,
 
-    oneMore: `${host}/oneMore`,
+    getMyCollages: `${host}/api/v1/college/GetMyCollages`,
 
-    searchTopic: `${host}/searchTopic`,
+    getExcellentCollage: `${host}/api/v1/college/GetExcellentCollage`,
 
-    getColleges: `${host}/getColleges`,
+    buyCollage: `${host}/api/v1/recharge/BuyCollage`,
 
-    GetCollegeMember: `${host}/GetCollegeMember`,
+    checkUserWetherBuyCollage: `${host}/api/v1/college/CheckUserWetherBuyCollage`,
 
     img: `http://itedu.yzu.edu.cn/kygl/upload/portrait/`,
 
-    getGetProfile: `${host}/getGetProfile`,
+    getRechargeList: `${host}/api/v1/manager/recharge/GetRechargeList`,
 
     getGetResearch: `${host}/getGetResearch`,
 
@@ -67,7 +67,7 @@ var api = {
 
     PageNews: `${host}/PageNews`,
 
-}
+  }
 };
 
 module.exports = api;
