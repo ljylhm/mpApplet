@@ -1,30 +1,43 @@
 <template>
-  <view class="caontainer" style="height:{{heightTotal}}px;">
-    <view class="contain" style="height:{{height}}px;">
-      <view class="amount">选择充值金额</view>
+  <view class="caontainer" style="min-height:{{heightTotal}}px;">
+    <view class="contain" style="min-height:{{height}}px;">
+      <view class="charge"><text class="text-recharge" @tap="seeRechargeList">交易明细</text></view>
+      <view class="leftmoney">
+        <view class="money">
+          {{userInfo.Balance}}
+        </view>
+        <text class="font">账户余额（创币）</text>
+      </view>
+      <view class="amount">充值(1元=1创币)</view>
       <form bindsubmit="formSubmit" bindreset="formReset">
         <view @tap="click">
-          <input class="amount" type="Nume" value="{{amount}}" name="充值金额" />
+          <input class="amount" type="Numer" value="{{amount}}" placeholder="输入金额" name="充值金额" />
           <view style="display:flex;flex-wrap: row">
-            <button data-amount="20" class="btn">20元</button>
-            <button data-amount="50" class="btn">50元</button>
-            <button data-amount="100" class="btn">100元</button>
+            <button plain data-amount="20" class="btn-hover">20元</button>
+            <button plain data-amount="50" class="btn">50元</button>
+            <button plain data-amount="100" class="btn">100元</button>
           </view>
           <view style="display:flex;flex-wrap: row">
-            <button data-amount="200" class="btn">200元</button>
-            <button data-amount="500" class="btn">500元</button>
-            <button data-amount="1000" class="btn">1000元</button>
+            <button plain data-amount="200" class="btn">200元</button>
+            <button plain data-amount="500" class="btn">500元</button>
+            <button plain data-amount="1000" class="btn">1000元</button>
           </view>
         </view>
         <button class='btn1' form-type="submit">
           <view>去充值</view>
         </button>
       </form>
-      <van-toast id="van-toast" />
-      <van-notify id="custom-selector" />
-      <van-notify id="van-notify" />
+      <view class="charge-detail">
+        <view>充值说明：</view>
+        <view>1、创币为虚拟币，充值后不会过期，但无法提现、退款或转赠他人</view>
+        <view>2、创币可直接用于购买小程序内容</view>
+        <view>3、充值过程中遇到问题，可以拨打客服电话：13000000000</view>
+      </view>
     </view>
   </view>
+  <van-toast id="van-toast" />
+  <van-notify id="custom-selector" />
+  <van-notify id="van-notify" />
 </template>
 <script>
 import wepy from 'wepy'
@@ -48,7 +61,6 @@ export default class pay extends wepy.page {
       "van-tag": "../components/vant/tag/index",
       "van-toast": "../components/vant/toast/index",
       "van-notify": "../components/vant/notify/index"
-
     }
   }
   components = {}
@@ -77,11 +89,21 @@ export default class pay extends wepy.page {
     /*formSubmit(e) {
       console.log(e)
     },*/
+
+    seeRechargeList() {
+      wepy.navigateTo({
+        url: 'moneyList'
+      })
+    },
     formSubmit(e) {
+      console.log(e)
       console.log(e.detail.value['充值金额'])
       var that = this;
-      that.amount = e.detail.value['充值金额']
-      if (that.amount == "" || that.amount == 0) {
+      if (e.detail.value['充值金额']) {
+        that.amount = e.detail.value['充值金额']
+      }
+
+      if (!that.amount) {
         // wx.showToast({ title: "金额错误", icon: "none" })
         Notify('金额错误');
         return
@@ -139,18 +161,17 @@ export default class pay extends wepy.page {
     var that = this
     console.log(that.$parent.globalData.deviceInfo.windowHeight)
     that.heightTotal = that.$parent.globalData.deviceInfo.screenHeight - 60
-    that.height = that.$parent.globalData.deviceInfo.screenHeight - 80
+    that.height = that.$parent.globalData.deviceInfo.windowHeight + 30
+
     console.log("ddddddd", db.Get("userInfo"))
-    console.log(that.userInfo.UserId)
+
     that.userInfo = db.Get("userInfo")
+    that.userInfo.Balance = that.userInfo.Balance.toFixed(2)
     if (!that.userInfo.UserId) {
-      Toast.fail('失败');
+      Toast.fail('网络在开小差');
     }
+    console.log(that.userInfo.Balance)
     that.$apply();
-
-
-
-
 
   }
 }
@@ -172,34 +193,91 @@ export default class pay extends wepy.page {
 .btn {
   width: 200rpx;
   margin-top: 30rpx;
-  background-color: burlywood;
   color: white;
-  border-radius: 30rpx;
+  border-radius: 10rpx;
   height: 100rpx;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
+  border: 1px solid burlywood !important
 }
+
+.btn-hover {
+  width: 200rpx;
+  margin-top: 30rpx;
+  color: white !important;
+  border-radius: 10rpx;
+  height: 100rpx;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid burlywood !important;
+  background-color: burlywood !important;
+}
+
 
 .amount {
   padding-left: 30rpx;
   padding-top: 30rpx;
-
-
+  padding-top: 30rpx;
+  font-size: 80%
 }
 
 .btn1 {
   width: 80%;
-  bottom: 60rpx;
+  margin-top: 50rpx;
   background-color: burlywood;
   color: white;
-  border-radius: 98rpx;
+  border-radius: 10rpx;
   margin-left: 35rpx;
   position: absolute;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
+
+.leftmoney {
+  text-align: center;
+  margin-top: 60rpx;
+  margin-bottom: 30rpx
+}
+
+.font {
+  margin-top: 20rpx;
+  font-size: 80%
+}
+
+.money {
+  margin-bottom: 20rpx;
+  font-weight: bold;
+  color: #FF4500;
+  font-size: 120%;
+}
+
+.charge {
+  text-align: right;
+  font-size: 80%;
+  border-radius: 5rpx;
+  color: #FFFFFF;
+  padding-left: 40rpx;
+}
+
+.text-recharge {
+  display: inline-block;
+  background-color: #D3D3D3;
+  border-radius: 10rpx;
+  padding: 3rpx 8rpx 3rpx 8rpx;
+  margin-top: 10rpx;
+  margin-right: 8rpx;
+}
+
+.charge-detail {
+  margin-left: 20rpx;
+  margin-top: 200rpx;
+  color: #707070;
+  font-size: 80%
+}
+
+.click-btn {}
 
 </style>

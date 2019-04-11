@@ -127,7 +127,7 @@ import db from '../utils/db'
 
 export default class test extends wepy.page {
   config = {
-    navigationBarTitleText: '雨课详情',
+    navigationBarTitleText: '课程详情',
     usingComponents: {
       "van-tab": "../components/vant/tab/index",
       "van-tabs": "../components/vant/tabs/index",

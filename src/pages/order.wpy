@@ -66,6 +66,9 @@ export default class test extends wepy.page {
       para.OpenId = userinfo.OpenId;
       para.CollageId = +para.CollageId
       console.log(para)
+      if (para.ShareUserId === "undefined") {
+        para.ShareUserId = 0
+      }
       request.httpPostJY(api.service.buyCollage, para, (isOk, data) => {
 
         console.log(data)

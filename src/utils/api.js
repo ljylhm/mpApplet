@@ -49,7 +49,8 @@ var api = {
 
     getRechargeList: `${host}/api/v1/manager/recharge/GetRechargeList`,
 
-    getGetResearch: `${host}/getGetResearch`,
+    getUserRechargeList
+: `${host}/api/v1/recharge/GetUserRechargeList`,
 
     bindinfo: `${host}/bind`,
 

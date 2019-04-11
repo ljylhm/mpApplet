@@ -1,0 +1,104 @@
+<template>
+  <view class="contain" style="min-height:{{minheight}}px">
+    <block wx:for="{{list}}"></block>
+    <van-cell-group title="分组2">
+      <van-cell custom-class="body" title="账户充值" value-class="value" value="+9000币" size="large" label-class="label" label="4月12日 20:35" />
+    </van-cell-group>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import goodsItem from '../components/goodsItem'
+import List from '../components/list' // aliasFields example
+import helper from '../utils/helper'
+import api from '../utils/api'
+import request from '../utils/request'
+import db from "./../utils/db"
+import toast from "./../utils/toast"
+import Toast from '../components/vant/toast/toast'
+import Notify from '../components/vant/notify/notify'
+export default class pay extends wepy.page {
+  config = {
+    navigationBarTitleText: '交易明细',
+    navigationBarBackgroundColor: "#F7F7F7",
+    usingComponents: {
+      "van-button": "../components/vant/button/index",
+      "van-card": "../components/vant/card/index",
+      "van-rate": "../components/vant/rate/index",
+      "van-tag": "../components/vant/tag/index",
+      "van-toast": "../components/vant/toast/index",
+      "van-notify": "../components/vant/notify/index",
+      "van-cell": "../components/vant/cell/index",
+      "van-cell-group": "../components/vant/cell-group/index"
+
+    }
+  }
+  components = {}
+
+
+
+  data = {
+    PageIndex: 0,
+    userinfo: {},
+    minheight: 1000
+  }
+
+  computed = {
+
+  }
+
+  watch = {
+
+  }
+
+
+  methods = {
+
+  }
+
+  getRechargeList() {
+
+  }
+  onLoad() {
+    var that = this
+    console.log(that.$parent.globalData.deviceInfo.windowHeight)
+    that.minheight = that.$parent.globalData.deviceInfo.screenHeight - 30
+    var userinfo = this.$parent.globalData.userInfo;
+    var userinfo = db.Get("userInfo")
+    this.PageIndex = this.PageIndex + 1;
+    request.httpPostJY(api.service.getUserRechargeList, { PageSiz: 10, PageIndex: this.PageIndex, userId: userinfo.UserId, OpenId: userinfo.OpenId, payType: 0 }, (isOk, data) => {
+      console.log(data)
+      //that.list = data.Data;
+
+      that.$apply()
+    })
+    that.$apply()
+
+
+  }
+}
+
+</script>
+<style lang="less">
+.contain {
+  background-color: #F7F7F7;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+}
+
+.body {
+  border-radius: 15rpx;
+}
+
+.label {
+  font-size: 80% !important;
+}
+
+.value {
+  position: absolute;
+  top: 50%;
+  left: 80%;
+  transform: translate(-50%, -50%)
+}
+
+</style>

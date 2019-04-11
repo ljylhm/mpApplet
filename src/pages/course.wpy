@@ -1,4 +1,8 @@
 <template>
+  <view wx:if="{{list.length==0}}" class="img-contain">
+    <image class="img" src="/image/frown.png"></image>
+    <view class="subTitle">您还没有购买课程哦~</view>
+  </view>
   <view class="contain" wx:for="{{list}}" wx:key="id">
     <van-card　@tap="toUrl" data-id="{{item.Id}}" thumb-class="picture" custom-class="custom" thumb="{{ item.SmallImageUrl }}" thumb-mode="aspectFit">
       <view slot="title">
@@ -60,7 +64,7 @@ export default class Index extends wepy.page {
     this.PageIndex = this.PageIndex + 1;
     request.httpPostJY(api.service.getMyCollages, { PageSiz: 10, PageIndex: this.PageIndex, userId: userinfo.UserId, OpenId: userinfo.OpenId }, (isOk, data) => {
       console.log(data)
-      that.list = data.Data;
+      that.list = that.list.concat(data.Data);
       console.log(that.list)
       that.$apply()
     })
@@ -110,6 +114,16 @@ export default class Index extends wepy.page {
 
 .tag {
   margin-right: 10rpx;
+}
+
+.img {
+  width: 100rpx;
+  height: 100rpx
+}
+
+.img-contain {
+  text-align: center;
+  margin-top: 80rpx;
 }
 
 </style>

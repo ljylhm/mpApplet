@@ -2,7 +2,6 @@
   .picture {
   margin-left: -15rpx;
   border-radius: 15rpx;
-  border-radius: 8rpx;
   margin-top:-30rpx
 }
 
@@ -69,6 +68,9 @@
 .weui-loadmore__tips{
   display: inline-block;
   vertical-align: middle;
+}
+.custom{
+
 }
 </style>
 <template>
