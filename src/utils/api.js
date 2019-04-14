@@ -49,8 +49,7 @@ var api = {
 
     getRechargeList: `${host}/api/v1/manager/recharge/GetRechargeList`,
 
-    getUserRechargeList
-: `${host}/api/v1/recharge/GetUserRechargeList`,
+    getUserRechargeList: `${host}/api/v1/recharge/GetUserRechargeList`,
 
     bindinfo: `${host}/bind`,
 
@@ -68,7 +67,7 @@ var api = {
 
     PageNews: `${host}/PageNews`,
 
-  }
+}
 };
 
 module.exports = api;

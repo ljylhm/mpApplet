@@ -30,90 +30,96 @@
                   <van-rate value="{{ item.Scroe }}" size=14 count=5 readonly></van-rate>
                   <view>{{item.Content}}</view>
                 </view>
-            </view>
-            </van-cell>
-    </view>
-    </van-cell-group>
-    <view class="see-rate" @tap="seerate">查看全部评价({{collegeDetailEntity.collageEvaluateEntities?collegeDetailEntity.collageEvaluateEntities.length:'0'}})</view>
-    <van-cell title-class="rate-title" title="课程讲师"></van-cell>
-    <van-cell-group>
-      <view wx:for="{{collegeDetailEntity.teacherInfoEntity}}" wx:key="name" wx:for-item="item">
-        <van-cell>
-          <view slot="icon">
-            <image class="teacher-icon" src="{{item.LogoUrl}}" />
-          </view>
-          <view slot="title">
-            <view>{{item.Name}} </view>
-            <view class="teacher-desc">{{item.Title}}</view>
-            <br />
-            <view>{{item.Tags}}</view>
-          </view>
-        </van-cell>
-      </view>
-    </van-cell-group>
-    <van-cell custom-class="class-contain" title-class="rate-title" border="{{ false }}" title="课程内容"></van-cell>
-    <van-cell border="{{ false }}">
-      <view slot="title">
-        <wxparser rich-text="{{collegeDetailEntity.CollageContent}}"></wxparser>
-      </view>
-    </van-cell>
-    </van-tab>
-    <van-tab title="课程目录">
-      <scroll-view scroll-y="true" style="height: 800rpx;">
-        <view Slot="Tab">
-          <view wx:for="{{collegeDetailEntity.collageClassEntities}}" wx:key="id" wx:for-item="item">
-            <van-panel>
-              <view data-item="{{item}}" @tap="clickitem" slot="header" class="detail-item">
-                <image class="detail_header_img" src="../image/video.png"></image>
-                <view class="detail_header_title">{{item.ClassName}}</view>
-                <view class="detail_header_time">时长:{{item.ClassTimeLong}}</view>
               </view>
-            </van-panel>
+            </van-cell>
           </view>
-        </view>
-      </scroll-view>
-    </van-tab>
-    <van-tab title="评价">
-      <view class="intro_contain">
-        <van-cell title-class="rate-title" title="综合评价" value-class="rate-number" value="10.00"></van-cell>
-        <van-cell-group border="{{ false }}">
-          <view wx:for="{{collegeDetailEntity.collageEvaluateEntities}}" wx:key="name" wx:for-item="item">
-            <van-cell border="{{ false }}">
+        </van-cell-group>
+        <view class="see-rate" @tap="seerate">查看全部评价({{collegeDetailEntity.collageEvaluateEntities?collegeDetailEntity.collageEvaluateEntities.length:'0'}})</view>
+        <van-cell title-class="rate-title" title="课程讲师"></van-cell>
+        <van-cell-group>
+          <view wx:for="{{collegeDetailEntity.teacherInfoEntity}}" wx:key="name" wx:for-item="item">
+            <van-cell>
               <view slot="icon">
-                <image class="advice-icon" src="{{item.LogoUrl}}"></image>
+                <image class="teacher-icon" src="{{item.LogoUrl}}" />
               </view>
               <view slot="title">
-                <view>{{item.UserName}} </view>
-                <view><text class="rate-font">评分</text></view>
-                <van-rate value="{{ item.Scroe }}" size=14 count=5 readonly></van-rate>
-                <view>{{item.Content}}</view>
+                <view>{{item.Name}} </view>
+                <view class="teacher-desc">{{item.Title}}</view>
+                <br />
+                <view>{{item.Tags}}</view>
               </view>
+            </van-cell>
           </view>
-          </van-cell>
+        </van-cell-group>
+        <van-cell custom-class="class-contain" title-class="rate-title" border="{{ false }}" title="课程内容"></van-cell>
+        <van-cell border="{{ false }}">
+          <view slot="title">
+            <wxparser rich-text="{{collegeDetailEntity.CollageContent}}"></wxparser>
+          </view>
+        </van-cell>
+      </van-tab>
+      <van-tab title="课程目录">
+        <scroll-view scroll-y="true" style="height: 800rpx;">
+          <view Slot="Tab">
+            <view wx:for="{{collegeDetailEntity.collageClassEntities}}" wx:key="id" wx:for-item="item">
+              <van-panel>
+                <view data-item="{{item}}" @tap="clickitem" slot="header" class="detail-item">
+                  <image class="detail_header_img" src="../image/video.png"></image>
+                  <view class="detail_header_title">{{item.ClassName}}</view>
+                  <view class="detail_header_time">时长:{{item.ClassTimeLong}}</view>
+                </view>
+              </van-panel>
+            </view>
+          </view>
+        </scroll-view>
+      </van-tab>
+      <van-tab title="评价">
+        <view class="intro_contain">
+          <van-cell title-class="rate-title" title="综合评价" value-class="rate-number" value="10.00"></van-cell>
+          <van-cell-group border="{{ false }}">
+            <view wx:for="{{collegeDetailEntity.collageEvaluateEntities}}" wx:key="name" wx:for-item="item">
+              <van-cell border="{{ false }}">
+                <view slot="icon">
+                  <image class="advice-icon" src="{{item.LogoUrl}}"></image>
+                </view>
+                <view slot="title">
+                  <view>{{item.UserName}} </view>
+                  <view><text class="rate-font">评分</text></view>
+                  <van-rate value="{{ item.Scroe }}" size=14 count=5 readonly></van-rate>
+                  <view>{{item.Content}}</view>
+                </view>
+              </view>
+            </van-cell>
+          </view>
+        </van-cell-group>
       </view>
-      </van-cell-group>
-  </view>
-  </van-tab>
+    </van-tab>
   </van-tabs>
+</view>
+<van-toast id="van-toast" />
+<van-goods-action>
+  <van-goods-action-icon icon="chat-o" text="客服" bind:click="onClickIcon" />
+  <van-goods-action-button data-share="{{userinfo}}" open-type="share" text="分享赚佣" type="warning" />
+  <van-goods-action-button wx:if="{{!isBuy}}" text="立即购买" bind:click="buy" />
+  <van-goods-action-button wx:if="{{isBuy}}" text="评论" bind:click="rate" />
+</van-goods-action>
+<van-popup position="bottom" show="{{ show }}" bind:close="onClose">
+  <view class="rate">
+    <van-rate value="{{ rateValue }}" bind:change="onChange" />
   </view>
-  <van-toast id="van-toast" />
-  <van-goods-action>
-    <van-goods-action-icon icon="chat-o" text="客服" bind:click="onClickIcon" />
-    <van-goods-action-button data-share="{{userinfo}}" open-type="share" text="分享赚佣" type="warning" />
-    <van-goods-action-button wx:if="{{!isBuy}}" text="立即购买" bind:click="buy" />
-    <van-goods-action-button wx:if="{{isBuy}}" text="评论" bind:click="rate" />
-  </van-goods-action>
-  <van-popup position="bottom" show="{{ show }}" bind:close="onClose">
-    <view class="rate">
-      <van-rate value="{{ rateValue }}" bind:change="onChange" />
-    </view>
-    <van-cell-group>
-      <van-field bind:blur="complete" data-rate="{{message}}" value="{{ message }}" type="text" placeholder="说说课程的亮点和不足吧" border="{{ true }}" use-button-slot>
-        <van-button slot="button" size="small" type="primary" data-rate="{{ message }}" bind:click="sendRate">发表</van-button>
-      </van-field>
-    </van-cell-group>
-  </van-popup>
-  </view>
+  <van-cell-group>
+    <van-field bind:blur="complete" data-rate="{{message}}" value="{{ message }}" type="text" placeholder="说说课程的亮点和不足吧" border="{{ true }}" use-button-slot>
+      <van-button slot="button" size="small" type="primary" data-rate="{{ message }}" bind:click="sendRate">发表</van-button>
+    </van-field>
+  </van-cell-group>
+</van-popup>
+</view>
+<modal title="提示" wx:if="{{hiddenContant}}" bindconfirm="modalConfirm" bindcancel="modalCandel">
+  <view>
+    <image class="image" src="../image/webwxgetmsgimg.jpg" mode='aspectFill'></image>
+
+  </modal>
+
 </template>
 <script>
 import wepy from 'wepy'
@@ -164,7 +170,8 @@ export default class test extends wepy.page {
     message: "",
     id: "",
     isBuy: false,
-    userinfo: {}
+    userinfo: {},
+    hiddenContant:false
 
   }
 
@@ -176,22 +183,32 @@ export default class test extends wepy.page {
 
   methods = {
     onClickIcon() {
-      wx.showShareMenu({ withShareTicket: false })
+      console.log("客服");
+      this.hiddenContant=true;
+      this.$apply()
+    },
+    hiddenContant(){
+      this.hiddenContant=false;
+      this.$apply()
+    },
+    modalCandel(){
+      this.hiddenContant=false;
+      this.$apply()
     },
     clickitem(e) {
 
       console.log(e.currentTarget.dataset.item);
       let item = e.currentTarget.dataset.item
-
+      if (item.VadioUrl !== "") {
+        this.videourl = item.VadioUrl;
+        this.showBanner = false;
+        wx.setKeepScreenOn({
+          keepScreenOn: true
+        })
+      }
       if (item.IsFree == 1) {
         //直接观看
-        if (item.VadioUrl !== "") {
-          this.videourl = item.VadioUrl;
-          this.showBanner = false;
-          wx.setKeepScreenOn({
-            keepScreenOn: true
-          })
-        }
+
       } else {
         //收费
         if (item.IsFreeForVip == 1) {
@@ -199,6 +216,7 @@ export default class test extends wepy.page {
           //vip免费
         } else {
           //必须收费
+
         }
       }
 
@@ -265,6 +283,10 @@ export default class test extends wepy.page {
     request.httpGetJY(api.service.getCollageDetail + this.id, {},
       (isOk, data) => {
         console.log(data)
+        wx.showLoading({
+          title: '加载中',
+        })
+
         that.collegeDetailEntity = data.Data;
         let e = data.Data.teacherInfoEntity;
         that.collegeDetailEntity.teacherInfoEntity = [data.Data.teacherInfoEntity];
@@ -272,10 +294,12 @@ export default class test extends wepy.page {
           if (that.collegeDetailEntity.collageEvaluateEntities.length > 2) {
             that.adviceshort = data.Data.collageEvaluateEntities.slice(0, 1);
           } else {
-            this.adviceshort = data.Data.collageEvaluateEntities;
+            that.adviceshort = data.Data.collageEvaluateEntities;
           }
+        }else{
+          adviceshort=[]
         }
-
+        wx.hideLoading()
         that.$apply();
       })
   }
@@ -302,26 +326,29 @@ export default class test extends wepy.page {
   }
   onLoad(item) {
     var that = this;
-    console.log(item)
     console.log(db.Get("token"))
     this.ShareUserId = item.ShareUserId;
     this.userinfo = this.$parent.globalData.userInfo;
     this.id = item.id;
+    this.getDetail()
     this.$apply()
   }
   onShow() {
     this.checkUserWetherBuyCollage()
-    this.getDetail()
-    this.$apply()
+
   }
   onShareAppMessage(e) {
     return {
       title: this.collegeDetailEntity.Title,
       desc: "发现一款很棒的课程，点进来看看吧",
       path: "pages/detail?ShareUserId=" +
-        this.userinfo.UserId + "&id=" + this.id
+      this.userinfo.UserId + "&id=" + this.id
       // imageUrl: "qqq"
     }
+  }
+  onHide(){
+    this.collegeDetailEntity={};
+    this.$apply()
   }
 }
 

@@ -1,9 +1,10 @@
 <template>
   <view class="contain" style="min-height:{{minheight}}px">
-    <block wx:for="{{list}}"></block>
-    <van-cell-group title="分组2">
-      <van-cell custom-class="body" title="账户充值" value-class="value" value="+9000币" size="large" label-class="label" label="4月12日 20:35" />
-    </van-cell-group>
+    <block wx:for="{{list}}" wx:key="id">
+      <van-cell-group title="分组2">
+        <van-cell custom-class="body" title="{{item.payType==1?'充值':item.payType==2?'购买课程消费':item.payType==3?'分享返利':'优惠券兑换'}}" value-class="value" value="{{item.payType==2?'-':'+'}}{{item.rechageAmount/100}}币" size="large" label-class="label" label="{{item.createTime}}" />
+      </van-cell-group>
+    </block>
   </view>
 </template>
 <script>
@@ -40,7 +41,8 @@ export default class pay extends wepy.page {
   data = {
     PageIndex: 0,
     userinfo: {},
-    minheight: 1000
+    minheight: 1000,
+    list:[]
   }
 
   computed = {
@@ -57,25 +59,32 @@ export default class pay extends wepy.page {
   }
 
   getRechargeList() {
-
+    var that=this;
+    this.PageIndex = this.PageIndex + 1;
+    var userinfo = this.$parent.globalData.userInfo;
+    var userinfo = db.Get("userInfo")
+    request.httpPostJY(api.service.getUserRechargeList, { PageSiz: 10, PageIndex: this.PageIndex, userId: userinfo.UserId, OpenId: userinfo.OpenId, payType: 0 }, (isOk, data) => {
+    //  console.log(data)
+    that.list =that.list.concat(data.Data)
+    console.log(that.list)
+    that.$apply()
+  })
   }
   onLoad() {
     var that = this
     console.log(that.$parent.globalData.deviceInfo.windowHeight)
     that.minheight = that.$parent.globalData.deviceInfo.screenHeight - 30
-    var userinfo = this.$parent.globalData.userInfo;
-    var userinfo = db.Get("userInfo")
-    this.PageIndex = this.PageIndex + 1;
-    request.httpPostJY(api.service.getUserRechargeList, { PageSiz: 10, PageIndex: this.PageIndex, userId: userinfo.UserId, OpenId: userinfo.OpenId, payType: 0 }, (isOk, data) => {
-      console.log(data)
-      //that.list = data.Data;
-
-      that.$apply()
-    })
+    
+    this.getRechargeList();
     that.$apply()
 
 
   }
+  onReachBottom(e){
+    console.log("ssssssss");
+    this.getRechargeList();
+  }
+
 }
 
 </script>
@@ -97,8 +106,11 @@ export default class pay extends wepy.page {
 .value {
   position: absolute;
   top: 50%;
-  left: 80%;
-  transform: translate(-50%, -50%)
+  left: 78%;
+  transform: translate(-50%, -50%);
+  width:200rpx;
+
+
 }
 
 </style>

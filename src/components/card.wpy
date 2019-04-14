@@ -15,7 +15,9 @@
           <text class="card-desc-info">{{item.CollageType==0?'初级':item.CollageType==1?'中级':'高级'}}</text>
           <van-icon class="icon-people" size="22rpx" color="#999999" name="manager">
           </van-icon>
-          <text class="card-desc-info people-num">{{item.ViewCount}}</text>
+          <text class="card-desc-info people-num">{{item.ViewCountitem}}</text>
+          <text class="card-desc-info price">￥{{item.SalePrice/100}}</text><span wx:if="{{item.CollagePrice!=item.PayAmount}}" style="text-decoration:line-through;color:#707070;font-size: 24rpx">￥{{item.CollagePrice/100}}</span>
+
         </view>
       </view>
     </view>
@@ -33,11 +35,13 @@ export default class cardself extends wepy.component {
     title: String,
     size: {
       type: [Number, String],
-      default: 4
-    }
+      default: 6
+    },
+    pageData: [{},{},{},{}],
+    showData:[]
   }
 
-  onLoad() {
+  /*onLoad() {
     console.log(321321);
     console.log(this.title);
     if (this.title == "精品专栏") {
@@ -64,7 +68,7 @@ export default class cardself extends wepy.component {
       this.$apply()
     })
   }
-
+  */
   computed = {
     showData() {
       console.log("xxxxxx", this.size);
@@ -74,7 +78,8 @@ export default class cardself extends wepy.component {
 
   data = {
     message: "免费专区",
-    pageData: []
+    
+    pageData: [{},{},{},{}],
 
   }
 
@@ -105,12 +110,14 @@ export default class cardself extends wepy.component {
 .card-title {
   font-size: 30rpx;
   font-weight: bold;
-  font-size: 101%
+  font-size: 101%;
+  margin:10rpx 2rpx 10rpx 0rpx;
 }
 
 .card-contain>view {
   width: 49%;
-  height: auto;
+  height: 350rpx;
+  margin-top:8rpx;
 }
 
 .card-img {
@@ -151,7 +158,7 @@ export default class cardself extends wepy.component {
 
 .card-desc {
   width: 100%;
-  height: auto;
+  height: 150rpx;
   box-sizing: border-box;
   padding: 12rpx;
   background-color: #fff;
@@ -169,12 +176,15 @@ export default class cardself extends wepy.component {
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
+  height:80rpx;
+
 }
 
 .card-desc-info {
   font-size: 24rpx;
   color: #999999;
-  margin-right: 15rpx;
+  margin-right: 20rpx;
+
 }
 
 .icon-people {
@@ -185,6 +195,12 @@ export default class cardself extends wepy.component {
 
 .people-num {
   margin-left: 10rpx;
+}
+.price{
+  font-weight: bold;
+  color: #FF4500;
+  font-size: 88%;
+
 }
 
 </style>

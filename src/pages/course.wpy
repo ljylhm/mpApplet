@@ -3,20 +3,23 @@
     <image class="img" src="/image/frown.png"></image>
     <view class="subTitle">您还没有购买课程哦~</view>
   </view>
-  <view class="contain" wx:for="{{list}}" wx:key="id">
-    <van-card　@tap="toUrl" data-id="{{item.Id}}" thumb-class="picture" custom-class="custom" thumb="{{ item.SmallImageUrl }}" thumb-mode="aspectFit">
-      <view slot="title">
-        <view class="title">
-          <van-tag wx:if="{{item.ViewCount>0}}" custom-class="tag" type="danger">热门 </van-tag>{{item.Title}}
-        </view>
-        <view class="subTitle">{{item.Description}}</view>
-        <view class="mintitle">{{item.ViewCount}}人·{{item.ViewCount}}在学</view>
+  <view style="background-color:#F7F7F7">
+    <view class="contain" wx:for="{{list}}" wx:key="id">
+      <van-card　@tap="toUrl" data-id="{{item.Id}}" thumb-class="picture" custom-class="custom" thumb="{{ item.SmallImageUrl }}" >
+        <view slot="title" style="margin-left:-5rpx;margin-top:5px;">
+          <view class="title">
+            {{item.Title}}
+          </view>
+          <view class="subTitle">{{item.Description}}</view>
+          <view class="mintitle">{{item.ViewCount}}人·{{item.ViewCount}}在学  <text class="price">￥{{item.SalePrice/100}}</text><span wx:if="{{item.CollagePrice!=item.PayAmount}}" style="text-decoration:line-through;color:#707070">￥{{item.CollagePrice/100}}</span></view>
         <!-- <view class="desc">
           查看回放
         </view> -->
       </view>
+      
     </van-card>
   </view>
+</view>
 </template>
 <script>
 import wepy from 'wepy'
@@ -78,35 +81,53 @@ export default class Index extends wepy.page {
 
 </script>
 <style lang="less">
+.contain{
+ background-color:#ffffff;
+ margin-left:20rpx;
+ margin-right:20rpx;
+ margin-top:10rpx;
+ border-radius:15rpx;
+
+}
 .picture {
   margin-left: -15rpx;
   border-radius: 15rpx;
-  border-radius: 8rpx;
-  margin-top: -30rpx
+
+}
+.price{
+  font-weight: bold;
+  color: #FF4500;
+  font-size: 110%;
+  margin-left:40rpx;
+  margin-right:20rpx;
 }
 
+.out {
+  border-radius: 15rpx;
+  background-image: 'https://img.cifnews.com/dev/20180521/91f7d1f55c5e4b6a8642dea53c57546f.jpg';
+}
 .title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 140%;
+  font-size: 120%;
 }
-
 .subTitle {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 120%;
+  font-size: 98%;
   color: #707070;
 }
-
 .mintitle {
-  font-size: 100%;
+  font-size: 98%;
   color: #707070;
-}
+  margin-left:10rpx;
+  margin-top:40rpx;
 
+}
 .desc {
-  font-size: 90%;
+  font-size: 98%;
   background-color: #eeeeee;
   border-radius: 4rpx;
   display: inline-block;
@@ -115,7 +136,39 @@ export default class Index extends wepy.page {
 .tag {
   margin-right: 10rpx;
 }
-
+.weui-loadmore__tips_in-line{
+  position: relative;
+  top:-.9em;
+  padding:0 .55em;
+  background-color: #FFFFFF;
+  color:#999999;
+}
+.weui-loadmore__tips{
+  display: inline-block;
+  vertical-align: middle;
+}
+.weui-loadmore{
+  width: 65%;
+  margin:1.5em auto;
+  line-height: 1.6em;
+  font-size:14px;
+  text-align: center;
+}
+.weui-loadmore_line{
+  border-top:1px solid #E5E5E5;
+  margin-top:2.4em;
+}
+.weui-loadmore{
+  width: 65%;
+  margin:1.5em auto;
+  line-height: 1.6em;
+  font-size:14px;
+  text-align: center;
+}
+.weui-loadmore__tips{
+  display: inline-block;
+  vertical-align: middle;
+}
 .img {
   width: 100rpx;
   height: 100rpx

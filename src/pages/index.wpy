@@ -7,7 +7,7 @@
         </block>
       </scroll-view>
     </view>
-    <view style="margin-top:60rpx">
+    <view style="margin-top:80rpx">
       <swiper class="swiper-card" indicator-dots="{{true}}" autoplay>
         <block class="swiper-container" wx:for="{{bannerList}}" wx:for-index="index" wx:for-item="item" wx:key="id">
           <swiper-item class="displex-center" data-id="{{item.Id}}" @tap="toUrl1">
@@ -20,14 +20,12 @@
       </swiper>
     </view>
     <view>
-      <cardself :title="area1" :size="num1"></cardself>
+      <cardself :title="area1" :size="num1" :pageData.sync="ExcellentCollageList"></cardself>
     </view>
     <view>
-      <cardself1 :title="area2" :size="num2"></cardself1>
+      <cardself1 :title="area2" :size="num2" :pageData.sync="DaKaCollageList"></cardself1>
     </view>
-    <view>
-      <cardservice></cardservice>
-    </view>
+
   </view>
 </template>
 <script>
@@ -62,11 +60,12 @@ export default class Index extends wepy.page {
   data = {
     bannerList: [],
     groups: [],
-    area2: "免费专区",
+    area2: "大咖课",
     area1: "精品专栏",
     num1: 4,
-    num2: 2,
-    Appserect: "8e69a523943daff4a253d6a57a7c0cc1"
+    num2: 6,
+    ExcellentCollageList:[{},{},{},{}],
+    DaKaCollageList:[{},{},{},{}]
   }
 
   computed = {
@@ -113,16 +112,15 @@ export default class Index extends wepy.page {
     var that = this;
 
     //console.log("进入了index",that.$parent.globalData.userInfo)
-    request.httpGetOpenid(function(data) {
-      that.$parent.globalData.userInfo = db.Get("userInfo");
-      console.log("赋值")
-    })
+
 
     request.httpGetJY(api.service.getHomeBannerInfo, {}, (isOk, data) => {
       let result = data;
       if (result.Code == "200") {
         console.log("xxxxsssss", result.Data)
-        that.bannerList = result.Data;
+        that.bannerList = result.BannerList;
+        that.ExcellentCollageList=result.ExcellentCollageList;
+        that.DaKaCollageList=result.DaKaCollageList;
         that.$apply()
       }
     })
@@ -188,12 +186,14 @@ page {
   position: fixed;
   z-index: 1000;
   top: 0%;
+
 }
 
 .navtab-contain {
   width: 100%;
   height: 60rpx;
   background-color: rgba(255, 255, 255, 1);
+  padding-bottom:10rpx;
 }
 
 .navtab-item {

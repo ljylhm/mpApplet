@@ -13,14 +13,14 @@
         <view @tap="click">
           <input class="amount" type="Numer" value="{{amount}}" placeholder="输入金额" name="充值金额" />
           <view style="display:flex;flex-wrap: row">
-            <button plain data-amount="20" class="btn-hover">20元</button>
-            <button plain data-amount="50" class="btn">50元</button>
-            <button plain data-amount="100" class="btn">100元</button>
+            <button plain data-amount="20" class="{{amount==20?'btn-hover':'btn'}}">20元</button>
+            <button plain data-amount="50" class="{{amount==50?'btn-hover':'btn'}}">50元</button>
+            <button plain data-amount="100" class="{{amount==100?'btn-hover':'btn'}}">100元</button>
           </view>
           <view style="display:flex;flex-wrap: row">
-            <button plain data-amount="200" class="btn">200元</button>
-            <button plain data-amount="500" class="btn">500元</button>
-            <button plain data-amount="1000" class="btn">1000元</button>
+            <button plain data-amount="200" class="{{amount==200?'btn-hover':'btn'}}">200元</button>
+            <button plain data-amount="500" class="{{amount==500?'btn-hover':'btn'}}">500元</button>
+            <button plain data-amount="1000" class="{{amount==1000?'btn-hover':'btn'}}">1000元</button>
           </view>
         </view>
         <button class='btn1' form-type="submit">
@@ -71,7 +71,8 @@ export default class pay extends wepy.page {
     height: 480,
     heightTotal: 504,
     userInfo: {},
-    amount: ""
+    amount: "",
+    currentMoney:""
   }
 
   computed = {
@@ -141,7 +142,9 @@ export default class pay extends wepy.page {
             paySign: data.paySign,
             success(res) {
               Toast.success('支付成功');
-              request.httpGetOpenid();
+              request.httpGetOpenid((d)=>{
+                wx.navigateBack()
+              });
             },
             fail(res) {
               Toast.fail('失败');
@@ -151,7 +154,8 @@ export default class pay extends wepy.page {
       })
     },
     click(e) {
-      console.log(e.target.dataset.amount);
+
+      console.log(e);
       this.amount = e.target.dataset.amount;
       this.$apply();
     }
@@ -166,7 +170,7 @@ export default class pay extends wepy.page {
     console.log("ddddddd", db.Get("userInfo"))
 
     that.userInfo = db.Get("userInfo")
-    that.userInfo.Balance = that.userInfo.Balance.toFixed(2)
+    that.userInfo.Balance = (that.userInfo.Balance/100).toFixed(2)
     if (!that.userInfo.UserId) {
       Toast.fail('网络在开小差');
     }

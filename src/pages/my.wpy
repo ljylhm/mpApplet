@@ -3,103 +3,128 @@
     <view class="mypage-info">
       <view class="mypage-info-image-cover pos-center-avt">
         <image src={{imgurl}}>
+        </view>
+        <text class="mypage-info-nickname">{{nickname}}</text>
       </view>
-      <text class="mypage-info-nickname">{{nickname}}</text>
+      <view class="mypage-info-middle">
+        <view>
+          <view class="middle-contain pos-center-avt">
+            <text> 当前余额：</text>
+            <van-icon name="balance-o" style="margin-right:5rpx" />
+            <text style="position:float">{{myPoint/100}} 创币</text>
+          </view>
+        </view>
+        <view>
+          <view class="pos-center-btn">
+            <van-button @tap="recharge" round size="small" style="margin-left:150rpx" type="primary">充</van-button>
+          </view>
+        </view>
+      </view>
+      <view class="mypage-info-list">
+        <view class="myInfo-list-item">
+          <view class="show-list-item-icon">
+            <image src="./../image/record.png" class="pos-center-avt" />
+          </view>
+          <view class="show-list-item-title" @tap="toUrl(1)">
+            我的优惠
+          </view>
+          <view class="show-list-item-guide">
+            <van-icon name="arrow" />
+          </view>
+        </view>
+        <view class="myInfo-list-item">
+          <view class="show-list-item-icon">
+            <image src="./../image/ticket.png" class="pos-center-avt" />
+          </view>
+          <view class="show-list-item-title" @tap="toUrl(2)">
+            我的课程
+          </view>
+          <view class="show-list-item-guide">
+            <van-icon name="arrow" />
+          </view>
+        </view>
+      </view>
     </view>
-    <view class="mypage-info-middle">
-      <view>
-        <view class="middle-contain pos-center-avt">
-          <text> 当前余额：</text>
-          <van-icon name="balance-o" style="margin-right:5rpx" />
-          <text style="position:float">{{myPoint}}创币</text>
-        </view>
-      </view>
-      <view>
-        <view class="pos-center-btn">
-          <van-button @tap="recharge" round size="small" style="margin-left:150rpx" type="primary">充</van-button>
-        </view>
-      </view>
-    </view>
-    <view class="mypage-info-list">
-      <view class="myInfo-list-item">
-        <view class="show-list-item-icon">
-          <image src="./../image/record.png" class="pos-center-avt" />
-        </view>
-        <view class="show-list-item-title" @tap="toUrl(1)">
-          我的优惠
-        </view>
-        <view class="show-list-item-guide">
-          <van-icon name="arrow" />
-        </view>
-      </view>
-      <view class="myInfo-list-item">
-        <view class="show-list-item-icon">
-          <image src="./../image/ticket.png" class="pos-center-avt" />
-        </view>
-        <view class="show-list-item-title" @tap="toUrl(2)">
-          我的课程
-        </view>
-        <view class="show-list-item-guide">
-          <van-icon name="arrow" />
-        </view>
-      </view>
-    </view>
-  </view>
-</template>
-<script>
-import wepy from 'wepy'
-import config from "./../utils/config"
-import helper from "./../utils/helper"
-export default class Index extends wepy.page {
-  config = {
-    navigationBarTitleText: '我的信息',
-  }
-
-  data = {
-    url: "https://img.qccip.com/Test/%E7%AE%B4%E5%88%9B%E7%AC%AC%E4%B8%80%E8%AF%BE%E7%B2%BE%E9%80%89%20%E6%9D%8E%E5%AF%BC%200301--20%E5%88%86%E9%92%9F.mp4",
-    imgurl: "",
-    nickname: "",
-    myPoint: ""
-  }
-
-  methods = {
-    toUrl(num) {
-      let t = {
-        1: "ticket",
-        2: "course"
-      }
-      wepy.navigateTo({
-        url: t[num]
-      })
-    },
-    recharge() {
-      wepy.navigateTo({
-        url: "pay"
-      })
+  </template>
+  <script>
+  import wepy from 'wepy'
+  import config from "./../utils/config"
+  import helper from "./../utils/helper"
+  import request from "./../utils/request"
+  import db from "./../utils/db"
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的信息',
+      enablePullDownRefresh:true
     }
-  }
 
-  onLoad() {
-    // 判断是否有用户信?
-    var that = this
-    let userinfo = that.$parent.globalData.userInfo
-    console.log(userinfo, "assss")
-    if (userinfo.Nickname) {
+    data = {
+      url: "https://img.qccip.com/Test/%E7%AE%B4%E5%88%9B%E7%AC%AC%E4%B8%80%E8%AF%BE%E7%B2%BE%E9%80%89%20%E6%9D%8E%E5%AF%BC%200301--20%E5%88%86%E9%92%9F.mp4",
+      imgurl: "",
+      nickname: "",
+      myPoint: ""
+    }
+
+    methods = {
+      toUrl(num) {
+        let t = {
+          1: "ticket",
+          2: "course"
+        }
+        wepy.navigateTo({
+          url: t[num]
+        })
+      },
+      recharge() {
+        wepy.navigateTo({
+          url: "pay"
+        })
+      }
+    }
+
+    onLoad() {
+      this.getdetail()
+    }
+    getdetail(){
+      // 判断是否有用户信?
+      var that = this
+      let userinfo = db.Get("userInfo")
+      console.log(userinfo, "assss")
+      if (userinfo.Nickname) {
       // 已经有用户信息了
 
       that.imgurl = userinfo.LogoUrl
       that.nickname = userinfo.Nickname
       that.myPoint = userinfo.Balance
+      wx.stopPullDownRefresh()
       that.$apply()
     } else {
 
     }
   }
-}
+  onPullDownRefresh(){
+    var that=this
+    request.httpGetOpenid(function(data) {
 
-</script>
-<style lang="less">
-page {
+      that.getdetail()
+
+     // console.log(that.globalData.userInfo)
+   })
+    
+  }
+  onShow(){
+
+
+    this.getdetail()
+
+     // console.log(that.globalData.userInfo)
+
+   }
+ }
+
+ </script>
+ <style lang="less">
+ page {
   background: #eee;
 }
 
@@ -132,7 +157,7 @@ page {
 .mypage-info-middle {
   width: 100%;
   height: 120rpx;
-  margin-top: 30rpx;
+  margin-top: 15rpx;
   display: flex;
   background-color: #fff
 }
@@ -145,7 +170,7 @@ page {
 
 
 .mypage-info-list {
-  margin-top: 30rpx;
+  margin-top: 15rpx;
   background-color: #fff;
 }
 
@@ -180,9 +205,10 @@ page {
 }
 
 .middle-contain {
-  width: 100%;
+  width: 110%;
   text-align: center;
   font-size: 34rpx;
+  margin-left:40rpx;
 }
 
 .pos-center-avt {
@@ -195,19 +221,20 @@ page {
 .pos-center-btn {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%) margin-right:50rpx;
+  transform: translateY(-50%) ;
+  margin-right:50rpx;
 }
 
 // #show-border{
-//    position: relative;
-// }
-// #show-border:after{
-//     content: "";
-//     position: absolute;
-//     top: 5rpx;
-//     right: 5rpx;
-//     height: 60rpx;
-//     border: 1rpx solid #999999; 
-// }
+  //    position: relative;
+  // }
+  // #show-border:after{
+    //     content: "";
+    //     position: absolute;
+    //     top: 5rpx;
+    //     right: 5rpx;
+    //     height: 60rpx;
+    //     border: 1rpx solid #999999; 
+    // }
 
-</style>
+    </style>
