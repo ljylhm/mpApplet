@@ -114,7 +114,7 @@
   </van-cell-group>
 </van-popup>
 </view>
-<modal title="提示" wx:if="{{hiddenContant}}" bindconfirm="modalConfirm" bindcancel="modalCandel">
+<modal title="有任何问题添加管理员微信或拨打客服热线" wx:if="{{hiddenContant}}" bindconfirm="modalConfirm" confirmText="呼叫" bindcancel="modalCandel">
   <view>
     <image class="image" src="../image/webwxgetmsgimg.jpg" mode='aspectFill'></image>
 
@@ -187,9 +187,10 @@ export default class test extends wepy.page {
       this.hiddenContant=true;
       this.$apply()
     },
-    hiddenContant(){
-      this.hiddenContant=false;
-      this.$apply()
+    modalConfirm(){
+      wx.makePhoneCall({
+  phoneNumber: '17715879315' // 仅为示例，并非真实的电话号码
+})
     },
     modalCandel(){
       this.hiddenContant=false;
@@ -208,15 +209,39 @@ export default class test extends wepy.page {
       }
       if (item.IsFree == 1) {
         //直接观看
-
+        if (item.VadioUrl !== "") {
+          this.videourl = item.VadioUrl;
+          this.showBanner = false;
+          Toast('该免费视频直接观看');
+          wx.setKeepScreenOn({
+            keepScreenOn: true
+          })
+        }
       } else {
         //收费
         if (item.IsFreeForVip == 1) {
-
+         if(this.userinfo.IsVip==1){
+          this.videourl = item.VadioUrl;
+          this.showBanner = false;
+          Toast('尊敬的VIP用户，正在为您加载视频');
+          wx.setKeepScreenOn({
+            keepScreenOn: true
+          })
+        }
           //vip免费
         } else {
           //必须收费
-
+          if(this.isBuy){
+            this.videourl = item.VadioUrl;
+            this.showBanner = false;
+            Toast('已购买该视频，正在为您加载视频');
+            wx.setKeepScreenOn({
+              keepScreenOn: true
+            })
+          }else{
+            Toast('请先购买该视频');
+          }
+          
         }
       }
 
@@ -297,11 +322,11 @@ export default class test extends wepy.page {
             that.adviceshort = data.Data.collageEvaluateEntities;
           }
         }else{
-          adviceshort=[]
-        }
-        wx.hideLoading()
-        that.$apply();
-      })
+         that.adviceshort=[]
+       }
+       wx.hideLoading()
+       that.$apply();
+     })
   }
   checkUserWetherBuyCollage() {
     var userinfo = this.$parent.globalData.userInfo;
@@ -330,6 +355,8 @@ export default class test extends wepy.page {
     this.ShareUserId = item.ShareUserId;
     this.userinfo = this.$parent.globalData.userInfo;
     this.id = item.id;
+    this.videourl="";
+    this.showBanner=true;
     this.getDetail()
     this.$apply()
   }
@@ -347,8 +374,7 @@ export default class test extends wepy.page {
     }
   }
   onHide(){
-    this.collegeDetailEntity={};
-    this.$apply()
+
   }
 }
 
@@ -465,7 +491,12 @@ export default class test extends wepy.page {
   width: 100%;
   height: 400rpx;
 }
+.image{
+  height: 400rpx;
+  width: 400rpx;
+  transform:translate(20%);
 
+}
 .rate {
   margin-left: 30rpx;
   margin-top: 30rpx;

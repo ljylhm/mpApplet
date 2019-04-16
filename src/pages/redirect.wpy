@@ -6,8 +6,11 @@
     bindgetuserinfo="getUserInfo">
     <image class='btnImg' src='./../image/wechat.png'/>
     <view>微信登录</view>
+
   </button>
+  
 </view>
+<view class="charge-detail">登陆即代表同意我们的 <span @tap="seetext" class="text">用户协议</span></view>
 </template>
 
 <script>
@@ -46,6 +49,11 @@ export default class Index extends wepy.page{
          wx.navigateBack({})
        })   
       }
+    },
+    seetext(){
+      wepy.navigateTo({
+        url: 'agreement'
+      })
     },
     getPhoneNumber(e){
       let detail = e.detail
@@ -92,6 +100,7 @@ export default class Index extends wepy.page{
       flex-direction: row;
       align-items: center;
       justify-content: center;
+      bottom:-200rpx;
     }
 
     .btnImg {
@@ -103,6 +112,17 @@ export default class Index extends wepy.page{
     .btn1::after {
       border-radius: 98rpx;
       border: 0; 
+    }
+    .charge-detail {
+      text-align:center;
+      margin-top:-180rpx;
+      color:#707070;
+      font-size:70%;
+      font-weight: soild
+
+    }
+    .text{
+      color: #0000CD
     }
     </style>
 

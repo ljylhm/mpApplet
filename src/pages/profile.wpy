@@ -1,0 +1,365 @@
+<template>
+ <view>
+  <form bindsubmit="formSubmit" bindreset="formReset">
+
+    <van-cell>
+      <view slot="value"><image class="mypage-info-nickname" src="{{userInfo.LogoUrl}}"></image>
+      </view>
+      <view slot="title">
+        <view class="van-cell-text">头像</view>
+      </view>
+      <view slot="right-icon"><van-icon class="nick-url" color="#999" name="arrow" /></view>
+    </van-cell>
+    <van-cell is-link>
+      <view slot="value"><text>{{userInfo.Nickname}}</text>
+      </view>
+      <view slot="title">
+        <view>昵称</view>
+      </view>
+    </van-cell>
+    <van-cell is-link clickable>
+      <view slot="value"><picker mode="selector" bindchange="bindPickerChange" range="{{sexlist}}" value="{{sexlist[index]}}" name="sex">{{sexlist[index]}}</picker>
+      </view>
+      <view slot="title">
+        <view>性别</view>
+      </view>
+    </van-cell>
+    <van-cell is-link clickable>
+      <view slot="value"><input   type="number" name="phone" value="{{userData.phone}}"/>
+      </view>
+      <view slot="title">
+        <view>手机号</view>
+      </view>
+    </van-cell>
+    <van-cell is-link clickable>
+      <view slot="value"><picker
+        mode="date"
+        value="{{userData.birthday}}" fields="day"
+        start="1900-01-01"
+        bindchange="bindTimeChange" name="birthday"
+        >{{birthday}}
+      </picker>
+
+    </view>
+    <view slot="title">
+      <view style="width:100%">生日<span class="desc">选择后不可更改</span></view>
+    </view>
+  </van-cell>
+  <van-cell is-link clickable>
+    <view slot="value"><input  type="text" name="degree" value="{{userData.degree}}" placeholder="添加" />
+    </view>
+    <view slot="title">
+      <view >身份</view>
+    </view>
+  </van-cell>
+  <van-cell is-link clickable>
+    <view slot="value"><picker mode="selector" bindchange="bindemotionChange" range="{{emotionlist}}" value="{{emotionlist[emotionindex]}}" name="emotion">{{emotionlist[emotionindex]}}</picker>
+    </view>
+    <view slot="title">
+      <view >情感状态</view>
+    </view>
+  </van-cell>
+  <van-cell is-link clickable>
+    <view slot="value"><picker mode="region" bindchange="bindeHomeChange" value="region" name="Home">{{Home}}</picker>
+    </view>
+    <view slot="title">
+      <view >家乡</view>
+    </view>
+  </van-cell>
+  <van-cell is-link clickable>
+    <view slot="value"><picker mode="region" bindchange="bindeNowHomeChange" value="region" name="NowHome">{{NowHome}}</picker>
+    </view>
+  </view>
+  <view slot="title">
+    <view >现居城市</view>
+  </view>
+</van-cell>
+<van-cell is-link clickable>
+  <view slot="value"><input  type="text" name="persondes" value="{{userData.persondes}}" placeholder="添加" />
+  </view>
+  <view slot="title">
+    <view >几句话介绍自己</view>
+  </view>
+</van-cell>
+
+<view class="sub-title">圈内人名片</view>
+<van-cell-group title="分组2">
+  <van-cell is-link clickable>
+    <view slot="value"><input  type="text" name="persondes" value="{{userData.outcountry}}" placeholder="添加" />
+    </view>
+    <view slot="title">
+      <view >出口国家</view>
+    </view>
+  </van-cell>
+  <van-cell is-link clickable>
+    <view slot="value"><input  type="text" name="persondes" value="{{userData.outproduct}}" placeholder="添加" />
+    </view>
+    <view slot="title">
+      <view >主营产品</view>
+    </view>
+  </van-cell> 
+</van-cell-group>
+<view class="sub-title">关于我几个问题</view>
+<van-cell-group title="分组2">
+  <van-cell is-link clickable>
+    <view slot="value"><input  type="text" name="persondes" value="{{userData.outproduct}}" placeholder="添加" />
+    </view>
+    <view slot="title">
+      <view >我目前工作主要做..</view>
+    </view>
+  </van-cell>
+  <van-cell is-link clickable>
+    <view slot="value"><input  type="text" name="persondes" value="{{userData.outproduct}}" placeholder="添加" />
+    </view>
+    <view slot="title">
+      <view >我能给圈友什么帮助..</view>
+    </view>
+  </van-cell>
+  <van-cell is-link clickable>
+    <view slot="value"><input  type="text" name="persondes" value="{{userData.outproduct}}" placeholder="添加" />
+    </view>
+    <view slot="title">
+      <view >能获得圈友什么帮助..</view>
+    </view>
+  </van-cell>
+  <van-cell is-link clickable>
+    <view slot="value"><input  type="text" name="persondes" value="{{userData.outproduct}}" placeholder="添加" />
+    </view>
+    <view slot="title">
+      <view >我的状态</view>
+    </view>
+  </van-cell>
+</van-cell-group>
+<button class='btn1' form-type="submit">
+  <view>保存编辑</view>
+</button>
+</form>
+</view>
+<van-action-sheet id="{{actionType}}" close-on-click-overlay
+show="{{ actionshow }}"
+actions="{{ actions }}"
+bind:close="onClose"
+bind:select="onSelect"
+cancel-text="取消"
+bind:cancel="onCancel"
+/>
+<van-toast id="van-toast" />
+<van-notify id="custom-selector" />
+<van-notify id="van-notify" />
+</template>
+<script>
+import wepy from 'wepy'
+import goodsItem from '../components/goodsItem'
+  import List from '../components/list' // aliasFields example
+  import helper from '../utils/helper'
+  import api from '../utils/api'
+  import request from '../utils/request'
+  import db from "./../utils/db"
+  import toast from "./../utils/toast"
+  import Toast from '../components/vant/toast/toast'
+  import Notify from '../components/vant/notify/notify';
+  export default class pay extends wepy.page {
+    config = {
+      navigationBarTitleText: '编辑名片',
+      navigationBarBackgroundColor: "#F7F7F7",
+      usingComponents: {
+        "van-button": "../components/vant/button/index",
+        "van-tag": "../components/vant/tag/index",
+        "van-toast": "../components/vant/toast/index",
+        "van-notify": "../components/vant/notify/index",
+        "van-cell": "../components/vant/cell/index",
+        "van-cell-group": "../components/vant/cell-group/index",
+        "van-icon": "../components/vant/icon/index",
+        "van-action-sheet": "../components/vant/action-sheet/index"
+
+      }
+    }
+    components = {}
+
+
+
+    data = {
+      index:0,
+      birthday:"1997-12-21",
+      Home:"",
+      NowHome:"",
+      sexlist:["男","女","未知"],
+      emotionindex:0,
+      emotionlist:["保密","已婚","未婚"],
+      userInfo:{},
+      actionshow: false,
+      actions: [
+
+      ],
+      userData:{
+        sex:"未知",
+        phone:"17715879315",
+        birthday:"1997-12-21",
+        degree:"主管",
+        emotion:"",
+        Home:"山西省 太原市 小店区",
+        NowHome:"山西省 太原市 小店区",
+        persondes:"哈哈哈哈哈哈",
+        outcountry:"美国",
+        outproduct:"保健品"
+      },
+     actionType:0//1:性别
+   }
+
+   computed = {
+
+   }
+
+   watch = {
+
+   }
+
+
+   methods = {
+
+  /*sexedit(){
+    this.actionshow=true;
+    this.actions=[{
+      name: '男',
+      sextype:1
+    },
+    {
+      name: '女',
+      sextype:2
+    },
+    {
+      name: '未知',
+      sextype:0
+    }
+    ];
+    this.actionType=1
+    this.$apply()
+  },*/
+  editphone(e){
+    console.log(e)
+  },
+  formSubmit(e){
+    console.log(e)
+  },
+  bindPickerChange(e){
+    this.index=e.detail.value
+
+    this.userData.sex=this.sexlist[e.detail.value];
+
+    console.log(this.userData.sex)
+    this.$apply()
+
+  },
+  bindTimeChange(e){
+    console.log(e);
+    this.userData.birthday=e.detail.value
+    this.birthday=e.detail.value
+    console.log(this.userData.birthday)
+    this.$apply()
+  },
+
+  bindemotionChange(e){
+    this.userData.emotion=this.emotionlist[e.detail.value]
+    this.emotionindex=e.detail.value
+    this.$apply()
+  },
+  bindeHomeChange(e){
+    console.log(e);
+    var data=e.detail.value;
+    this.Home=data[0]+" "+data[1]+" "+data[2];
+    this.$apply()
+
+  },
+  bindeNowHomeChange(e){
+    var data=e.detail.value;
+    this.NowHome=data[0]+" "+data[1]+" "+data[2];
+    this.$apply()
+
+  }
+
+}
+
+onLoad() {
+  var that = this
+  console.log(that.$parent.globalData.deviceInfo.windowHeight)
+  that.heightTotal = that.$parent.globalData.deviceInfo.screenHeight - 60
+  that.height = that.$parent.globalData.deviceInfo.windowHeight + 30
+
+  console.log("ddddddd", db.Get("userInfo"))
+
+  that.userInfo = db.Get("userInfo")
+  that.userInfo.Balance = (that.userInfo.Balance/100).toFixed(2)
+  if (!that.userInfo.UserId) {
+    Toast.fail('网络在开小差');
+  }
+  console.log(that.userInfo.Balance)
+
+
+
+  this.Home=this.userData.Home;
+  this.NowHome=this.userData.NowHome;
+  that.$apply();
+
+}
+onCancel(){
+  this.actionshow=false;
+  this.$apply()
+}
+onClose(){
+  this.onCancel()
+}
+onSelect(e){
+  console.log(e);
+  if(e.currentTarget.id==1){
+    this.userData.sex=e.detail.name;
+    this.actionshow=false
+    this.$apply()
+  }
+}
+}
+
+</script>
+<style lang="less">
+.mypage-info-nickname{
+  width:120rpx;
+  height:120rpx;
+  border-radius:48px;
+
+
+}
+.van-cell-text{
+  top: 30%;
+  position:absolute;
+
+}
+.nick-url{
+  display:block !important;
+  margin-top:40rpx;
+  margin-left:10rpx;
+}
+.desc{
+  font-size:80%;
+  color:#999;
+  margin-left:10rpx
+}
+.sub-title{
+  color:#999;
+  margin-left:30rpx;
+  margin-top:20rpx;
+  margin-bottom:20rpx;
+  font-size:80%;
+
+}
+.btn1 {
+  width: 80%;
+  margin-top: 50rpx;
+  background-color: burlywood;
+  color: white;
+  border-radius: 10rpx;
+  margin-left: 35rpx;
+  position: absolute;
+  flex-direction: row;
+  left:6%;
+
+}
+</style>

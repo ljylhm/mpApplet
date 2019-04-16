@@ -9,10 +9,15 @@ import request from "./utils/request"
 export default class extends wepy.app {
   config = {
     pages: ['pages/index',
+    'pages/profile',
+    
+    'pages/redirect',
+    
     'pages/pay',
 
     'pages/moneyList',
 
+    'pages/agreement',
     
 
 
@@ -26,7 +31,6 @@ export default class extends wepy.app {
     'pages/order',
     'pages/ticket',
     'pages/course',
-    'pages/redirect',
     ],
     window: {
       backgroundTextStyle: 'light',

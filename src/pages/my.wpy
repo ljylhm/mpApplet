@@ -2,7 +2,7 @@
   <view>
     <view class="mypage-info">
       <view class="mypage-info-image-cover pos-center-avt">
-        <image src={{imgurl}}>
+        <image @tap="profile" src={{imgurl}}>  
         </view>
         <text class="mypage-info-nickname">{{nickname}}</text>
       </view>
@@ -78,6 +78,11 @@
       recharge() {
         wepy.navigateTo({
           url: "pay"
+        })
+      },
+      profile(){
+        wepy.navigateTo({
+          url: "profile"
         })
       }
     }
