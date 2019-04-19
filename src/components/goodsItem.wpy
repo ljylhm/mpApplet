@@ -180,6 +180,7 @@ export default class goodsItem extends wepy.component {
     this.getCollageList()
 
   }
+  
 
 }
 

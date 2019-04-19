@@ -2,7 +2,8 @@
   <view>
     <view class="mypage-info">
       <view class="mypage-info-image-cover pos-center-avt">
-        <image @tap="profile" src={{imgurl}}>  
+        <van-tag wx:if="{{showReward}}" class="tag" round type="danger">+100</van-tag>
+        <image @tap="profile" src="{{imgurl}}">  
         </view>
         <text class="mypage-info-nickname">{{nickname}}</text>
       </view>
@@ -45,52 +46,74 @@
         </view>
       </view>
     </view>
-  </template>
-  <script>
-  import wepy from 'wepy'
-  import config from "./../utils/config"
-  import helper from "./../utils/helper"
-  import request from "./../utils/request"
-  import db from "./../utils/db"
-  export default class Index extends wepy.page {
-    config = {
-      navigationBarTitleText: '我的信息',
-      enablePullDownRefresh:true
-    }
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import config from "./../utils/config"
+import helper from "./../utils/helper"
+import request from "./../utils/request"
+import db from "./../utils/db"
+import api from '../utils/api'
 
-    data = {
-      url: "https://img.qccip.com/Test/%E7%AE%B4%E5%88%9B%E7%AC%AC%E4%B8%80%E8%AF%BE%E7%B2%BE%E9%80%89%20%E6%9D%8E%E5%AF%BC%200301--20%E5%88%86%E9%92%9F.mp4",
-      imgurl: "",
-      nickname: "",
-      myPoint: ""
-    }
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的信息',
+    enablePullDownRefresh:true,
+    usingComponents: {"van-tag": "../components/vant/tag/index"}
+  }
 
-    methods = {
-      toUrl(num) {
-        let t = {
-          1: "ticket",
-          2: "course"
-        }
-        wepy.navigateTo({
-          url: t[num]
-        })
-      },
-      recharge() {
-        wepy.navigateTo({
-          url: "pay"
-        })
-      },
-      profile(){
-        wepy.navigateTo({
-          url: "profile"
-        })
+  data = {
+    url: "https://img.qccip.com/Test/%E7%AE%B4%E5%88%9B%E7%AC%AC%E4%B8%80%E8%AF%BE%E7%B2%BE%E9%80%89%20%E6%9D%8E%E5%AF%BC%200301--20%E5%88%86%E9%92%9F.mp4",
+    imgurl: "",
+    nickname: "",
+    myPoint: "",
+    showReward:false
+  }
+
+  methods = {
+    toUrl(num) {
+      let t = {
+        1: "ticket",
+        2: "course"
       }
+      wepy.navigateTo({
+        url: t[num]
+      })
+    },
+    recharge() {
+      wepy.navigateTo({
+        url: "pay"
+      })
+    },
+    profile(){
+      wepy.navigateTo({
+        url: "profile"
+      })
     }
+  }
 
-    onLoad() {
-      this.getdetail()
+  onLoad() {
+    var that=this;
+    this.getdetail()
+
+    this.getProfile()
+  }
+  getProfile(){
+    var that=this;
+    request.httpGetJY(api.service.getUserDetail+"/"+db.Get("userInfo").UserId,{},(isOk,data)=>{
+
+      if(data.IsComplate==0){
+      //未完善
+      that.showReward=true
+    }else{
+      //完善
+      that.showReward=false
     }
-    getdetail(){
+    that.$apply();
+  })
+  }
+  getdetail(){
       // 判断是否有用户信?
       var that = this
       let userinfo = db.Get("userInfo")
@@ -112,7 +135,7 @@
     request.httpGetOpenid(function(data) {
 
       that.getdetail()
-
+      this.getProfile()
      // console.log(that.globalData.userInfo)
    })
     
@@ -229,7 +252,13 @@
   transform: translateY(-50%) ;
   margin-right:50rpx;
 }
+.tag{
+ margin-top:-20rpx;
+ position:absolute;
+ margin-left:125rpx;
+ width:100%;
 
+}
 // #show-border{
   //    position: relative;
   // }

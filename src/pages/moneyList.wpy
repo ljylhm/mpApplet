@@ -2,7 +2,7 @@
   <view class="contain" style="min-height:{{minheight}}px">
     <block wx:for="{{list}}" wx:key="id">
       <van-cell-group title="分组2">
-        <van-cell custom-class="body" title="{{item.payType==1?'充值':item.payType==2?'购买课程消费':item.payType==3?'分享返利':'优惠券兑换'}}" value-class="value" value="{{item.payType==2?'-':'+'}}{{item.rechageAmount/100}}币" size="large" label-class="label" label="{{item.createTime}}" />
+        <van-cell custom-class="body" title="{{item.payType==1?'充值':item.payType==2?'购买课程消费':item.payType==3?'分享返利':item.payType==4?'兑换优惠券':'完善资料奖励金'}}" value-class="value" value="{{item.payType==2?'-':'+'}}{{item.rechageAmount/100}}币" size="large" label-class="label" label="{{item.createTime}}" />
       </van-cell-group>
     </block>
   </view>

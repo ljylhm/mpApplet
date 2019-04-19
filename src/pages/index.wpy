@@ -111,10 +111,21 @@ export default class Index extends wepy.page {
   onLoad() {
     var that = this;
 
-    //console.log("进入了index",that.$parent.globalData.userInfo)
+    console.log("进入了index")
 
 
-    request.httpGetJY(api.service.getHomeBannerInfo, {}, (isOk, data) => {
+
+    
+
+    request.httpGetOpenid(function(data) {
+     request.httpPostJY(api.service.getCollageCategoryList, { "GroupName": "首页导航" }, (isOk, data) => {
+      console.log(data)
+      if (data.Code == "200") {
+        that.groups = data.Data;
+        that.$apply();
+      }
+    });
+     request.httpGetJY(api.service.getHomeBannerInfo, {}, (isOk, data) => {
       let result = data;
       if (result.Code == "200") {
         console.log("xxxxsssss", result.Data)
@@ -125,14 +136,7 @@ export default class Index extends wepy.page {
       }
     })
 
-    request.httpPostJY(api.service.getCollageCategoryList, { "GroupName": "首页导航" }, (isOk, data) => {
-      console.log(data)
-      if (data.Code == "200") {
-        that.groups = data.Data;
-        that.$apply();
-      }
-    })
-
+   })
     // let self = this
     // this.$parent.getUserInfo(function (userInfo) {
     //   if (userInfo) {

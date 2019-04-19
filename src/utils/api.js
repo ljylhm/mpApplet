@@ -51,9 +51,9 @@ var api = {
 
     getUserRechargeList: `${host}/api/v1/recharge/GetUserRechargeList`,
 
-    bindinfo: `${host}/bind`,
+    updaetUserProfile: `${host}/api/v1/user/UpdaetUserProfile`,
 
-    loginbywx: `${host}/loginbywx`,
+    getUserDetail: `${host}/api/v1/user/GetUserDetail`,
 
     getMyPost: `${host}/getMyPost`,
 

@@ -1,138 +1,140 @@
 <template>
- <view>
-  <form bindsubmit="formSubmit" bindreset="formReset">
+  <view wx:if="{{showReward}}" class="reward">完善名片可获得更大曝光和<span style="color:#FFD700">100</span>创币奖励！</view>
+  <view style="{{showReward?'margin-top:50rpx':''}}">
 
-    <van-cell>
-      <view slot="value"><image class="mypage-info-nickname" src="{{userInfo.LogoUrl}}"></image>
+    <form bindsubmit="formSubmit" bindreset="formReset">
+
+      <van-cell>
+        <view slot="value"><image class="mypage-info-nickname" src="{{userInfo.LogoUrl}}"></image>
+        </view>
+        <view slot="title">
+          <view class="van-cell-text">头像</view>
+        </view>
+        <view slot="right-icon"><van-icon class="nick-url" color="#999" name="arrow" /></view>
+      </van-cell>
+      <van-cell is-link>
+        <view slot="value"><text>{{userInfo.Nickname}}</text>
+        </view>
+        <view slot="title">
+          <view>昵称</view>
+        </view>
+      </van-cell>
+      <van-cell is-link clickable>
+        <view slot="value"><picker mode="selector" bindchange="bindPickerChange" range="{{sexlist}}" value="{{sexlist[index]}}" name="Sex">{{sexlist[index]}}</picker>
+        </view>
+        <view slot="title">
+          <view>性别</view>
+        </view>
+      </van-cell>
+      <van-cell is-link clickable>
+        <view slot="value"><input   type="number" name="Mobile" value="{{userData.Mobile}}"/>
+        </view>
+        <view slot="title">
+          <view>手机号</view>
+        </view>
+      </van-cell>
+      <van-cell is-link clickable>
+        <view slot="value"><picker
+          mode="date"
+          fields="day"
+          start="1900-01-01" value="{{birthday}}"
+          bindchange="bindTimeChange" name="Birthday"
+          >{{birthday}}
+        </picker>
+
       </view>
       <view slot="title">
-        <view class="van-cell-text">头像</view>
-      </view>
-      <view slot="right-icon"><van-icon class="nick-url" color="#999" name="arrow" /></view>
-    </van-cell>
-    <van-cell is-link>
-      <view slot="value"><text>{{userInfo.Nickname}}</text>
-      </view>
-      <view slot="title">
-        <view>昵称</view>
+        <view style="width:100%">生日<span class="desc">选择后不可更改</span></view>
       </view>
     </van-cell>
     <van-cell is-link clickable>
-      <view slot="value"><picker mode="selector" bindchange="bindPickerChange" range="{{sexlist}}" value="{{sexlist[index]}}" name="sex">{{sexlist[index]}}</picker>
+      <view slot="value"><picker mode="selector" bindchange="bindPositionChange" range="{{position}}" value="{{position[positionIndex]}}" name="Position">{{position[positionIndex]}}</picker>
       </view>
       <view slot="title">
-        <view>性别</view>
+        <view >身份</view>
       </view>
     </van-cell>
     <van-cell is-link clickable>
-      <view slot="value"><input   type="number" name="phone" value="{{userData.phone}}"/>
+      <view slot="value"><picker mode="selector" bindchange="bindemotionChange" range="{{emotionlist}}" value="{{emotionlist[emotionindex]}}" name="MarryInfo">{{emotionlist[emotionindex]}}</picker>
       </view>
       <view slot="title">
-        <view>手机号</view>
+        <view >情感状态</view>
       </view>
     </van-cell>
     <van-cell is-link clickable>
-      <view slot="value"><picker
-        mode="date"
-        value="{{userData.birthday}}" fields="day"
-        start="1900-01-01"
-        bindchange="bindTimeChange" name="birthday"
-        >{{birthday}}
-      </picker>
+      <view slot="value"><picker mode="region" bindchange="bindeHomeChange" value="Home" name="Location">{{Home==""?"选择":Home}}</picker>
+      </view>
+      <view slot="title">
+        <view >家乡</view>
+      </view>
+    </van-cell>
+    <van-cell is-link clickable>
+      <view slot="value"><picker mode="region" bindchange="bindeNowHomeChange" value="NowHome" name="LiveCity">{{NowHome==""?"选择":NowHome}}</picker>
+      </view>
+    </view>
+    <view slot="title">
+      <view >现居城市</view>
+    </view>
+  </van-cell>
+  <van-cell is-link clickable>
+    <view slot="value"><input  type="text" name="Introduce" value="{{userData.Introduce}}" placeholder="添加" />
+    </view>
+    <view slot="title">
+      <view >几句话介绍自己</view>
+    </view>
+  </van-cell>
 
-    </view>
-    <view slot="title">
-      <view style="width:100%">生日<span class="desc">选择后不可更改</span></view>
-    </view>
-  </van-cell>
-  <van-cell is-link clickable>
-    <view slot="value"><input  type="text" name="degree" value="{{userData.degree}}" placeholder="添加" />
-    </view>
-    <view slot="title">
-      <view >身份</view>
-    </view>
-  </van-cell>
-  <van-cell is-link clickable>
-    <view slot="value"><picker mode="selector" bindchange="bindemotionChange" range="{{emotionlist}}" value="{{emotionlist[emotionindex]}}" name="emotion">{{emotionlist[emotionindex]}}</picker>
-    </view>
-    <view slot="title">
-      <view >情感状态</view>
-    </view>
-  </van-cell>
-  <van-cell is-link clickable>
-    <view slot="value"><picker mode="region" bindchange="bindeHomeChange" value="region" name="Home">{{Home}}</picker>
-    </view>
-    <view slot="title">
-      <view >家乡</view>
-    </view>
-  </van-cell>
-  <van-cell is-link clickable>
-    <view slot="value"><picker mode="region" bindchange="bindeNowHomeChange" value="region" name="NowHome">{{NowHome}}</picker>
-    </view>
-  </view>
-  <view slot="title">
-    <view >现居城市</view>
-  </view>
-</van-cell>
-<van-cell is-link clickable>
-  <view slot="value"><input  type="text" name="persondes" value="{{userData.persondes}}" placeholder="添加" />
-  </view>
-  <view slot="title">
-    <view >几句话介绍自己</view>
-  </view>
-</van-cell>
-
-<view class="sub-title">圈内人名片</view>
-<van-cell-group title="分组2">
-  <van-cell is-link clickable>
-    <view slot="value"><input  type="text" name="persondes" value="{{userData.outcountry}}" placeholder="添加" />
-    </view>
-    <view slot="title">
-      <view >出口国家</view>
-    </view>
-  </van-cell>
-  <van-cell is-link clickable>
-    <view slot="value"><input  type="text" name="persondes" value="{{userData.outproduct}}" placeholder="添加" />
-    </view>
-    <view slot="title">
-      <view >主营产品</view>
-    </view>
-  </van-cell> 
-</van-cell-group>
-<view class="sub-title">关于我几个问题</view>
-<van-cell-group title="分组2">
-  <van-cell is-link clickable>
-    <view slot="value"><input  type="text" name="persondes" value="{{userData.outproduct}}" placeholder="添加" />
-    </view>
-    <view slot="title">
-      <view >我目前工作主要做..</view>
-    </view>
-  </van-cell>
-  <van-cell is-link clickable>
-    <view slot="value"><input  type="text" name="persondes" value="{{userData.outproduct}}" placeholder="添加" />
-    </view>
-    <view slot="title">
-      <view >我能给圈友什么帮助..</view>
-    </view>
-  </van-cell>
-  <van-cell is-link clickable>
-    <view slot="value"><input  type="text" name="persondes" value="{{userData.outproduct}}" placeholder="添加" />
-    </view>
-    <view slot="title">
-      <view >能获得圈友什么帮助..</view>
-    </view>
-  </van-cell>
-  <van-cell is-link clickable>
-    <view slot="value"><input  type="text" name="persondes" value="{{userData.outproduct}}" placeholder="添加" />
-    </view>
-    <view slot="title">
-      <view >我的状态</view>
-    </view>
-  </van-cell>
-</van-cell-group>
-<button class='btn1' form-type="submit">
-  <view>保存编辑</view>
-</button>
+  <view class="sub-title">圈内人名片</view>
+  <van-cell-group title="分组2">
+    <van-cell is-link clickable>
+      <view slot="value"><input  type="text" name="OutCountry" value="{{userData.OutCountry}}" placeholder="添加" />
+      </view>
+      <view slot="title">
+        <view >出口国家</view>
+      </view>
+    </van-cell>
+    <van-cell is-link clickable>
+      <view slot="value"><input  type="text" name="MyProduct" value="{{userData.MyProduct}}" placeholder="添加" />
+      </view>
+      <view slot="title">
+        <view >主营产品</view>
+      </view>
+    </van-cell> 
+  </van-cell-group>
+  <view class="sub-title">关于我几个问题</view>
+  <van-cell-group title="分组2">
+    <van-cell is-link clickable>
+      <view slot="value"><input  type="text" name="MyWork" value="{{userData.MyWork}}" placeholder="添加" />
+      </view>
+      <view slot="title">
+        <view >我目前工作主要做..</view>
+      </view>
+    </van-cell>
+    <van-cell is-link clickable>
+      <view slot="value"><input  type="text" name="CanProvider" value="{{userData.MyWork}}" placeholder="添加" />
+      </view>
+      <view slot="title">
+        <view >我能给圈友什么帮助..</view>
+      </view>
+    </van-cell>
+    <van-cell is-link clickable>
+      <view slot="value"><input  type="text" name="NeedSurport" value="{{userData.NeedSurport}}" placeholder="添加" />
+      </view>
+      <view slot="title">
+        <view >能获得圈友什么帮助..</view>
+      </view>
+    </van-cell>
+    <van-cell is-link clickable>
+      <view slot="value"><picker mode="selector" bindchange="bindMyStatusChange" range="{{myStatus}}" value="{{myStatus[statusIndex]}}" name="MyStatus">{{myStatus[statusIndex]}}</picker>
+      </view>
+      <view slot="title">
+        <view >我的状态</view>
+      </view>
+    </van-cell>
+  </van-cell-group>
+  <button class='btn1' form-type="submit">
+    <view>保存编辑</view>
+  </button>
 </form>
 </view>
 <van-action-sheet id="{{actionType}}" close-on-click-overlay
@@ -179,11 +181,16 @@ import goodsItem from '../components/goodsItem'
 
 
     data = {
-      index:0,
+      showReward:false,
+      index:2,
       birthday:"1997-12-21",
       Home:"",
       NowHome:"",
       sexlist:["男","女","未知"],
+      positionIndex:9,
+      position:["新业务员","老业务员","SOHO","高管","老板","学生","采购","运营营销","跟单员","其他"],
+      myStatus:["我在职，不考虑变动","我离职，正在看机会","我在职,也考虑新机会","我求贤若渴,正在招人","我很佛系，选择保密"],
+      statusIndex:4,
       emotionindex:0,
       emotionlist:["保密","已婚","未婚"],
       userInfo:{},
@@ -192,30 +199,20 @@ import goodsItem from '../components/goodsItem'
 
       ],
       userData:{
-        sex:"未知",
-        phone:"17715879315",
-        birthday:"1997-12-21",
-        degree:"主管",
-        emotion:"",
-        Home:"山西省 太原市 小店区",
-        NowHome:"山西省 太原市 小店区",
-        persondes:"哈哈哈哈哈哈",
-        outcountry:"美国",
-        outproduct:"保健品"
+
       },
-     actionType:0//1:性别
-   }
+    }
 
-   computed = {
+    computed = {
 
-   }
+    }
 
-   watch = {
+    watch = {
 
-   }
+    }
 
 
-   methods = {
+    methods = {
 
   /*sexedit(){
     this.actionshow=true;
@@ -239,12 +236,27 @@ import goodsItem from '../components/goodsItem'
     console.log(e)
   },
   formSubmit(e){
-    console.log(e)
+    console.log(e)//updaetUserProfile
+    var para=Object.assign({},e.detail.value);
+    para.UserId=this.userInfo.UserId
+    para.OpenId=this.userInfo.OpenId
+    para.LiveCity=this.NowHome;
+    para.Location=this.Home;
+    console.log(JSON.stringify(para) )
+    request.httpPostJY(api.service.updaetUserProfile,para,(isOk,data)=>{
+      console.log(data)
+      if(data.IsSuccess){
+        Toast('编辑成功');
+
+      }else{
+        Toast('网络在开小差');
+      }
+    })
   },
   bindPickerChange(e){
     this.index=e.detail.value
 
-    this.userData.sex=this.sexlist[e.detail.value];
+    this.userData.Sex=this.sexlist[e.detail.value];
 
     console.log(this.userData.sex)
     this.$apply()
@@ -259,7 +271,7 @@ import goodsItem from '../components/goodsItem'
   },
 
   bindemotionChange(e){
-    this.userData.emotion=this.emotionlist[e.detail.value]
+    //this.userData.emotion=this.emotionlist[e.detail.value]
     this.emotionindex=e.detail.value
     this.$apply()
   },
@@ -275,25 +287,42 @@ import goodsItem from '../components/goodsItem'
     this.NowHome=data[0]+" "+data[1]+" "+data[2];
     this.$apply()
 
+  },
+  bindPositionChange(e){
+    console.log(e)
+    this.positionIndex=e.detail.value;
+    this.$apply()
+  },
+  bindMyStatusChange(e){
+    this.statusIndex=e.detail.value;
+    this.$apply()
   }
 
 }
 
 onLoad() {
   var that = this
-  console.log(that.$parent.globalData.deviceInfo.windowHeight)
-  that.heightTotal = that.$parent.globalData.deviceInfo.screenHeight - 60
-  that.height = that.$parent.globalData.deviceInfo.windowHeight + 30
-
+  
   console.log("ddddddd", db.Get("userInfo"))
 
   that.userInfo = db.Get("userInfo")
-  that.userInfo.Balance = (that.userInfo.Balance/100).toFixed(2)
-  if (!that.userInfo.UserId) {
-    Toast.fail('网络在开小差');
-  }
-  console.log(that.userInfo.Balance)
+  request.httpGetJY(api.service.getUserDetail+"/"+that.userInfo.UserId,{},(isOk,data)=>{
+    console.log(data);
+    that.userData=Object.assign({},data);
+    that.Home=that.userData.Location;
+    that.NowHome=that.userData.LiveCity;
+    
+    if(data.IsComplate==0){
+      //未完善
+      that.showReward=true
+    }else{
+      //完善
+      that.showReward=false
+    }
+    that.$apply();
+  })
 
+  
 
 
   this.Home=this.userData.Home;
@@ -361,5 +390,17 @@ onSelect(e){
   flex-direction: row;
   left:6%;
 
+}
+.reward{
+  position:absolute;
+  top:0rpx;
+  z-index:999;
+  background-color:#FAFAD2;
+  text-align:center;
+  margin-left:;
+  font-size:90%;
+  padding-top:10rpx;
+  padding-bottom:10rpx;
+  width:100%;
 }
 </style>
